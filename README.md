@@ -1,3 +1,12 @@
+---
+title: UIT SE Learning Platform
+emoji: 💻
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+---
+
 # SE Learning Platform — UIT Software Engineering 4-Year Adaptive Workspace
 
 Nền tảng học tập tương tác dành cho sinh viên Kỹ thuật Phần mềm (nhịp học thích ứng 4–6 giờ/tuần), được xây dựng từ 3 tài liệu Master chính thống:
