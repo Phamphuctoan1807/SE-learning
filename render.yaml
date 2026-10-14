@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: se-learning-platform
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python3 -m uvicorn backend.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: SESSION_COOKIE_SECURE
+        value: "true"
+      - key: SESSION_SECRET_KEY
+        generateValue: true
