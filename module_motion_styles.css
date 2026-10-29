@@ -1,0 +1,1533 @@
+/**
+ * ============================================================================
+ * SE SANCTUARY — MODULE MOTION & PLAYBOOK STUDIO STYLES
+ * File: module_motion_styles.css
+ * Version: 2.4.0 (Ultra-Polish 60fps Production Release)
+ * 
+ * TRIẾT LÝ THIẾT KẾ:
+ * "Sanctuary" — Dịu mắt, xúc giác hữu cơ mềm mại, chuyển động chuẩn mực 60fps.
+ * Tương thích trọn vẹn với 4 Theme: skin, matcha, rose, espresso.
+ * Tối ưu hóa GPU Acceleration & Hỗ trợ toàn diện prefers-reduced-motion.
+ * ============================================================================
+ */
+
+/* ============================================================================
+   1. MOTION DESIGN TOKENS & EASING SYSTEM
+   ============================================================================ */
+:root {
+  /* Sanctuary Custom Bezier Curves */
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-soft: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+
+  /* Sanctuary Motion Durations */
+  --dur-instant: 120ms;
+  --dur-fast: 220ms;
+  --dur-normal: 360ms;
+  --dur-gentle: 520ms;
+  --dur-slow: 780ms;
+  --dur-ambient: 2800ms;
+
+  /* Playbook & Visualizer Specific Accents */
+  --editor-bg: #141210;
+  --editor-bg-elevated: #1a1715;
+  --editor-gutter-bg: #110f0e;
+  --editor-text: #e6ded7;
+  --editor-border: rgba(138, 105, 86, 0.22);
+  --editor-line-highlight: rgba(196, 116, 87, 0.09);
+
+  /* Function Glow & Pulse Highlights */
+  --glow-amber: rgba(224, 130, 60, 0.45);
+  --glow-amber-soft: rgba(224, 130, 60, 0.14);
+  --glow-emerald: rgba(63, 122, 92, 0.45);
+  --glow-emerald-soft: rgba(63, 122, 92, 0.14);
+  --glow-cyan: rgba(77, 143, 168, 0.45);
+  --glow-cyan-soft: rgba(77, 143, 168, 0.12);
+
+  /* Terminal Colors */
+  --term-bg: #100e0d;
+  --term-header: #181513;
+  --term-text: #6ee7b7;
+  --term-dim: #718096;
+  --term-accent: #f59e0b;
+}
+
+/* Theme Adjustments for Dark Editor & Visualizer Glows */
+[data-theme="matcha"] {
+  --glow-amber: rgba(181, 124, 86, 0.45);
+  --glow-amber-soft: rgba(181, 124, 86, 0.14);
+  --glow-emerald: rgba(77, 124, 96, 0.45);
+  --glow-emerald-soft: rgba(77, 124, 96, 0.14);
+  --editor-bg: #111412;
+  --editor-bg-elevated: #161a17;
+  --editor-gutter-bg: #0d100e;
+  --editor-border: rgba(78, 107, 88, 0.25);
+  --editor-line-highlight: rgba(77, 124, 96, 0.09);
+}
+
+[data-theme="rose"] {
+  --glow-amber: rgba(214, 122, 134, 0.45);
+  --glow-amber-soft: rgba(214, 122, 134, 0.14);
+  --glow-emerald: rgba(108, 125, 103, 0.45);
+  --glow-emerald-soft: rgba(108, 125, 103, 0.14);
+  --editor-bg: #141011;
+  --editor-bg-elevated: #1a1516;
+  --editor-gutter-bg: #0f0c0d;
+  --editor-border: rgba(156, 104, 112, 0.25);
+  --editor-line-highlight: rgba(184, 101, 113, 0.09);
+}
+
+[data-theme="espresso"] {
+  --glow-amber: rgba(239, 181, 103, 0.45);
+  --glow-amber-soft: rgba(239, 181, 103, 0.14);
+  --glow-emerald: rgba(111, 194, 150, 0.45);
+  --glow-emerald-soft: rgba(111, 194, 150, 0.14);
+  --editor-bg: #0f0c0a;
+  --editor-bg-elevated: #171310;
+  --editor-gutter-bg: #0b0907;
+  --editor-border: rgba(224, 185, 160, 0.22);
+  --editor-line-highlight: rgba(223, 146, 118, 0.12);
+}
+
+/* ============================================================================
+   2. CORE KEYFRAMES & TRANSITION ANIMATIONS
+   ============================================================================ */
+
+/**
+ * 2.1. fadeInSlideUp: Chuyển tab hoặc view mượt mà, bay nhẹ lên 12px
+ */
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/**
+ * 2.2. functionGlow: Viền phát sáng cam ngọc dịu mắt khi bấm hàm ở Navigator
+ */
+@keyframes functionGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(224, 130, 60, 0), inset 0 0 0 0 rgba(224, 130, 60, 0);
+    background-color: transparent;
+  }
+  25% {
+    box-shadow: 0 0 0 3px var(--glow-amber), inset 0 0 18px var(--glow-amber-soft);
+    background-color: var(--glow-amber-soft);
+  }
+  60% {
+    box-shadow: 0 0 0 2px var(--glow-amber), inset 0 0 10px var(--glow-amber-soft);
+    background-color: var(--glow-amber-soft);
+  }
+  100% {
+    box-shadow: 0 0 0 1px rgba(224, 130, 60, 0.2), inset 0 0 4px rgba(224, 130, 60, 0.05);
+    background-color: rgba(224, 130, 60, 0.03);
+  }
+}
+
+/**
+ * 2.3. callSitePulse: Nhấp nháy mềm mại ở dòng gọi hàm trong main()
+ */
+@keyframes callSitePulse {
+  0%, 100% {
+    border-left-color: var(--accent-primary);
+    background-color: rgba(196, 116, 87, 0.06);
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    border-left-color: var(--accent-secondary);
+    background-color: rgba(196, 116, 87, 0.16);
+    box-shadow: inset 4px 0 0 var(--accent-primary), 0 2px 10px -2px rgba(196, 116, 87, 0.2);
+    transform: translate3d(2px, 0, 0);
+  }
+}
+
+/**
+ * 2.4. terminalBlink: Con trỏ nhấp nháy chuẩn Terminal UNIX/macOS
+ */
+@keyframes terminalBlink {
+  0%, 49.9% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+/**
+ * 2.5. shimmer: Ánh sáng quét dịu qua badge VIP & Thẻ cầu nối
+ */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/**
+ * 2.6. pulseBadge: Hiệu ứng thở nhẹ của badge môn học cầu nối
+ */
+@keyframes pulseBadge {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px -2px rgba(224, 130, 60, 0.25);
+  }
+  50% {
+    transform: scale(1.045);
+    box-shadow: 0 4px 16px 0 rgba(224, 130, 60, 0.45);
+  }
+}
+
+/**
+ * 2.7. streamLineIn: Từng dòng kết quả xuất hiện tuần tự khi nhấn "Chạy Thử"
+ */
+@keyframes streamLineIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/**
+ * 2.8. memoryLinkFlow: Dòng tín hiệu chuyển động từ con trỏ Stack sang Heap
+ */
+@keyframes memoryLinkFlow {
+  0% {
+    stroke-dashoffset: 40;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/**
+ * 2.9. nodePulseGlow: Hào quang thở nhẹ quanh node ngôn ngữ
+ */
+@keyframes nodePulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(196, 116, 87, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(196, 116, 87, 0);
+  }
+}
+
+/* ============================================================================
+   3. GIAO DIỆN PLAYBOOK STUDIO 3 CỘT (PLAYBOOK STUDIO GRID)
+   ============================================================================ */
+
+/* 3.1. Grid Layout Container */
+.playbook-studio-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr 340px;
+  gap: 20px;
+  align-items: stretch;
+  width: 100%;
+  margin: 18px 0 28px 0;
+  min-height: 680px;
+  position: relative;
+}
+
+/* 3.2. Cột 1: Function Navigator (Mục lục Hàm Thông Minh) */
+.playbook-nav-col {
+  background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-soft);
+  max-height: calc(100vh - 120px);
+  position: sticky;
+  top: 90px;
+  overflow: hidden;
+  transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+}
+
+.playbook-nav-col:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
+}
+
+.playbook-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.playbook-nav-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.playbook-nav-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-primary-bg);
+  color: var(--accent-primary);
+}
+
+.playbook-nav-search {
+  width: 100%;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.playbook-nav-search input {
+  width: 100%;
+  padding: 7px 12px 7px 30px;
+  font-size: 12.5px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  transition: all var(--dur-fast) ease;
+}
+
+.playbook-nav-search input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: var(--focus-ring);
+  outline: none;
+}
+
+.playbook-nav-search-icon {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.playbook-func-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.playbook-func-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.playbook-func-list::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-pill);
+}
+
+/* Function Navigator Item Button */
+.func-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-spring);
+  position: relative;
+  user-select: none;
+}
+
+.func-nav-item:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-subtle);
+  transform: translate3d(2px, 0, 0);
+  color: var(--accent-primary);
+}
+
+.func-nav-item.active {
+  background: var(--accent-primary-bg);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  font-weight: 600;
+  box-shadow: 0 2px 8px -2px rgba(196, 116, 87, 0.2);
+}
+
+.func-nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 15%;
+  bottom: 15%;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--accent-primary);
+}
+
+.func-nav-tag {
+  font-size: 10px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+}
+
+.func-nav-item.active .func-nav-tag {
+  background: var(--accent-primary);
+  color: var(--accent-primary-fg);
+}
+
+/* 3.3. Cột 2: Interactive Code Playbook Editor (Trình Soạn Thảo Playbook) */
+.playbook-editor-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.playbook-editor-box {
+  background: var(--editor-bg);
+  border: 1px solid var(--editor-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 18px 46px -14px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  transition: border-color var(--dur-fast) ease;
+}
+
+.playbook-editor-box:focus-within {
+  border-color: var(--accent-primary);
+}
+
+/* Editor Topbar */
+.playbook-editor-toolbar {
+  background: var(--editor-bg-elevated);
+  border-bottom: 1px solid var(--editor-border);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.editor-file-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.editor-lang-badge {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(196, 116, 87, 0.2);
+  color: var(--accent-primary);
+  border: 1px solid rgba(196, 116, 87, 0.3);
+  text-transform: uppercase;
+}
+
+.editor-filename {
+  font-size: 13px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--editor-text);
+  letter-spacing: -0.2px;
+}
+
+.editor-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.editor-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--editor-text);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-spring);
+  user-select: none;
+}
+
+.editor-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translate3d(0, -1px, 0);
+}
+
+.editor-btn:active {
+  transform: translate3d(0, 1px, 0);
+}
+
+.editor-btn-run {
+  background: linear-gradient(135deg, #c47457 0%, #b06246 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 14px rgba(196, 116, 87, 0.35);
+  font-weight: 700;
+}
+
+.editor-btn-run:hover {
+  box-shadow: 0 6px 20px rgba(196, 116, 87, 0.5);
+  filter: brightness(1.08);
+}
+
+/* Editor Code Canvas & Line Numbers */
+.playbook-code-canvas {
+  display: flex;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.68;
+  color: var(--editor-text);
+  position: relative;
+  overflow: auto;
+  max-height: 580px;
+  min-height: 480px;
+  background: var(--editor-bg);
+  font-variant-ligatures: normal;
+  tab-size: 4;
+}
+
+/* Smooth Translucent Scrollbar for Code Canvas */
+.playbook-code-canvas::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.playbook-code-canvas::-webkit-scrollbar-track {
+  background: var(--editor-gutter-bg);
+}
+
+.playbook-code-canvas::-webkit-scrollbar-thumb {
+  background: rgba(138, 105, 86, 0.3);
+  border-radius: var(--radius-pill);
+}
+
+.playbook-code-canvas::-webkit-scrollbar-thumb:hover {
+  background: rgba(196, 116, 87, 0.5);
+}
+
+.code-gutter {
+  background: var(--editor-gutter-bg);
+  border-right: 1px solid var(--editor-border);
+  padding: 16px 10px 16px 14px;
+  text-align: right;
+  user-select: none;
+  color: rgba(230, 222, 215, 0.3);
+  font-size: 12px;
+  min-width: 44px;
+}
+
+.code-content-area {
+  padding: 16px 20px;
+  flex: 1;
+  white-space: pre;
+  min-width: 0;
+}
+
+/* 3.4. Điểm Neo Code Playbook: // Thay điều kiện ở đây & // Lưu ý: */
+
+/* Neo 1: // Thay điều kiện ở đây */
+.code-hook-condition {
+  display: block;
+  margin: 6px 0;
+  padding: 6px 12px;
+  background: rgba(224, 130, 60, 0.09);
+  border: 1px dashed rgba(224, 130, 60, 0.6);
+  border-radius: 8px;
+  color: #ffb076;
+  font-weight: 600;
+  position: relative;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-spring);
+  box-shadow: 0 2px 10px -2px rgba(224, 130, 60, 0.15);
+}
+
+.code-hook-condition:hover {
+  background: rgba(224, 130, 60, 0.18);
+  border-color: #ff9848;
+  transform: translate3d(2px, 0, 0);
+  box-shadow: 0 4px 18px -2px rgba(224, 130, 60, 0.3);
+}
+
+.code-hook-condition::before {
+  content: "⚡ TÙY BIẾN LOGIC";
+  font-size: 9.5px;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #ff9848;
+  color: #1a0f08;
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Neo 2: // Lưu ý kỹ thuật */
+.code-hook-note {
+  display: block;
+  margin: 6px 0;
+  padding: 6px 12px;
+  background: rgba(77, 143, 168, 0.08);
+  border: 1px solid rgba(77, 143, 168, 0.5);
+  border-radius: 8px;
+  color: #89cff0;
+  font-style: italic;
+  position: relative;
+  transition: all var(--dur-fast) var(--ease-spring);
+}
+
+.code-hook-note:hover {
+  background: rgba(77, 143, 168, 0.16);
+  border-color: #5bb3d6;
+  transform: translate3d(2px, 0, 0);
+}
+
+.code-hook-note::before {
+  content: "📌 LƯU Ý KỸ THUẬT";
+  font-size: 9.5px;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-style: normal;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #5bb3d6;
+  color: #0b1c24;
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Tooltip trên điểm neo */
+.code-hook-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 12px;
+  background: #251d18;
+  color: #f7ede6;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(224, 130, 60, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(0, 6px, 0);
+  transition: all var(--dur-fast) var(--ease-spring);
+  white-space: nowrap;
+  z-index: 100;
+}
+
+.code-hook-condition:hover .code-hook-tooltip,
+.code-hook-note:hover .code-hook-tooltip {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Active Highlighted Function in Editor */
+.function-target-highlight {
+  animation: functionGlow 2.4s var(--ease-spring) forwards;
+  border-radius: 6px;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  display: inline-block;
+  width: calc(100% + 8px);
+}
+
+/* Call Site Pulse in main() */
+.call-site-pulse {
+  animation: callSitePulse 1.8s var(--ease-spring) infinite;
+  border-left: 3px solid var(--accent-primary);
+  padding-left: 6px;
+  display: block;
+}
+
+/* 3.5. Cột 3: Live Output & Memory Visualizer */
+.playbook-output-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Terminal Console Box */
+.playbook-terminal {
+  background: var(--term-bg);
+  border: 1px solid rgba(138, 105, 86, 0.25);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* macOS Terminal Window Titlebar */
+.terminal-titlebar {
+  background: var(--term-header);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mac-traffic-lights {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.mac-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.mac-dot-red {
+  background: #ff5f56;
+  border: 1px solid #e0443e;
+}
+
+.mac-dot-yellow {
+  background: #ffbd2e;
+  border: 1px solid #dea123;
+}
+
+.mac-dot-green {
+  background: #27c93f;
+  border: 1px solid #1aab29;
+}
+
+.terminal-title-text {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #a0aec0;
+  letter-spacing: 0.3px;
+}
+
+/* Terminal Body */
+.terminal-body {
+  padding: 14px 16px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--term-text);
+  max-height: 300px;
+  min-height: 200px;
+  overflow-y: auto;
+  background: var(--term-bg);
+}
+
+.terminal-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-pill);
+}
+
+/* Phân tách khối === ... === */
+.terminal-block-divider {
+  display: flex;
+  align-items: center;
+  margin: 10px 0 6px 0;
+  color: var(--term-accent);
+  font-weight: 700;
+  font-size: 11.5px;
+  letter-spacing: 0.4px;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+  padding-bottom: 3px;
+}
+
+.stream-line {
+  animation: streamLineIn 320ms var(--ease-spring) both;
+}
+
+.stream-line:nth-child(1) { animation-delay: 50ms; }
+.stream-line:nth-child(2) { animation-delay: 110ms; }
+.stream-line:nth-child(3) { animation-delay: 170ms; }
+.stream-line:nth-child(4) { animation-delay: 230ms; }
+.stream-line:nth-child(5) { animation-delay: 290ms; }
+.stream-line:nth-child(6) { animation-delay: 350ms; }
+.stream-line:nth-child(7) { animation-delay: 410ms; }
+.stream-line:nth-child(8) { animation-delay: 470ms; }
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--term-text);
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: terminalBlink 1.06s infinite steps(1);
+}
+
+/* 3.6. Khung Memory Visualizer (Sơ Đồ Stack & Heap Trực Quan) */
+.playbook-memory-vis {
+  background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.memory-vis-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.memory-vis-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.memory-arena-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  position: relative;
+}
+
+.memory-arena-col {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.memory-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.mem-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 7px 9px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: all var(--dur-fast) var(--ease-spring);
+}
+
+.mem-card:hover {
+  transform: translate3d(0, -2px, 0);
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 12px rgba(196, 116, 87, 0.15);
+}
+
+.mem-card-addr {
+  font-size: 9.5px;
+  color: var(--text-muted);
+}
+
+.mem-card-val {
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+/* Pointer Link Arrow (SVG Connection) */
+.mem-arrow-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.mem-arrow-path {
+  stroke: var(--accent-primary);
+  stroke-width: 2;
+  stroke-dasharray: 6 3;
+  fill: none;
+  animation: memoryLinkFlow 1.6s linear infinite;
+}
+
+/* Mini-Challenge Box */
+.playbook-mini-challenge {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.challenge-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--status-warning);
+}
+
+.challenge-body {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ============================================================================
+   4. GIAO DIỆN CAREER WAYS & BRIDGE MATRIX (LƯỚI ĐA NGÀNH & ĐIỂM GIAO)
+   ============================================================================ */
+
+/* 4.1. Lưới Thẻ Nghề Nghiệp (Career Matrix Grid) */
+.career-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 22px;
+  width: 100%;
+  margin: 20px 0 32px 0;
+}
+
+/* Thẻ Nghề Nghiệp với Hiệu Ứng Hover 3D Tilt Nhẹ */
+.career-card-3d {
+  background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+  transition: transform var(--dur-normal) var(--ease-spring),
+              box-shadow var(--dur-normal) var(--ease-smooth),
+              border-color var(--dur-fast) ease;
+  will-change: transform, box-shadow;
+}
+
+/* Viền Đổi Màu Gradient Theo Theme */
+.career-card-3d::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  padding: 2px;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, transparent 50%, var(--accent-secondary) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--dur-normal) ease;
+  pointer-events: none;
+}
+
+.career-card-3d:hover {
+  transform: perspective(1000px) translateY(-6px) scale3d(1.02, 1.02, 1.02);
+  box-shadow: var(--shadow-hover), 0 12px 30px -8px rgba(196, 116, 87, 0.2);
+  border-color: transparent;
+}
+
+.career-card-3d:hover::before {
+  opacity: 1;
+}
+
+.career-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.career-way-code {
+  font-size: 11px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--accent-primary);
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--accent-primary-bg);
+  border: 1px solid rgba(196, 116, 87, 0.2);
+}
+
+.career-card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+  transition: transform var(--dur-fast) var(--ease-bounce);
+}
+
+.career-card-3d:hover .career-card-icon {
+  transform: scale(1.12) rotate(3deg);
+}
+
+.career-card-title {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.35;
+  margin-top: 4px;
+}
+
+.career-card-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.career-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* 4.2. Bảng So Sánh Điểm Giao Chuyển Ngành (Zero-Overlap Career Bridge) */
+.bridge-matrix-wrapper {
+  background: var(--bg-surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+  margin: 24px 0 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bridge-header-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.bridge-path-flow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.bridge-path-arrow {
+  color: var(--accent-primary);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+/* Khối So Sánh 2 Cột: Môn Dùng Chung & Môn Cầu Nối */
+.bridge-columns-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Cột 1: Môn Đã Có / Dùng Chung (Shared - Emerald Green) */
+.bridge-box-shared {
+  background: rgba(63, 122, 92, 0.05);
+  border: 1px solid rgba(63, 122, 92, 0.25);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shared-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--status-success);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.subject-item-shared {
+  background: var(--bg-surface);
+  border: 1px solid rgba(63, 122, 92, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  transition: all var(--dur-fast) ease;
+}
+
+.subject-item-shared:hover {
+  transform: translate3d(2px, 0, 0);
+  border-color: var(--status-success);
+  box-shadow: 0 4px 12px rgba(63, 122, 92, 0.12);
+}
+
+.shared-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--status-success-bg);
+  color: var(--status-success);
+}
+
+/* Cột 2: Môn Cầu Nối Cần Học Bổ Sung (Bridge - Vibrant Amber Glow) */
+.bridge-box-needed {
+  background: rgba(224, 130, 60, 0.06);
+  border: 1px solid rgba(224, 130, 60, 0.35);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.bridge-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #d97706;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.subject-item-bridge {
+  background: var(--bg-surface);
+  border: 1px solid rgba(224, 130, 60, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--dur-fast) var(--ease-spring);
+}
+
+.subject-item-bridge:hover {
+  transform: translate3d(3px, 0, 0);
+  border-color: #f59e0b;
+  box-shadow: 0 6px 18px rgba(224, 130, 60, 0.22);
+}
+
+/* Animation Viền Nổi Bật Cho Môn Cầu Nối */
+.subject-item-bridge.pulse-active {
+  animation: pulseBadge 3s var(--ease-spring) infinite;
+}
+
+.bridge-badge-vip {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Shimmer Ánh Sáng Quét Qua Badge VIP */
+.shimmer-badge {
+  background-image: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.45) 50%, 
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.4s infinite;
+}
+
+/* Thống Kê Tiết Kiệm Thời Gian */
+.bridge-savings-summary {
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.savings-metric {
+  display: flex;
+  flex-direction: column;
+}
+
+.savings-metric-num {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent-primary);
+  font-family: var(--font-mono);
+}
+
+.savings-metric-label {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* 4.3. Bản Đồ Chuyển Dịch Ngôn Ngữ (L1 -> L2 -> L3 -> L4) */
+.lang-crossover-map {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 16px;
+  margin: 18px 0;
+  position: relative;
+  overflow-x: auto;
+}
+
+.lang-track-line {
+  position: absolute;
+  top: 50%;
+  left: 60px;
+  right: 60px;
+  height: 3px;
+  background: var(--border-strong);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.lang-track-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  border-radius: var(--radius-pill);
+  transition: width var(--dur-slow) var(--ease-spring);
+}
+
+.lang-node-wrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.lang-node {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-soft);
+  transition: all var(--dur-normal) var(--ease-spring);
+}
+
+.lang-node-wrapper:hover .lang-node {
+  transform: scale(1.14);
+  border-color: var(--accent-primary);
+  box-shadow: 0 8px 24px -4px rgba(196, 116, 87, 0.35);
+}
+
+.lang-node-wrapper.active .lang-node {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary-fg);
+  color: var(--accent-primary-fg);
+  animation: nodePulseGlow 2.2s infinite;
+}
+
+.lang-node-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.lang-node-sub {
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+/* ============================================================================
+   5. MICRO-INTERACTIONS & PILL GLIDER SYSTEM
+   ============================================================================ */
+
+/* 5.1. Pill Glider (Con Trượt Mềm Mại Dưới Các Tab) */
+.horiz-tab-bar-container {
+  position: relative;
+  display: inline-flex;
+}
+
+.pill-glider {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 0;
+  border-radius: var(--radius-pill);
+  background: var(--accent-primary);
+  box-shadow: var(--shadow-pill);
+  pointer-events: none;
+  z-index: 1;
+  transition: transform var(--dur-normal) var(--ease-spring),
+              width var(--dur-normal) var(--ease-spring);
+  will-change: transform, width;
+}
+
+/* 5.2. View Transitions & View Fade In */
+.tab-view-pane {
+  display: none;
+  opacity: 0;
+}
+
+.tab-view-pane.active {
+  display: block;
+  animation: fadeInSlideUp var(--dur-normal) var(--ease-spring) forwards;
+  will-change: transform, opacity;
+}
+
+/* 5.3. Modal Transitions */
+.sanctuary-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 16, 14, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-normal) var(--ease-smooth);
+}
+
+.sanctuary-modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sanctuary-modal-dialog {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.45);
+  width: 90%;
+  max-width: 640px;
+  max-height: 85vh;
+  overflow-y: auto;
+  transform: translate3d(0, 20px, 0) scale(0.96);
+  transition: transform var(--dur-normal) var(--ease-spring);
+}
+
+.sanctuary-modal-backdrop.open .sanctuary-modal-dialog {
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* ============================================================================
+   6. RESPONSIVE BREAKPOINTS (TABLET & MOBILE CO-LẬP)
+   ============================================================================ */
+
+/* Màn Hình Trung Bình / Tablet Ngang (<= 1200px) */
+@media (max-width: 1200px) {
+  .playbook-studio-grid {
+    grid-template-columns: 240px 1fr;
+    gap: 16px;
+  }
+
+  .playbook-output-col {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .bridge-columns-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Màn Hình Tablet Dọc & Mobile Lớn (<= 860px) */
+@media (max-width: 860px) {
+  .playbook-studio-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .playbook-nav-col {
+    position: static;
+    max-height: 280px;
+  }
+
+  .playbook-output-col {
+    grid-template-columns: 1fr;
+  }
+
+  .playbook-code-canvas {
+    max-height: 420px;
+    min-height: 320px;
+    font-size: 12px;
+  }
+
+  .career-matrix-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lang-crossover-map {
+    justify-content: flex-start;
+    gap: 28px;
+    padding-bottom: 28px;
+  }
+}
+
+/* ============================================================================
+   7. GPU ACCELERATION & PREFERS-REDUCED-MOTION SUPPORT
+   ============================================================================ */
+
+/* GPU Acceleration Compositing Classes */
+.gpu-accelerated,
+.career-card-3d,
+.playbook-studio-grid,
+.pill-glider,
+.tab-view-pane.active,
+.sanctuary-modal-dialog {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Tuân thủ tiêu chuẩn tiếp cận & dịu mắt khi người dùng bật Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .career-card-3d:hover {
+    transform: none !important;
+  }
+
+  .pulse-active,
+  .shimmer-badge,
+  .terminal-cursor,
+  .mem-arrow-path {
+    animation: none !important;
+  }
+}
+
+/* Lớp can thiệp bằng tay nếu người dùng bật nút "Giảm chuyển động" trên UI */
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+body.reduce-motion .career-card-3d:hover {
+  transform: none !important;
+}
+
+body.reduce-motion .pulse-active,
+body.reduce-motion .shimmer-badge,
+body.reduce-motion .terminal-cursor,
+body.reduce-motion .mem-arrow-path {
+  animation: none !important;
+}
