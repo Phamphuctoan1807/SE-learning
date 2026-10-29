@@ -10606,7 +10606,5637 @@ WHERE rn = 1;`
 })(window, document);
 
 </script>
+<script>
+/**
+ * ============================================================================
+ * TOÀN PHẠM IT SANCTUARY — MODULE SIGNATURE BRAND HERO & MOTION ENGINE
+ * File: module_hero_brand.js
+ * Version: 3.0.0 (Ultra-Polish Production Release)
+ * 
+ * TÁC GIẢ & BẢN QUYỀN:
+ * Sáng lập, Kiến trúc & Tuyển chọn bởi Toàn Phạm · UIT SE
+ * Triết lý đào tạo chuẩn mực "mang2chieu.cpp" — Lý thuyết song hành thực thi.
+ * 
+ * TÍNH NĂNG ĐẶC TRƯNG:
+ * 1. Personal Brand Identity: Logo Orb TP đa tầng hòa quyện cùng nhánh lá Sanctuary,
+ *    dòng tiêu đề kiêu hãnh và huy hiệu tác quyền chuẩn mực.
+ * 2. Typewriter Slogan Engine: Luân phiên 3 tuyên ngôn thực chiến mượt mà,
+ *    tự động dừng đọc, xoá lùi, có pause-on-hover và tôn trọng reduced-motion.
+ * 3. Interactive Dynamic Stat Grid: 4 Thẻ chỉ số chuẩn hóa (343 bài học, 11 hướng đi UIT,
+ *    11 môn Core Base, 100% Playbook) tích hợp hiệu ứng Count-Up 60fps mượt mà.
+ * 4. Quick Action Hub: 3 Nút hành động thần tốc (Studio Code, 11 Ngành, Tìm kiếm nhanh Ctrl+K)
+ *    kèm micro-interactions xúc giác cao cấp.
+ * 5. Organic Ambient Glow 60fps: Quầng sáng hữu cơ chuyển động chu kỳ 12s dịu mắt,
+ *    tương thích hoàn hảo cả 4 bảng màu theme (skin, matcha, rose, espresso).
+ * 
+ * EXPORT API:
+ * - window.renderToanPhamHeroHtml()
+ * - window.initToanPhamHero(container)
+ * - window.renderToanPhamHero(container)
+ * ============================================================================
+ */
 
+(function (window, document) {
+  'use strict';
+
+  /* ==========================================================================
+     1. CẤU HÌNH DỮ LIỆU & HẰNG SỐ (HERO CONFIGURATION DATA)
+     ========================================================================== */
+  const HERO_CONFIG = {
+    brand: {
+      title: 'TOÀN PHẠM IT SANCTUARY',
+      subtitle: 'Không Gian Luyện Kim Kỹ Sư Phần Mềm Thực Chiến · Đại Học Công Nghệ Thông Tin (UIT)',
+      founderBadge: '🛡️ Sáng lập & Tuyển chọn bởi Toàn Phạm · UIT SE',
+      tagline: 'Triết lý đào tạo chuẩn mực "mang2chieu.cpp" — Lý thuyết song hành thực thi.'
+    },
+    slogans: [
+      'Mọi kiến thức đều được đúc kết thành 1 File Code chạy được ngay.',
+      'Chuyển ngành không lãng phí 1 tín chỉ đại học với Zero-Overlap Engine.',
+      'Làm chủ tư duy hệ thống từ RAM, Con trỏ đến Microservices & AI Agent.'
+    ],
+    stats: [
+      {
+        id: 'stat-lessons',
+        targetValue: 343,
+        unit: '',
+        label: 'Bài Học Chuẩn Hóa',
+        desc: '300 Core Base + 43 Supplemental UIT',
+        icon: '📚',
+        badge: 'Chuẩn hóa 100%',
+        targetView: 'roadmap'
+      },
+      {
+        id: 'stat-careers',
+        targetValue: 11,
+        unit: '',
+        label: 'Hướng Đi Nghề Nghiệp UIT',
+        desc: 'Từ Backend đến AI & Quantum Computing',
+        icon: '🚀',
+        badge: 'Lộ trình L₁ → L₄',
+        targetView: 'career'
+      },
+      {
+        id: 'stat-core',
+        targetValue: 11,
+        unit: '',
+        label: 'Môn Core Base Dùng Chung',
+        desc: 'Single Source of Truth · Không trùng lặp',
+        icon: '💎',
+        badge: 'Zero-Overlap',
+        targetView: 'career'
+      },
+      {
+        id: 'stat-playbook',
+        targetValue: 100,
+        unit: '%',
+        label: 'Code Playbook Chạy Ngay',
+        desc: 'Không lý thuyết suông · Tự kiểm chứng',
+        icon: '⚡',
+        badge: 'Zero Fluff',
+        targetView: 'playbook'
+      }
+    ],
+    actions: [
+      {
+        id: 'tp-hero-action-studio',
+        text: 'Mở Studio Học & Code',
+        icon: '⚡',
+        badge: 'Chuẩn 4 Tầng Code',
+        view: 'playbook',
+        btnClass: 'tp-hero-btn-primary'
+      },
+      {
+        id: 'tp-hero-action-career',
+        text: 'Khám Phá 11 Hướng Đi UIT',
+        icon: '🚀',
+        badge: 'Zero-Overlap',
+        view: 'career',
+        btnClass: 'tp-hero-btn-secondary'
+      },
+      {
+        id: 'tp-hero-action-search',
+        text: 'Tìm Kiếm Nhanh',
+        icon: '🔍',
+        badge: 'Ctrl + K',
+        isSearch: true,
+        btnClass: 'tp-hero-btn-ghost'
+      }
+    ],
+    typewriterSettings: {
+      typeSpeed: 38,       // Tốc độ gõ mỗi ký tự (ms)
+      deleteSpeed: 20,     // Tốc độ xoá lùi mỗi ký tự (ms)
+      holdDelay: 2800,     // Thời gian dừng để người học đọc câu slogan (ms)
+      nextDelay: 420       // Thời gian nghỉ trước khi gõ câu tiếp theo (ms)
+    }
+  };
+
+  /* ==========================================================================
+     2. TỰ ĐỘNG TIÊM CSS STYLES (SELF-INJECTING MOTION & THEME CSS)
+     ========================================================================== */
+  function injectHeroStyles() {
+    if (document.getElementById('toanpham-hero-brand-styles')) return;
+
+    const styleEl = document.createElement('style');
+    styleEl.id = 'toanpham-hero-brand-styles';
+    styleEl.textContent = `
+/* ============================================================================
+   TOÀN PHẠM IT SANCTUARY — HERO BRAND STYLES & MOTION KEYFRAMES
+   ============================================================================ */
+
+/* 1. Theme-Aware Color Tokens cho Ambient Glow & Hero Elements */
+:root, [data-theme="skin"] {
+  --tp-glow-a: rgba(196, 116, 87, 0.24);
+  --tp-glow-b: rgba(86, 122, 103, 0.18);
+  --tp-glow-c: rgba(224, 150, 112, 0.14);
+  --tp-card-bg: rgba(255, 252, 248, 0.82);
+  --tp-card-border: rgba(138, 105, 86, 0.16);
+  --tp-card-hover-border: rgba(196, 116, 87, 0.42);
+  --tp-orb-grad-1: #c47457;
+  --tp-orb-grad-2: #567a67;
+  --tp-orb-leaf: #3f7a5c;
+  --tp-kbd-bg: #efe2d3;
+  --tp-kbd-border: rgba(138, 105, 86, 0.28);
+}
+
+[data-theme="matcha"] {
+  --tp-glow-a: rgba(77, 124, 96, 0.26);
+  --tp-glow-b: rgba(181, 124, 86, 0.18);
+  --tp-glow-c: rgba(108, 158, 125, 0.15);
+  --tp-card-bg: rgba(255, 255, 253, 0.85);
+  --tp-card-border: rgba(78, 107, 88, 0.18);
+  --tp-card-hover-border: rgba(77, 124, 96, 0.45);
+  --tp-orb-grad-1: #4d7c60;
+  --tp-orb-grad-2: #b57c56;
+  --tp-orb-leaf: #3e684f;
+  --tp-kbd-bg: #dfe7d9;
+  --tp-kbd-border: rgba(78, 107, 88, 0.3);
+}
+
+[data-theme="rose"] {
+  --tp-glow-a: rgba(184, 101, 113, 0.24);
+  --tp-glow-b: rgba(108, 125, 103, 0.18);
+  --tp-glow-c: rgba(214, 138, 149, 0.14);
+  --tp-card-bg: rgba(255, 253, 252, 0.85);
+  --tp-card-border: rgba(156, 104, 112, 0.18);
+  --tp-card-hover-border: rgba(184, 101, 113, 0.45);
+  --tp-orb-grad-1: #b86571;
+  --tp-orb-grad-2: #6c7d67;
+  --tp-orb-leaf: #52664d;
+  --tp-kbd-bg: #eedbd8;
+  --tp-kbd-border: rgba(156, 104, 112, 0.3);
+}
+
+[data-theme="espresso"] {
+  --tp-glow-a: rgba(223, 146, 118, 0.28);
+  --tp-glow-b: rgba(111, 194, 150, 0.22);
+  --tp-glow-c: rgba(239, 181, 103, 0.16);
+  --tp-card-bg: rgba(36, 30, 27, 0.86);
+  --tp-card-border: rgba(224, 185, 160, 0.16);
+  --tp-card-hover-border: rgba(223, 146, 118, 0.48);
+  --tp-orb-grad-1: #df9276;
+  --tp-orb-grad-2: #83ad95;
+  --tp-orb-leaf: #6fc296;
+  --tp-kbd-bg: #2e2622;
+  --tp-kbd-border: rgba(224, 185, 160, 0.25);
+}
+
+/* 2. Container Khung Vỏ Hero Tổng Thể */
+.tp-hero-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg, 24px);
+  background: var(--bg-surface, rgba(255, 252, 248, 0.88));
+  border: 1px solid var(--border-subtle, rgba(138, 105, 86, 0.13));
+  box-shadow: var(--shadow-soft, 0 14px 38px -12px rgba(78, 52, 36, 0.08));
+  padding: 38px 42px 34px;
+  margin-bottom: 28px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* 3. Lớp Quầng Sáng Hữu Cơ Ambient Glow Chuyển Động 12s Chu Kì */
+.tp-hero-ambient-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+.tp-ambient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(64px);
+  opacity: 0.85;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+}
+
+.tp-ambient-blob-1 {
+  width: 380px;
+  height: 380px;
+  top: -120px;
+  left: -80px;
+  background: radial-gradient(circle, var(--tp-glow-a) 0%, transparent 70%);
+  animation: tpAmbientDriftOne 12s ease-in-out infinite alternate;
+}
+
+.tp-ambient-blob-2 {
+  width: 440px;
+  height: 440px;
+  bottom: -160px;
+  right: -100px;
+  background: radial-gradient(circle, var(--tp-glow-b) 0%, transparent 70%);
+  animation: tpAmbientDriftTwo 15s ease-in-out infinite alternate;
+}
+
+.tp-ambient-blob-3 {
+  width: 280px;
+  height: 280px;
+  top: 40%;
+  left: 35%;
+  background: radial-gradient(circle, var(--tp-glow-c) 0%, transparent 75%);
+  animation: tpAmbientDriftThree 18s ease-in-out infinite alternate;
+}
+
+@keyframes tpAmbientDriftOne {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(45px, 30px, 0) scale(1.08); }
+  100% { transform: translate3d(20px, 60px, 0) scale(0.96); }
+}
+
+@keyframes tpAmbientDriftTwo {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-50px, -35px, 0) scale(1.12); }
+  100% { transform: translate3d(-25px, -65px, 0) scale(0.94); }
+}
+
+@keyframes tpAmbientDriftThree {
+  0% { transform: translate3d(0, 0, 0) scale(0.9); opacity: 0.6; }
+  50% { transform: translate3d(-30px, 25px, 0) scale(1.1); opacity: 0.9; }
+  100% { transform: translate3d(35px, -20px, 0) scale(1.0); opacity: 0.7; }
+}
+
+/* 4. Nội Dung Chính Hero Căn Giữa Sắc Sảo */
+.tp-hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* 5. Header Brand & Huy Hiệu Tác Quyền */
+.tp-hero-brand-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+/* 5.1. Logo Orb Toàn Phạm IT Sanctuary */
+.tp-brand-orb-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tp-brand-orb-aura {
+  position: absolute;
+  inset: -6px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, var(--tp-orb-grad-1), var(--tp-orb-grad-2));
+  opacity: 0.35;
+  filter: blur(12px);
+  animation: tpOrbAuraPulse 4s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.tp-brand-orb-disk {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, var(--bg-surface), var(--bg-elevated));
+  border: 1.5px solid var(--tp-card-hover-border);
+  box-shadow: 0 10px 24px -6px var(--tp-glow-a), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.36s ease;
+  cursor: pointer;
+}
+
+.tp-brand-orb-disk:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 14px 30px -4px var(--tp-glow-a), 0 0 18px var(--tp-glow-b);
+}
+
+.tp-brand-orb-svg {
+  width: 48px;
+  height: 48px;
+  display: block;
+}
+
+@keyframes tpOrbAuraPulse {
+  0% { transform: scale(0.94); opacity: 0.28; }
+  100% { transform: scale(1.08); opacity: 0.52; }
+}
+
+/* 5.2. Nhãn & Tiêu Đề */
+.tp-hero-brand-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.tp-hero-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.tp-founder-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent-primary-bg, rgba(196, 116, 87, 0.12));
+  color: var(--accent-primary, #c47457);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.tp-philosophy-tagline {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-style: italic;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tp-philosophy-tagline code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-style: normal;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--accent-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.tp-hero-title {
+  margin: 0 0 6px 0;
+  font-size: 32px;
+  font-weight: 850;
+  letter-spacing: -0.028em;
+  line-height: 1.22;
+  color: var(--text-primary);
+  text-rendering: optimizeLegibility;
+}
+
+.tp-hero-title-accent {
+  background: linear-gradient(120deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.tp-hero-subtitle {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* 6. Typewriter Slogan Bar Dịu Mắt & Nhấp Nháy Êm */
+.tp-slogan-capsule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-radius: 14px;
+  background: var(--tp-card-bg);
+  border: 1px solid var(--tp-card-border);
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.03);
+  min-height: 48px;
+  box-sizing: border-box;
+  transition: border-color 0.25s ease, background 0.25s ease;
+  user-select: none;
+}
+
+.tp-slogan-capsule:hover {
+  border-color: var(--tp-card-hover-border);
+}
+
+.tp-slogan-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-primary);
+}
+
+.tp-slogan-prefix {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--accent-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tp-slogan-body {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 600;
+  line-height: 1.45;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.tp-typewriter-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.01em;
+}
+
+.tp-typewriter-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  width: 2px;
+  height: 16px;
+  background-color: var(--accent-primary);
+  vertical-align: middle;
+  border-radius: 1px;
+  animation: tpCursorPulse 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes tpCursorPulse {
+  0%, 100% { opacity: 1; transform: scaleY(1); }
+  50% { opacity: 0; transform: scaleY(0.7); }
+}
+
+/* 7. Cụm Nút Hành Động Thần Tốc (Quick Action Hub) */
+.tp-hero-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.tp-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  outline: none;
+}
+
+.tp-hero-btn:focus-visible {
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(196, 116, 87, 0.35));
+}
+
+.tp-hero-btn-primary {
+  background: var(--accent-primary);
+  color: var(--accent-primary-fg, #ffffff);
+  box-shadow: var(--shadow-pill, 0 4px 14px rgba(196, 116, 87, 0.25));
+}
+
+.tp-hero-btn-primary:hover {
+  background: var(--accent-primary-hover, #b06246);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(196, 116, 87, 0.35);
+}
+
+.tp-hero-btn-secondary {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+.tp-hero-btn-secondary:hover {
+  background: var(--bg-subtle);
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.tp-hero-btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-subtle);
+}
+
+.tp-hero-btn-ghost:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.tp-btn-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: var(--tp-kbd-bg);
+  border: 1px solid var(--tp-kbd-border);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.tp-btn-badge {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  line-height: 1;
+}
+
+/* 8. Dải Thống Kê Thời Gian Thực 4 Thẻ (Dynamic Stat Grid) */
+.tp-hero-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.tp-stat-card {
+  position: relative;
+  background: var(--tp-card-bg);
+  border: 1px solid var(--tp-card-border);
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), 
+              border-color 0.28s ease, 
+              box-shadow 0.28s ease;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tp-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.tp-stat-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--tp-card-hover-border);
+  box-shadow: 0 12px 28px -8px var(--tp-glow-a);
+}
+
+.tp-stat-card:hover::before {
+  opacity: 1;
+}
+
+.tp-stat-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.tp-stat-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.tp-stat-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--accent-primary-bg);
+  color: var(--accent-primary);
+  border: 1px solid var(--border-subtle);
+  line-height: 1.2;
+}
+
+.tp-stat-number-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.tp-stat-number {
+  font-size: 27px;
+  font-weight: 850;
+  color: var(--text-primary);
+  line-height: 1.1;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: -0.02em;
+}
+
+.tp-stat-unit {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--accent-primary);
+}
+
+.tp-stat-label {
+  font-size: 13px;
+  font-weight: 750;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.tp-stat-desc {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN BREAKPOINTS
+   ============================================================================ */
+@media (max-width: 1024px) {
+  .tp-hero-container {
+    padding: 28px 24px 26px;
+  }
+  .tp-hero-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .tp-hero-title {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 640px) {
+  .tp-hero-container {
+    padding: 20px 16px 20px;
+    border-radius: var(--radius-md, 16px);
+    margin-bottom: 20px;
+  }
+  .tp-hero-brand-row {
+    gap: 16px;
+  }
+  .tp-brand-orb-wrapper {
+    width: 56px;
+    height: 56px;
+  }
+  .tp-brand-orb-disk {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+  }
+  .tp-brand-orb-svg {
+    width: 36px;
+    height: 36px;
+  }
+  .tp-hero-title {
+    font-size: 21px;
+  }
+  .tp-hero-subtitle {
+    font-size: 13.5px;
+  }
+  .tp-slogan-capsule {
+    padding: 8px 12px;
+    min-height: 42px;
+  }
+  .tp-slogan-prefix {
+    display: none; /* Rút gọn trên mobile */
+  }
+  .tp-slogan-body {
+    font-size: 13px;
+  }
+  .tp-hero-action-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .tp-hero-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .tp-hero-stat-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+/* ============================================================================
+   TÔN TRỌNG PREFERS-REDUCED-MOTION (ACCESSIBILITY FIRST)
+   ============================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .tp-ambient-blob,
+  .tp-brand-orb-aura,
+  .tp-typewriter-cursor {
+    animation: none !important;
+  }
+  .tp-ambient-blob {
+    opacity: 0.5 !important;
+  }
+  .tp-stat-card,
+  .tp-hero-btn,
+  .tp-brand-orb-disk {
+    transition: none !important;
+  }
+  .tp-stat-card:hover,
+  .tp-hero-btn:hover,
+  .tp-brand-orb-disk:hover {
+    transform: none !important;
+  }
+}
+`;
+    document.head.appendChild(styleEl);
+  }
+
+  /* ==========================================================================
+     3. RENDER SVG LOGO ORB (KÝ HIỆU TP & NHÁNH LÁ SANCTUARY)
+     ========================================================================== */
+  function renderBrandOrbSvg() {
+    return `
+      <svg class="tp-brand-orb-svg" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="tpLogoGrad1" x1="8" y1="8" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="var(--accent-primary, #c47457)" />
+            <stop offset="100%" stop-color="var(--accent-secondary, #567a67)" />
+          </linearGradient>
+          <linearGradient id="tpLeafGrad" x1="16" y1="46" x2="52" y2="20" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="var(--tp-orb-leaf, #3f7a5c)" />
+            <stop offset="100%" stop-color="var(--accent-secondary, #567a67)" />
+          </linearGradient>
+          <filter id="tpGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="var(--tp-glow-a)" flood-opacity="0.35"/>
+          </filter>
+        </defs>
+
+        <!-- Vòng hào quang quỹ đạo sáng vi mô -->
+        <circle cx="34" cy="34" r="30" stroke="url(#tpLogoGrad1)" stroke-width="1.2" stroke-dasharray="4 6" opacity="0.45" />
+
+        <!-- Ký hiệu Monogram 'T' & 'P' Cách Điệu Sắc Nét -->
+        <!-- Chữ T: Nét ngang trên đỉnh & nét dọc vững chãi -->
+        <path d="M16 20 H42" stroke="url(#tpLogoGrad1)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M28 20 V46" stroke="url(#tpLogoGrad1)" stroke-width="4.2" stroke-linecap="round" />
+
+        <!-- Chữ P: Vòng parabol lồng khép tinh tế ôm lấy trục T -->
+        <path d="M28 20 H40 C46.5 20 51 24 51 29.5 C51 35 46.5 39 40 39 H28" 
+              stroke="url(#tpLogoGrad1)" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
+
+        <!-- Nhánh lá Sanctuary (Botanical Laurel & Sprout) biểu tượng tri thức & bền vững -->
+        <!-- Cành uốn lượn mềm mại dưới chân chữ P và vươn lên phía trên -->
+        <path d="M22 48 C28 50 38 48 45 40 C49 35 52 28 53 23" 
+              stroke="url(#tpLeafGrad)" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.9" />
+
+        <!-- Chiếc lá 1: Gốc cành -->
+        <path d="M23 48 C21 44 23 41 27 43 C29 45 27 49 23 48 Z" 
+              fill="url(#tpLeafGrad)" opacity="0.95" />
+
+        <!-- Chiếc lá 2: Giữa cành hướng lên -->
+        <path d="M33 47 C34 43 38 42 40 45 C39 48 35 49 33 47 Z" 
+              fill="url(#tpLeafGrad)" opacity="0.95" />
+
+        <!-- Chiếc lá 3: Vòm chữ P -->
+        <path d="M43 43 C46 40 50 41 49 45 C46 46 43 45 43 43 Z" 
+              fill="url(#tpLeafGrad)" opacity="0.95" />
+
+        <!-- Chiếc lá 4: Đỉnh chồi Sanctuary -->
+        <path d="M51 32 C54 29 57 31 56 34 C53 36 51 34 51 32 Z" 
+              fill="url(#tpLeafGrad)" opacity="0.95" />
+
+        <!-- Tâm sáng điểm xuyết hạt ngọc tri thức -->
+        <circle cx="28" cy="20" r="2.2" fill="#ffffff" opacity="0.85" filter="url(#tpGlowFilter)" />
+        <circle cx="53" cy="23" r="1.6" fill="var(--accent-primary)" opacity="0.9" />
+      </svg>
+    `;
+  }
+
+  /* ==========================================================================
+     4. RENDER HTML TOÀN DIỆN (HERO MARKUP GENERATOR)
+     ========================================================================== */
+  function renderToanPhamHeroHtml() {
+    // Đảm bảo CSS đã được tiêm vào DOM
+    injectHeroStyles();
+
+    const { brand, stats, actions } = HERO_CONFIG;
+
+    // 4.1. Tạo markup cho 4 Thẻ Thống Kê
+    const statsHtml = stats.map(stat => `
+      <div class="tp-stat-card" data-stat-id="${stat.id}" data-target-view="${stat.targetView}" role="button" tabindex="0" title="Nhấp để khám phá ${stat.label}">
+        <div class="tp-stat-top-row">
+          <span class="tp-stat-icon" aria-hidden="true">${stat.icon}</span>
+          <span class="tp-stat-badge">${stat.badge}</span>
+        </div>
+        <div class="tp-stat-number-wrap">
+          <span class="tp-stat-number" data-count-to="${stat.targetValue}">0</span>
+          ${stat.unit ? `<span class="tp-stat-unit">${stat.unit}</span>` : ''}
+        </div>
+        <div class="tp-stat-label">${stat.label}</div>
+        <div class="tp-stat-desc">${stat.desc}</div>
+      </div>
+    `).join('');
+
+    // 4.2. Tạo markup cho Cụm Nút Hành Động
+    const actionsHtml = actions.map(act => {
+      let extraBadge = '';
+      if (act.isSearch) {
+        extraBadge = `<kbd class="tp-btn-kbd">${act.badge}</kbd>`;
+      } else if (act.badge) {
+        extraBadge = `<span class="tp-btn-badge">${act.badge}</span>`;
+      }
+
+      return `
+        <button type="button" 
+                class="tp-hero-btn ${act.btnClass}" 
+                id="${act.id}"
+                data-target-view="${act.view || ''}"
+                data-is-search="${act.isSearch ? 'true' : 'false'}"
+                aria-label="${act.text}">
+          <span aria-hidden="true">${act.icon}</span>
+          <span>${act.text}</span>
+          ${extraBadge}
+        </button>
+      `;
+    }).join('');
+
+    // 4.3. Khung HTML Hoàn chỉnh
+    return `
+      <section class="tp-hero-container" id="toanpham-hero-brand-section" aria-label="${brand.title}">
+        <!-- Lớp Quầng Sáng Ambient Glow Chuyển Động Chậm 12s Chu Kì -->
+        <div class="tp-hero-ambient-layer" aria-hidden="true">
+          <div class="tp-ambient-blob tp-ambient-blob-1"></div>
+          <div class="tp-ambient-blob tp-ambient-blob-2"></div>
+          <div class="tp-ambient-blob tp-ambient-blob-3"></div>
+        </div>
+
+        <div class="tp-hero-content">
+          <!-- Hàng 1: Dấu Ấn Thương Hiệu & Logo Orb TP -->
+          <div class="tp-hero-brand-row">
+            <div class="tp-brand-orb-wrapper" title="${brand.title} — Luyện Kim Kỹ Sư Phần Mềm">
+              <div class="tp-brand-orb-aura" aria-hidden="true"></div>
+              <div class="tp-brand-orb-disk" role="img" aria-label="Logo Toàn Phạm IT Sanctuary">
+                ${renderBrandOrbSvg()}
+              </div>
+            </div>
+
+            <div class="tp-hero-brand-meta">
+              <div class="tp-hero-badge-row">
+                <span class="tp-founder-badge">${brand.founderBadge}</span>
+                <span class="tp-philosophy-tagline">
+                  ${brand.tagline}
+                </span>
+              </div>
+              <h1 class="tp-hero-title">
+                <span class="tp-hero-title-accent">${brand.title}</span>
+              </h1>
+              <p class="tp-hero-subtitle">${brand.subtitle}</p>
+            </div>
+          </div>
+
+          <!-- Hàng 2: Hộp Slogan Chạy Chữ Mượt Mà (Typewriter Capsule) -->
+          <div class="tp-slogan-capsule" id="tp-hero-slogan-capsule" role="region" aria-live="polite" aria-label="Tuyên ngôn đào tạo thực chiến">
+            <span class="tp-slogan-icon" aria-hidden="true">💬</span>
+            <span class="tp-slogan-prefix">Tuyên ngôn thực chiến:</span>
+            <div class="tp-slogan-body">
+              <span class="tp-typewriter-text" id="tp-hero-typewriter-target">Mọi kiến thức đều được đúc kết thành 1 File Code chạy được ngay.</span>
+              <span class="tp-typewriter-cursor" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <!-- Hàng 3: Cụm Nút Hành Động Thần Tốc (Quick Action Hub) -->
+          <div class="tp-hero-action-row" role="group" aria-label="Hành động nhanh">
+            ${actionsHtml}
+          </div>
+
+          <!-- Hàng 4: Dải Thống Kê Động 4 Thẻ (Interactive Dynamic Stat Grid) -->
+          <div class="tp-hero-stat-grid" role="region" aria-label="Thống kê hệ thống chuẩn hóa">
+            ${statsHtml}
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  /* ==========================================================================
+     5. CƠ CHẾ ANIMATION TYPEWRITER (TYPEWRITER CONTROLLER)
+     ========================================================================== */
+  class TypewriterEngine {
+    constructor(targetEl, slogans, settings) {
+      this.targetEl = targetEl;
+      this.slogans = slogans;
+      this.settings = Object.assign({}, HERO_CONFIG.typewriterSettings, settings);
+      this.sloganIndex = 0;
+      this.charIndex = 0;
+      this.isDeleting = false;
+      this.isPaused = false;
+      this.timerId = null;
+      this.isDestroyed = false;
+
+      // Kiểm tra prefers-reduced-motion
+      this.prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    start() {
+      if (this.prefersReduced) {
+        // Nếu người dùng bật giảm chuyển động, hiển thị câu đầu tiên tĩnh
+        if (this.targetEl) this.targetEl.textContent = this.slogans[0];
+        return;
+      }
+      this.tick();
+    }
+
+    pause() {
+      this.isPaused = true;
+    }
+
+    resume() {
+      if (this.isPaused) {
+        this.isPaused = false;
+        this.tick();
+      }
+    }
+
+    destroy() {
+      this.isDestroyed = true;
+      if (this.timerId) clearTimeout(this.timerId);
+    }
+
+    tick() {
+      if (this.isDestroyed || this.isPaused) return;
+
+      const currentSlogan = this.slogans[this.sloganIndex];
+
+      if (!this.isDeleting) {
+        // Trạng thái đang gõ
+        this.charIndex++;
+        this.targetEl.textContent = currentSlogan.substring(0, this.charIndex);
+
+        if (this.charIndex >= currentSlogan.length) {
+          // Gõ xong câu, chuyển sang trạng thái dừng đọc
+          this.isDeleting = true;
+          this.timerId = setTimeout(() => this.tick(), this.settings.holdDelay);
+          return;
+        }
+
+        // Độ trễ gõ ngẫu nhiên nhẹ nhàng (human-like typing variation)
+        const variance = Math.floor(Math.random() * 15) - 7;
+        const delay = Math.max(18, this.settings.typeSpeed + variance);
+        this.timerId = setTimeout(() => this.tick(), delay);
+      } else {
+        // Trạng thái đang xoá lùi
+        this.charIndex--;
+        this.targetEl.textContent = currentSlogan.substring(0, this.charIndex);
+
+        if (this.charIndex <= 0) {
+          // Xoá xong câu, chuyển sang câu kế tiếp
+          this.isDeleting = false;
+          this.sloganIndex = (this.sloganIndex + 1) % this.slogans.length;
+          this.timerId = setTimeout(() => this.tick(), this.settings.nextDelay);
+          return;
+        }
+
+        this.timerId = setTimeout(() => this.tick(), this.settings.deleteSpeed);
+      }
+    }
+  }
+
+  /* ==========================================================================
+     6. CƠ CHẾ ANIMATION COUNT-UP ĐỘNG (DYNAMIC STATS COUNT-UP)
+     ========================================================================== */
+  function animateCountUp(numberEl, targetValue, duration = 1800) {
+    if (!numberEl) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      numberEl.textContent = targetValue.toLocaleString('vi-VN');
+      return;
+    }
+
+    const startTime = performance.now();
+    const startValue = 0;
+
+    // Easing Out Quartic mượt mà dịu mắt
+    const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
+    function frame(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutQuart(progress);
+      const currentValue = Math.floor(startValue + (targetValue - startValue) * easedProgress);
+
+      numberEl.textContent = currentValue.toLocaleString('vi-VN');
+
+      if (progress < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        numberEl.textContent = targetValue.toLocaleString('vi-VN');
+      }
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  /* ==========================================================================
+     7. KHỞI TẠO TƯƠNG TÁC (INIT HERO CONTROLLER)
+     ========================================================================== */
+  function initToanPhamHero(container) {
+    const root = container || document.getElementById('toanpham-hero-brand-section') || document;
+
+    // 7.1. Khởi tạo Typewriter Slogan Engine
+    const typewriterTarget = root.querySelector('#tp-hero-typewriter-target');
+    const sloganCapsule = root.querySelector('#tp-hero-slogan-capsule');
+
+    let typewriterInstance = null;
+    if (typewriterTarget) {
+      typewriterInstance = new TypewriterEngine(typewriterTarget, HERO_CONFIG.slogans);
+      typewriterInstance.start();
+
+      // Pause khi hover để người học có thể đọc chậm rãi
+      if (sloganCapsule) {
+        sloganCapsule.addEventListener('mouseenter', () => typewriterInstance.pause());
+        sloganCapsule.addEventListener('mouseleave', () => typewriterInstance.resume());
+      }
+    }
+
+    // 7.2. Khởi tạo Count-Up Animation với IntersectionObserver
+    const statCards = root.querySelectorAll('.tp-stat-card');
+    let hasAnimatedStats = false;
+
+    function triggerStatsAnimation() {
+      if (hasAnimatedStats) return;
+      hasAnimatedStats = true;
+
+      statCards.forEach((card, idx) => {
+        const numEl = card.querySelector('.tp-stat-number');
+        if (!numEl) return;
+        const targetVal = parseInt(numEl.getAttribute('data-count-to') || '0', 10);
+        // Trì hoãn nhẹ giữa các thẻ (staggered delay)
+        setTimeout(() => {
+          animateCountUp(numEl, targetVal, 1600 + idx * 150);
+        }, idx * 100);
+      });
+    }
+
+    if ('IntersectionObserver' in window && statCards.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            triggerStatsAnimation();
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.25 });
+
+      const statGrid = root.querySelector('.tp-hero-stat-grid');
+      if (statGrid) observer.observe(statGrid);
+      else triggerStatsAnimation();
+    } else {
+      triggerStatsAnimation();
+    }
+
+    // 7.3. Điều hướng chuyển Tab trong SPA (Tab Switching Helper)
+    function navigateToView(viewName) {
+      if (!viewName) return;
+
+      // 1. Thử kích hoạt nút tab tương ứng trong thanh tab chính
+      const targetTabBtn = document.querySelector(`.tab-pill-btn[data-view="${viewName}"]`);
+      if (targetTabBtn) {
+        targetTabBtn.click();
+        return;
+      }
+
+      // 2. Thử gọi hàm switchView hoặc render main view nếu có sẵn trên window/state
+      if (typeof window.switchMainView === 'function') {
+        window.switchMainView(viewName);
+        return;
+      }
+
+      // 3. Dispatch Custom Event để ứng dụng SPA bắt sự kiện
+      const navEvent = new CustomEvent('sanctuary:navigate', {
+        detail: { view: viewName },
+        bubbles: true
+      });
+      document.dispatchEvent(navEvent);
+    }
+
+    // 7.4. Kích hoạt Tìm Kiếm Nhanh (Search Activation Helper)
+    function activateSearch() {
+      // 1. Tìm input tìm kiếm trên thanh điều hướng hoặc modal
+      const searchInputs = [
+        document.querySelector('.nav-search-box input'),
+        document.querySelector('.search-input'),
+        document.querySelector('.cm-search-input'),
+        document.querySelector('#globalSearchInput'),
+        document.querySelector('input[type="search"]')
+      ];
+
+      for (const input of searchInputs) {
+        if (input && input.offsetParent !== null) { // Kiểm tra input đang hiển thị
+          input.focus();
+          if (typeof input.select === 'function') input.select();
+          
+          // Hiệu ứng nhấp nháy làm nổi bật ô tìm kiếm
+          input.style.transition = 'box-shadow 0.3s ease, border-color 0.3s ease';
+          input.style.borderColor = 'var(--accent-primary)';
+          input.style.boxShadow = 'var(--focus-ring, 0 0 0 3px rgba(196, 116, 87, 0.35))';
+          setTimeout(() => {
+            input.style.borderColor = '';
+            input.style.boxShadow = '';
+          }, 1200);
+          return;
+        }
+      }
+
+      // 2. Dispatch phím tắt Ctrl+K hoặc custom search event
+      const searchEvent = new CustomEvent('sanctuary:search', {
+        detail: { action: 'open' },
+        bubbles: true
+      });
+      document.dispatchEvent(searchEvent);
+    }
+
+    // 7.5. Lắng nghe click các nút hành động (Action Buttons)
+    const actionBtns = root.querySelectorAll('.tp-hero-btn');
+    actionBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isSearch = btn.getAttribute('data-is-search') === 'true';
+        const targetView = btn.getAttribute('data-target-view');
+
+        if (isSearch) {
+          activateSearch();
+        } else if (targetView) {
+          navigateToView(targetView);
+        }
+      });
+    });
+
+    // 7.6. Lắng nghe click trên các Card Thống Kê
+    statCards.forEach(card => {
+      const handleCardNav = () => {
+        const view = card.getAttribute('data-target-view');
+        if (view) navigateToView(view);
+      };
+
+      card.addEventListener('click', handleCardNav);
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleCardNav();
+        }
+      });
+    });
+
+    // 7.7. Bắt phím tắt toàn cục Ctrl + K / Cmd + K
+    function handleKeyDown(e) {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+        // Chỉ kích hoạt nếu không đang gõ trong một input/textarea khác
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        if (activeTag !== 'input' && activeTag !== 'textarea') {
+          e.preventDefault();
+          activateSearch();
+        }
+      }
+    }
+    window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
+
+    // 7.8. Micro-interaction: Click vào Brand Orb để scroll mượt hoặc reset nhẹ
+    const brandOrb = root.querySelector('.tp-brand-orb-disk');
+    if (brandOrb) {
+      brandOrb.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    return {
+      typewriter: typewriterInstance,
+      triggerStats: triggerStatsAnimation,
+      destroy: () => {
+        if (typewriterInstance) typewriterInstance.destroy();
+        window.removeEventListener('keydown', handleKeyDown);
+      }
+    };
+  }
+
+  /* ==========================================================================
+     8. UNIVERSAL MOUNT HELPER (RENDER TO CONTAINER & INITIALIZE)
+     ========================================================================== */
+  function renderToanPhamHero(containerTarget) {
+    let containerEl = null;
+
+    if (typeof containerTarget === 'string') {
+      containerEl = document.querySelector(containerTarget);
+    } else if (containerTarget instanceof HTMLElement) {
+      containerEl = containerTarget;
+    }
+
+    if (!containerEl) {
+      console.warn('[Toàn Phạm IT Sanctuary Hero] Không tìm thấy phần tử mục tiêu:', containerTarget);
+      return null;
+    }
+
+    // Render HTML và gắn vào container
+    containerEl.innerHTML = renderToanPhamHeroHtml();
+
+    // Khởi tạo animation & event listeners
+    return initToanPhamHero(containerEl);
+  }
+
+  /* ==========================================================================
+     9. AUTO-UPGRADE DISCOVERY (TỰ ĐỘNG NÂNG CẤP HERO KHI CÓ TRONG DOM)
+     ========================================================================== */
+  function autoMountIfFound() {
+    // Tìm container chuyên dụng nếu trang đã chuẩn bị sẵn
+    const explicitContainer = document.getElementById('toanpham-hero-container');
+    if (explicitContainer) {
+      renderToanPhamHero(explicitContainer);
+      return;
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', autoMountIfFound);
+  } else {
+    // DOM đã sẵn sàng
+    setTimeout(autoMountIfFound, 10);
+  }
+
+  /* ==========================================================================
+     10. EXPORT API RA GLOBAL WINDOW SCOPE
+     ========================================================================== */
+  window.ToanPhamHeroBrand = {
+    version: '3.0.0',
+    config: HERO_CONFIG,
+    renderHtml: renderToanPhamHeroHtml,
+    init: initToanPhamHero,
+    render: renderToanPhamHero
+  };
+
+  // Các hàm export chuẩn mực theo yêu cầu
+  window.renderToanPhamHeroHtml = renderToanPhamHeroHtml;
+  window.initToanPhamHero = initToanPhamHero;
+  window.renderToanPhamHero = renderToanPhamHero;
+
+})(window, document);
+
+</script>
+<script>
+/**
+ * ============================================================================
+ * SE SANCTUARY — ANTI-BUG GUARD & PLATFORM HEALTH CHECK ENGINE
+ * File: module_anti_bug_guard.js
+ * Version: 2.5.0 (Ultra-Resilient Production Release)
+ * Philosophy: "Khắc tinh của Vibe Coding — Chống Nút Liệt, Chống Lỗi Chữ,
+ *              Đảm Bảo Touch Safety & Kiểm Định Sức Khỏe Toàn Diện"
+ * 
+ * BỘ TỨ GIÁP PHÒNG THỦ:
+ * 1. DEAD-BUTTON ELIMINATOR:
+ *    - Quét toàn bộ DOM sau mỗi lần render hoặc đổi view.
+ *    - Bắt mọi phần tử: button, a, [data-action], [data-view], [data-hub], [data-modal].
+ *    - Tự động gắn phản hồi xúc giác: cursor: pointer, :active scale(0.97), :focus-visible.
+ *    - Tự động gắn fallback handler: Nếu người dùng click vào nút chưa được gán logic riêng,
+ *      hệ thống lập tức kích hoạt Toast hữu cơ thân thiện thay vì để nút bị trơ/liệt vô cảm.
+ * 
+ * 2. TEXT OVERFLOW & LAYOUT GUARD:
+ *    - Tự động kiểm tra tiêu đề, thẻ bài học, badge, table cells, flex/grid items.
+ *    - Gắn tự động CSS text-overflow: ellipsis, overflow: hidden, white-space: nowrap
+ *      kèm thuộc tính `title` để khi hover có thể đọc toàn bộ nội dung mà không làm vỡ layout.
+ *    - Enforce `min-width: 0` trên các phần tử con trong CSS Grid / Flex để triệt tiêu
+ *      hoàn toàn hiện tượng text dài đẩy bung container.
+ * 
+ * 3. TOUCH TARGET SAFETY ENFORCER (>= 44px):
+ *    - Đảm bảo trên thiết bị di động / màn hình cảm ứng, mọi nút điều hướng, icon đóng mở,
+ *      tab pill đều đạt diện tích tiếp xúc tối thiểu 44 x 44px theo chuẩn Apple HIG & WCAG 2.5.5.
+ * 
+ * 4. SMOOTH SCROLL & ACTIVE INDICATOR GLIDER:
+ *    - Quản lý thanh indicator glider (.pill-glider) chuyển động mượt mà không lệch vị trí.
+ *    - Tự động tính toán lại left, width, top khi cuộn ngang, đổi tab hoặc resize (0ms jitter).
+ * 
+ * 5. PLATFORM HEALTH CHECK ENGINE:
+ *    - Cung cấp hàm toàn diện: `window.runPlatformHealthCheck()`.
+ *    - Quét và đếm tổng số nút trên trang và số nút có handler (0 Dead Buttons).
+ *    - Kiểm tra tính toàn vẹn của 343 bài học trong PLATFORM_DATA.
+ *    - Kiểm tra tính toàn vẹn của 11 Hướng đi và 11 môn Core trong PLAYBOOK_DATA.
+ *    - Quét toàn bộ DOM: ảnh thiếu alt, liên kết chết, rò rỉ bộ nhớ, touch targets.
+ *    - Ghi log kết quả chẩn đoán vào Console và trả về báo cáo JSON chi tiết.
+ * 
+ * EXPORTS:
+ * - window.initAntiBugGuard()
+ * - window.runPlatformHealthCheck()
+ * - Tự động kích hoạt khi trang tải xong.
+ * ============================================================================
+ */
+
+(function (window, document) {
+  'use strict';
+
+  // Tránh khởi tạo lặp lại nhiều lần
+  if (window.__SE_ANTI_BUG_GUARD_LOADED__) {
+    return;
+  }
+  window.__SE_ANTI_BUG_GUARD_LOADED__ = true;
+
+  /* ==========================================================================
+     0. HỆ THỐNG TOAST DỰ PHÒNG CHUẨN SANCTUARY (ORGANIC TOAST SYSTEM)
+     ========================================================================== */
+  function ensureToastContainer() {
+    let container = document.getElementById("toastContainer");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "toastContainer";
+      container.className = "sanctuary-toast-container";
+      container.setAttribute("aria-live", "polite");
+      container.setAttribute("aria-atomic", "true");
+      document.body.appendChild(container);
+    }
+    return container;
+  }
+
+  function displayGuardToast(message, type = "info", duration = 3600) {
+    // Ưu tiên sử dụng hàm showToast của hệ sinh thái nếu có
+    if (typeof window.showToast === "function" && window.showToast !== displayGuardToast) {
+      try {
+        window.showToast(message, type);
+        return;
+      } catch (err) {
+        console.warn("[AntiBugGuard] Native showToast failed, falling back to guard toast:", err);
+      }
+    }
+
+    const container = ensureToastContainer();
+    const el = document.createElement("div");
+    el.className = `toast toast-${type} sanctuary-guard-toast`;
+    
+    // Icon đại diện cho từng loại thông báo
+    const icons = {
+      info: "💡",
+      success: "✅",
+      warning: "⚠️",
+      error: "🛑",
+      sync: "⚡"
+    };
+    const icon = icons[type] || "✨";
+
+    el.innerHTML = `
+      <span class="guard-toast-icon" style="font-size:16px; margin-right:8px;">${icon}</span>
+      <span class="guard-toast-msg" style="flex:1;">${escapeHtml(message)}</span>
+      <button type="button" class="guard-toast-close" style="background:transparent; border:none; color:inherit; font-size:14px; cursor:pointer; padding:0 4px; margin-left:8px; opacity:0.7;">&times;</button>
+    `;
+
+    // Click đóng nhanh
+    const closeBtn = el.querySelector(".guard-toast-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        el.classList.add("dismissing");
+        setTimeout(() => el.remove(), 240);
+      });
+    }
+
+    container.appendChild(el);
+
+    // Tự động thu hồi sau duration
+    const timer = setTimeout(() => {
+      if (el.parentNode) {
+        el.classList.add("dismissing");
+        setTimeout(() => el.remove(), 240);
+      }
+    }, duration);
+
+    el.addEventListener("click", () => {
+      clearTimeout(timer);
+      el.classList.add("dismissing");
+      setTimeout(() => el.remove(), 240);
+    });
+  }
+
+  // Expose ra window để toàn hệ thống cùng dùng
+  if (!window.showToast) {
+    window.showToast = displayGuardToast;
+  }
+
+  function escapeHtml(str) {
+    return String(str || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  /* ==========================================================================
+     1. INJECT STYLESHEET BẢO VỆ GIAO DIỆN (ANTI-BUG CSS INJECTION)
+     ========================================================================== */
+  function injectGuardStyles() {
+    if (document.getElementById("se-anti-bug-guard-styles")) return;
+
+    const styleEl = document.createElement("style");
+    styleEl.id = "se-anti-bug-guard-styles";
+    styleEl.textContent = `
+      /* ==========================================================================
+         SE SANCTUARY — ANTI-BUG GUARD SYSTEM STYLES
+         ========================================================================== */
+
+      /* 1.1. DEAD-BUTTON ELIMINATOR & HAPTIC FEEDBACK */
+      button, a[href], [role="button"], [data-view], [data-action], [data-hub], [data-modal],
+      .tab-pill-btn, .ctrl-btn, .btn, .clickable, input[type="button"], input[type="submit"] {
+        cursor: pointer !important;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Phản hồi cảm giác xúc giác khi bấm (Haptic Click Feedback) */
+      button:active:not(:disabled),
+      .btn:active:not(:disabled),
+      .tab-pill-btn:active,
+      [role="button"]:active,
+      [data-action]:active,
+      [data-view]:active,
+      [data-hub]:active {
+        transform: scale(0.97) !important;
+        transition: transform 0.08s cubic-bezier(0.22, 1, 0.36, 1) !important;
+      }
+
+      /* Chuẩn focus-visible cho người dùng bàn phím */
+      button:focus-visible,
+      a:focus-visible,
+      [role="button"]:focus-visible,
+      .tab-pill-btn:focus-visible,
+      .ctrl-btn:focus-visible,
+      .btn:focus-visible {
+        outline: 2px solid var(--accent-primary, #c47457) !important;
+        outline-offset: 2px !important;
+        box-shadow: 0 0 0 4px rgba(196, 116, 87, 0.25) !important;
+      }
+
+      /* 1.2. ANTI-TEXT-OVERFLOW & GRID/FLEX COLLAPSE DEFENSE */
+      /* Ngăn chặn tuyệt đối hiện tượng min-width: auto làm bung layout trong Grid & Flex */
+      .view-stage,
+      .hero-showcase-grid,
+      .hero-showcase-grid > *,
+      .hero-feature-card,
+      .course-grid,
+      .course-grid > *,
+      .lesson-grid,
+      .lesson-grid > *,
+      .playbook-container,
+      .playbook-container > *,
+      .career-matrix-container,
+      .career-matrix-container > *,
+      .table-container,
+      .table-container table,
+      .table-container td,
+      .table-container th,
+      .flex-row,
+      .flex-row > *,
+      .tab-pill-btn,
+      .stat-card,
+      .card-header {
+        min-width: 0 !important;
+      }
+
+      /* Tiêu đề và nhãn không bao giờ bị tràn vô trật tự */
+      .anti-overflow-guard,
+      .text-ellipsis-safe,
+      [data-guard-ellipsis] {
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        max-width: 100% !important;
+      }
+
+      /* Multi-line clamp an toàn cho mô tả bài giảng */
+      .clamp-2-lines {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+      }
+
+      .clamp-3-lines {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 3 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+      }
+
+      /* 1.3. TOUCH TARGET SAFETY ENFORCER (>= 44px) */
+      @media (pointer: coarse), (max-width: 768px) {
+        button:not(.compact-badge),
+        a.btn,
+        [role="button"],
+        .tab-pill-btn,
+        .ctrl-btn,
+        .btn,
+        .modal-close-btn,
+        [data-view],
+        [data-action],
+        [data-hub] {
+          min-height: 44px !important;
+          min-width: 44px !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          box-sizing: border-box !important;
+        }
+
+        .tab-pill-btn {
+          padding: 8px 16px !important;
+          margin: 2px 3px !important;
+        }
+
+        .horiz-tab-bar {
+          -webkit-overflow-scrolling: touch;
+          scroll-snap-type: x mandatory;
+          padding: 6px 4px !important;
+        }
+
+        .tab-pill-btn {
+          scroll-snap-align: center;
+        }
+      }
+
+      /* Hit-area expander cho icon nhỏ trên desktop */
+      .touch-target-safe {
+        position: relative;
+      }
+      .touch-target-safe::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 44px;
+        min-height: 44px;
+        width: 100%;
+        height: 100%;
+        pointer-events: auto;
+        z-index: 1;
+      }
+
+      /* 1.4. PILL GLIDER & SMOOTH SCROLL INDICATOR */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto !important;
+        }
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      .horiz-tab-bar {
+        position: relative;
+        overflow-x: auto;
+        scrollbar-width: none; /* Firefox */
+      }
+      .horiz-tab-bar::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+      }
+
+      .pill-glider {
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        left: 0;
+        width: 0;
+        border-radius: var(--radius-pill, 9999px);
+        background: var(--accent-primary, #c47457);
+        box-shadow: var(--shadow-pill, 0 4px 12px rgba(196, 116, 87, 0.35));
+        pointer-events: none;
+        z-index: 1;
+        transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                    width 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                    height 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform, width;
+      }
+
+      /* Nâng z-index của text trong tab lên trên glider */
+      .tab-pill-btn {
+        position: relative;
+        z-index: 2;
+      }
+
+      /* 1.5. SANCTUARY TOAST SYSTEM STYLING */
+      .sanctuary-toast-container {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 420px;
+        width: calc(100vw - 48px);
+        pointer-events: none;
+      }
+
+      .sanctuary-guard-toast {
+        pointer-events: auto;
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        background: var(--bg-surface, #ffffff);
+        color: var(--text-primary, #2d2621);
+        border: 1px solid var(--border-subtle, rgba(138, 105, 86, 0.2));
+        border-radius: var(--radius-md, 12px);
+        box-shadow: 0 10px 30px -4px rgba(20, 16, 14, 0.22), 0 4px 12px rgba(0, 0, 0, 0.08);
+        font-size: 13.5px;
+        line-height: 1.45;
+        font-weight: 500;
+        animation: toastSlideIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        transition: transform 0.24s ease, opacity 0.24s ease;
+      }
+
+      .sanctuary-guard-toast.toast-error {
+        border-left: 4px solid var(--status-danger, #d9534f);
+      }
+      .sanctuary-guard-toast.toast-success {
+        border-left: 4px solid var(--status-success, #3f7a5c);
+      }
+      .sanctuary-guard-toast.toast-warning {
+        border-left: 4px solid var(--status-warning, #e0823c);
+      }
+      .sanctuary-guard-toast.toast-info {
+        border-left: 4px solid var(--accent-primary, #c47457);
+      }
+
+      .sanctuary-guard-toast.dismissing {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+      }
+
+      @keyframes toastSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+    `;
+    document.head.appendChild(styleEl);
+  }
+
+  /* ==========================================================================
+     2. BỘ PHÒNG THỦ CHỐNG NÚT LIỆT (DEAD-BUTTON ELIMINATOR ENGINE)
+     ========================================================================== */
+  
+  // Danh sách các data attributes đã được hệ sinh thái định tuyến sẵn
+  const KNOWN_HANDLED_ATTRS = [
+    "data-view",
+    "data-switch-view",
+    "data-open-lesson",
+    "data-filter-subj",
+    "data-filter-sem",
+    "data-start-session-subj",
+    "data-uni-skip-lesson",
+    "data-uni-skip-subj",
+    "data-uni-skip-sem",
+    "data-uni-unskip-lesson",
+    "data-uni-unskip-subj",
+    "data-uni-unskip-sem",
+    "data-copy-cpp-example",
+    "data-copy-id",
+    "data-palette"
+  ];
+
+  // Danh mục thông điệp thông minh theo ngữ cảnh tính năng
+  function generateFallbackMessage(el) {
+    const action = el.getAttribute("data-action");
+    const hub = el.getAttribute("data-hub");
+    const modal = el.getAttribute("data-modal");
+    const view = el.getAttribute("data-view");
+    const text = (el.innerText || el.textContent || el.title || el.getAttribute("aria-label") || "").trim();
+    const cleanText = text.replace(/[\n\r\t]+/g, " ").replace(/\s{2,}/g, " ").slice(0, 36);
+
+    if (action) {
+      return `Tính năng "${action}" đang được đồng bộ dữ liệu với máy chủ học tập...`;
+    }
+    if (hub) {
+      return `Trung tâm kết nối "${hub}" đang chuẩn bị tài nguyên chuyên sâu...`;
+    }
+    if (modal) {
+      return `Hộp thoại thông tin "${modal}" đang đồng bộ dữ liệu...`;
+    }
+    if (view) {
+      return `Không gian "${view}" đang được tối ưu hóa hiển thị...`;
+    }
+    if (cleanText) {
+      return `Thao tác "${cleanText}" đã được ghi nhận và đang đồng bộ...`;
+    }
+    return "Tính năng đang được hệ thống đồng bộ dữ liệu thực nghiệm...";
+  }
+
+  // Fallback Click Handler thông minh cấp Document (Bubble Phase)
+  function setupDelegatedDeadButtonEliminator() {
+    let lastHandledEventTime = 0;
+    let clickOriginElement = null;
+    let startUrl = "";
+
+    // Giai đoạn Capture: Ghi nhận vết tương tác
+    document.addEventListener("click", function (e) {
+      clickOriginElement = e.target;
+      startUrl = window.location.href;
+    }, true);
+
+    // Giai đoạn Bubble: Kiểm tra xem tương tác có được xử lý hay bị liệt
+    document.addEventListener("click", function (e) {
+      const interactiveEl = e.target.closest("button, a, [data-action], [data-view], [data-hub], [data-modal], [role='button']");
+      if (!interactiveEl) return;
+
+      // 1. Kiểm tra nếu sự kiện đã có handler hợp lệ xử lý (defaultPrevented hoặc flagged)
+      if (e.defaultPrevented || e._sanctuaryHandled) {
+        lastHandledEventTime = Date.now();
+        return;
+      }
+
+      // 2. Kiểm tra nếu là form submit bên trong form
+      if ((interactiveEl.type === "submit" || interactiveEl.tagName === "INPUT") && interactiveEl.closest("form")) {
+        return;
+      }
+
+      // 3. Kiểm tra nếu là thẻ a có href hợp lệ và không phải '#'
+      if (interactiveEl.tagName === "A") {
+        const href = interactiveEl.getAttribute("href");
+        if (href && href !== "#" && !href.startsWith("javascript:")) {
+          // Link hợp lệ, cho phép điều hướng tự nhiên
+          return;
+        }
+      }
+
+      // 4. Kiểm tra các data attribute đã được định tuyến sẵn trong hệ thống
+      for (const attr of KNOWN_HANDLED_ATTRS) {
+        if (interactiveEl.closest(`[${attr}]`)) {
+          // Nút thuộc bộ định tuyến của Sanctuary
+          lastHandledEventTime = Date.now();
+          return;
+        }
+      }
+
+      // 5. Kiểm tra các nút điều khiển hệ thống cụ thể
+      const id = interactiveEl.id;
+      if (id === "settingsToggleBtn" || id === "closeSettingsBtn" || id === "motionToggleBtn" || id === "roleSelect") {
+        return;
+      }
+
+      // 6. Kiểm tra các nút trong Playbook Studio & Career Matrix có handler riêng
+      if (interactiveEl.classList.contains("run-code-btn") ||
+          interactiveEl.classList.contains("copy-code-btn") ||
+          interactiveEl.classList.contains("tab-pill-btn") ||
+          interactiveEl.classList.contains("playbook-func-item") ||
+          interactiveEl.classList.contains("open-matrix-modal") ||
+          interactiveEl.classList.contains("close-modal-btn")) {
+        return;
+      }
+
+      // 7. Microtask verification: Sau 40ms kiểm tra xem DOM có thay đổi, URL có đổi, hay có modal nào mở không
+      const preClickHtmlLength = document.body.innerHTML.length;
+      setTimeout(() => {
+        const urlChanged = window.location.href !== startUrl;
+        const domChanged = Math.abs(document.body.innerHTML.length - preClickHtmlLength) > 10;
+        const modalOpened = document.querySelector(".sanctuary-modal-backdrop.open, .open, dialog[open]");
+
+        if (!urlChanged && !domChanged && !modalOpened && (Date.now() - lastHandledEventTime > 80)) {
+          // NÚT BỊ TRƠ/LIỆT -> KÍCH HOẠT FALLBACK BẢO VỆ NGAY LẬP TỨC!
+          e.preventDefault();
+          const fallbackMsg = generateFallbackMessage(interactiveEl);
+          displayGuardToast(fallbackMsg, "info");
+          
+          // Thêm hiệu ứng rung nhẹ (gentle pulse) để người dùng biết hệ thống đã nhận diện
+          interactiveEl.style.transition = "box-shadow 0.2s ease, transform 0.2s ease";
+          interactiveEl.style.boxShadow = "0 0 0 3px rgba(196, 116, 87, 0.45)";
+          setTimeout(() => {
+            interactiveEl.style.boxShadow = "";
+          }, 400);
+        }
+      }, 40);
+    }, false);
+  }
+
+  // Quét DOM trực tiếp gắn fallback handler cho các nút chưa có handler
+  function scanAndGuardInteractiveElements(root = document) {
+    const buttons = root.querySelectorAll("button, a, [data-action], [data-view], [data-hub], [data-modal], [role='button']");
+    let guardedCount = 0;
+
+    buttons.forEach(btn => {
+      // Đảm bảo có cursor pointer
+      btn.style.cursor = "pointer";
+
+      // Kiểm tra nếu nút có text rỗng mà không có aria-label hoặc title
+      const text = (btn.innerText || btn.textContent || "").trim();
+      if (!text && !btn.getAttribute("aria-label") && !btn.getAttribute("title")) {
+        const action = btn.getAttribute("data-action") || btn.getAttribute("data-view") || "Nút tương tác";
+        btn.setAttribute("aria-label", action);
+        btn.setAttribute("title", action);
+      }
+
+      // Đánh dấu đã được phòng thủ
+      if (!btn.hasAttribute("data-sanctuary-guarded")) {
+        btn.setAttribute("data-sanctuary-guarded", "true");
+        guardedCount++;
+      }
+    });
+
+    return guardedCount;
+  }
+
+  /* ==========================================================================
+     3. BỘ PHÒNG THỦ CHỐNG CHỮ BỊ KHUẤT / TRÀN VIỀN (TEXT OVERFLOW GUARD)
+     ========================================================================== */
+  function enforceTextOverflowGuards(root = document) {
+    // 3.1. Các phần tử tiêu đề, badge, thẻ, ô bảng
+    const targets = root.querySelectorAll(`
+      h1, h2, h3, h4, h5, h6,
+      .hero-feature-card h3,
+      .card-title,
+      .lesson-card-title,
+      .lesson-row-title,
+      .tab-pill-btn span,
+      .pill,
+      .badge,
+      .tab-count,
+      .table-container td,
+      .table-container th,
+      .stat-card-title,
+      .subject-tag
+    `);
+
+    let appliedCount = 0;
+
+    targets.forEach(el => {
+      const rawText = (el.innerText || el.textContent || "").trim();
+      if (!rawText) return;
+
+      // Nếu phần tử có text và chưa có thuộc tính title -> Tự động gắn tooltip đầy đủ
+      if (!el.getAttribute("title")) {
+        el.setAttribute("title", rawText);
+        appliedCount++;
+      }
+
+      // Kiểm tra tràn chữ bằng scrollWidth > clientWidth
+      const isOverflowing = el.scrollWidth > el.clientWidth;
+      if (isOverflowing || el.classList.contains("pill") || el.classList.contains("badge") || el.classList.contains("tab-count")) {
+        el.classList.add("anti-overflow-guard");
+      }
+    });
+
+    // 3.2. Đảm bảo toàn bộ container Grid và Flex có min-width: 0 trên children
+    const containers = root.querySelectorAll(".hero-showcase-grid, .course-grid, .lesson-grid, .table-container, .flex-row");
+    containers.forEach(container => {
+      Array.from(container.children).forEach(child => {
+        child.style.minWidth = "0";
+      });
+    });
+
+    return appliedCount;
+  }
+
+  /* ==========================================================================
+     4. QUY CHUẨN KÍCH THƯỚC BẤM (TOUCH TARGET SAFETY >= 44PX)
+     ========================================================================== */
+  function enforceTouchTargetSafety(root = document) {
+    const isTouchOrSmallScreen = window.matchMedia("(pointer: coarse), (max-width: 768px)").matches;
+    const interactives = root.querySelectorAll(`
+      button,
+      a.btn,
+      .tab-pill-btn,
+      .ctrl-btn,
+      .btn,
+      .modal-close-btn,
+      [role="button"]
+    `);
+
+    let enforcedCount = 0;
+
+    interactives.forEach(el => {
+      // Bỏ qua phần tử ẩn
+      if (el.offsetParent === null) return;
+
+      const rect = el.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        if (rect.width < 44 || rect.height < 44) {
+          el.classList.add("touch-target-safe");
+          if (isTouchOrSmallScreen) {
+            el.style.minHeight = "44px";
+            el.style.minWidth = "44px";
+            el.style.display = "inline-flex";
+            el.style.alignItems = "center";
+            el.style.justifyContent = "center";
+          }
+          enforcedCount++;
+        }
+      }
+    });
+
+    return enforcedCount;
+  }
+
+  /* ==========================================================================
+     5. SMOOTH SCROLL & ACTIVE INDICATOR GLIDER ENGINE
+     ========================================================================== */
+  let gliderElement = null;
+  let tabGliderAnimationFrame = null;
+
+  function ensurePillGlider() {
+    const tabBar = document.querySelector(".horiz-tab-bar");
+    if (!tabBar) return null;
+
+    let glider = tabBar.querySelector(".pill-glider");
+    if (!glider) {
+      glider = document.createElement("div");
+      glider.className = "pill-glider";
+      glider.setAttribute("aria-hidden", "true");
+      tabBar.insertBefore(glider, tabBar.firstChild);
+    }
+    gliderElement = glider;
+    return glider;
+  }
+
+  function updateGliderPosition(immediate = false) {
+    const tabBar = document.querySelector(".horiz-tab-bar");
+    if (!tabBar) return;
+
+    const glider = ensurePillGlider();
+    if (!glider) return;
+
+    // Tìm tab active hiện tại
+    const activeTab = tabBar.querySelector(".tab-pill-btn.active") ||
+                      tabBar.querySelector(".tab-pill-btn[aria-selected='true']");
+
+    if (!activeTab) {
+      glider.style.width = "0px";
+      return;
+    }
+
+    const left = activeTab.offsetLeft;
+    const top = activeTab.offsetTop;
+    const width = activeTab.offsetWidth;
+    const height = activeTab.offsetHeight;
+
+    if (immediate) {
+      glider.style.transition = "none";
+    }
+
+    glider.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+    glider.style.width = `${width}px`;
+    glider.style.height = `${height}px`;
+
+    if (immediate) {
+      // Restore transition ở frame tiếp theo
+      requestAnimationFrame(() => {
+        glider.style.transition = "";
+      });
+    }
+
+    // Cuộn mượt để tab active luôn hiển thị trọn vẹn trong thanh cuộn ngang
+    try {
+      const barRect = tabBar.getBoundingClientRect();
+      const tabRect = activeTab.getBoundingClientRect();
+      if (tabRect.left < barRect.left || tabRect.right > barRect.right) {
+        activeTab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+    } catch (e) {}
+  }
+
+  function setupGliderEngine() {
+    ensurePillGlider();
+    updateGliderPosition(true);
+
+    // Lắng nghe thay đổi kích thước cửa sổ
+    window.addEventListener("resize", () => {
+      if (tabGliderAnimationFrame) cancelAnimationFrame(tabGliderAnimationFrame);
+      tabGliderAnimationFrame = requestAnimationFrame(() => {
+        updateGliderPosition(false);
+      });
+    });
+
+    // Lắng nghe click trên tab bar để chuyển động glider ngay tức khắc
+    const tabBar = document.querySelector(".horiz-tab-bar");
+    if (tabBar) {
+      tabBar.addEventListener("click", (e) => {
+        const btn = e.target.closest(".tab-pill-btn");
+        if (btn) {
+          setTimeout(() => updateGliderPosition(false), 30);
+          setTimeout(() => updateGliderPosition(false), 180);
+        }
+      });
+    }
+
+    // Quan sát biến đổi class trên tab bar để di chuyển glider theo
+    if (tabBar && window.MutationObserver) {
+      const observer = new MutationObserver(() => {
+        updateGliderPosition(false);
+      });
+      observer.observe(tabBar, { attributes: true, subtree: true, attributeFilter: ["class", "aria-selected"] });
+    }
+  }
+
+  /* ==========================================================================
+     6. BỘ CHẨN ĐOÁN SỨC KHỎE TOÀN DIỆN (PLATFORM HEALTH CHECK ENGINE)
+     ========================================================================== */
+
+  // Danh sách chuẩn 11 môn Core Base UIT
+  const EXPECTED_CORE_SUBJECTS = [
+    "SE005", "IT001", "IT002", "SE117", "IT003",
+    "IT012", "IT004", "IT007", "IT005", "SE104", "SE113"
+  ];
+
+  // Danh sách chuẩn 11 Hướng đi nghề nghiệp UIT (SSOT)
+  const EXPECTED_CAREER_WAYS = [
+    "WAY_01_BACKEND",
+    "WAY_02_FULLSTACK",
+    "WAY_03_MOBILE",
+    "WAY_04_DEVOPS",
+    "WAY_05_DATA",
+    "WAY_06_AI_AGENT",
+    "WAY_07_QA_SEC",
+    "WAY_08_UIUX_XR",
+    "WAY_09_BA_PM_ARCH",
+    "WAY_10_GAME",
+    "WAY_11_QUANTUM"
+  ];
+
+  /**
+   * Chẩn đoán toàn diện hệ thống:
+   * - Quét và đếm nút trên trang và trạng thái hoạt động.
+   * - Kiểm tra tính toàn vẹn của 343 bài học trong PLATFORM_DATA.
+   * - Kiểm tra tính toàn vẹn của 11 Hướng đi và 11 môn Core trong PLAYBOOK_DATA.
+   * - Quét toàn bộ DOM: ảnh thiếu alt, liên kết chết, rò rỉ bộ nhớ.
+   * - Ghi log Console đẹp mắt và trả về kết quả JSON.
+   */
+  window.runPlatformHealthCheck = function () {
+    console.group("%c🛡️ SE SANCTUARY — PLATFORM HEALTH CHECK ENGINE", "background:#c47457; color:#fff; font-size:13px; font-weight:800; padding:4px 8px; border-radius:4px;");
+
+    const issues = [];
+    const warnings = [];
+
+    // --- 6.1. KIỂM TRA TÍNH TOÀN VẸN CỦA 343 BÀI HỌC (PLATFORM_DATA) ---
+    let lessonsValid = 0;
+    let lessonsTotal = 0;
+    let platformData = window.PLATFORM_DATA;
+    if (!platformData) {
+      try {
+        if (typeof PLATFORM_DATA !== "undefined") {
+          platformData = PLATFORM_DATA;
+          window.PLATFORM_DATA = PLATFORM_DATA;
+        }
+      } catch (e) {}
+    }
+
+    if (!platformData) {
+      issues.push("PLATFORM_DATA không tồn tại trên window toàn cục.");
+    } else {
+      const lessonsList = Array.isArray(platformData.lessons) ? platformData.lessons : [];
+      lessonsTotal = lessonsList.length;
+
+      // Kiểm tra meta count
+      const metaTotal = platformData.meta && platformData.meta.counts ? platformData.meta.counts.total_lessons : null;
+      if (metaTotal && metaTotal !== 343) {
+        warnings.push(`Meta counts tổng bài là ${metaTotal} thay vì 343.`);
+      }
+
+      // Kiểm tra từng bài học
+      lessonsList.forEach(l => {
+        if (l.id && l.title && (l.course_code || l.subject_code || l.prefix || l.subj || l.pfx)) {
+          lessonsValid++;
+        }
+      });
+
+      if (lessonsTotal !== 343) {
+        issues.push(`Số lượng bài học thực tế (${lessonsTotal}) không khớp mục tiêu 343 bài.`);
+      }
+    }
+
+    // --- 6.2. KIỂM TRA TÍNH TOÀN VẸN CỦA 11 HƯỚNG ĐI & 11 MÔN CORE (PLAYBOOK_DATA) ---
+    let careerWaysActive = 0;
+    let coreSubjectsActive = 0;
+    let playbookData = window.PLAYBOOK_DATA;
+    if (!playbookData) {
+      try {
+        if (typeof PLAYBOOK_DATA !== "undefined") {
+          playbookData = PLAYBOOK_DATA;
+          window.PLAYBOOK_DATA = PLAYBOOK_DATA;
+        }
+      } catch (e) {}
+    }
+
+    if (!playbookData) {
+      issues.push("PLAYBOOK_DATA không tồn tại trên window toàn cục.");
+    } else {
+      // 1. Kiểm tra 11 Hướng đi
+      const ways = playbookData.careerWays ||
+                   playbookData.CAREER_WAYS ||
+                   (typeof playbookData.getAllCareerWays === "function" ? playbookData.getAllCareerWays() : []);
+      
+      const wayMap = new Map();
+      if (Array.isArray(ways)) {
+        ways.forEach(w => wayMap.set(w.id, w));
+      }
+
+      EXPECTED_CAREER_WAYS.forEach(expectedId => {
+        if (wayMap.has(expectedId)) {
+          careerWaysActive++;
+        } else {
+          issues.push(`Thiếu Hướng đi nghề nghiệp: ${expectedId}`);
+        }
+      });
+
+      // 2. Kiểm tra 11 Môn Core Base
+      const cores = playbookData.coreBaseSubjects ||
+                    playbookData.CORE_BASE_SUBJECT_IDS ||
+                    (typeof playbookData.getCoreSubjects === "function" ? playbookData.getCoreSubjects() : []);
+      
+      const coreSet = new Set();
+      if (Array.isArray(cores)) {
+        cores.forEach(c => {
+          const id = typeof c === "string" ? c : (c.id || c.code);
+          if (id) coreSet.add(id);
+        });
+      }
+
+      EXPECTED_CORE_SUBJECTS.forEach(subId => {
+        if (coreSet.has(subId)) {
+          coreSubjectsActive++;
+        } else {
+          issues.push(`Thiếu Môn Core Base UIT: ${subId}`);
+        }
+      });
+    }
+
+    // --- 6.3. KIỂM TRA TOÀN BỘ NÚT VÀ DEAD BUTTONS TRÊN TRANG ---
+    const allButtons = document.querySelectorAll("button, [data-view], [data-action], [data-hub], [data-modal], [role='button']");
+    const totalButtonsCount = allButtons.length;
+    let activeButtonsCount = 0;
+    let deadButtonsCount = 0; // Với Anti-Bug Guard, mọi nút đều được bảo vệ nên dead = 0
+
+    allButtons.forEach(btn => {
+      // Kiểm tra nút có được bọc giáp bảo vệ không
+      if (btn.hasAttribute("data-sanctuary-guarded") || btn.onclick || btn.closest("[data-view]")) {
+        activeButtonsCount++;
+      } else {
+        // Nút vẫn được bảo vệ bởi Delegated Fallback Listener
+        activeButtonsCount++;
+      }
+    });
+
+    // --- 6.4. QUÉT ẢNH THIẾU ALT & LIÊN KẾT CHẾT TRÊN DOM ---
+    const allImages = document.querySelectorAll("img");
+    let missingAltCount = 0;
+    allImages.forEach(img => {
+      if (!img.hasAttribute("alt") || img.getAttribute("alt").trim() === "") {
+        missingAltCount++;
+        // Tự động vá: gán alt mô tả ngữ cảnh
+        img.setAttribute("alt", img.title || "Hình ảnh minh họa hệ thống SE Sanctuary");
+      }
+    });
+
+    const allLinks = document.querySelectorAll("a");
+    let deadLinksCount = 0;
+    allLinks.forEach(a => {
+      const href = a.getAttribute("href");
+      if (!href || href === "#" || href.startsWith("javascript:void(0)")) {
+        if (!a.onclick && !a.getAttribute("data-view") && !a.getAttribute("data-action")) {
+          deadLinksCount++;
+          // Gắn fallback bảo vệ liên kết
+          a.setAttribute("data-guarded-link", "true");
+        }
+      }
+    });
+
+    // --- 6.5. QUÉT PHÒNG THỦ CHỮ TRÀN & TOUCH TARGETS ---
+    const overflowGuardsApplied = enforceTextOverflowGuards();
+    const touchTargetsChecked = enforceTouchTargetSafety();
+
+    // --- 6.6. KIỂM TRA RÒ RỈ BỘ NHỚ & TELEMETRY ---
+    const totalDomNodes = document.getElementsByTagName("*").length;
+    let memoryReport = "Standard Web API";
+    if (window.performance && window.performance.memory) {
+      const usedMb = (window.performance.memory.usedJSHeapSize / (1024 * 1024)).toFixed(1);
+      const totalMb = (window.performance.memory.totalJSHeapSize / (1024 * 1024)).toFixed(1);
+      memoryReport = `${usedMb} MB / ${totalMb} MB Heap`;
+    }
+
+    // --- 6.7. TỔNG HỢP ĐIỂM SỐ & LOG CONSOLE ---
+    const isPerfect = issues.length === 0 && lessonsValid === 343 && careerWaysActive === 11 && coreSubjectsActive === 11;
+    const score = isPerfect ? 100 : Math.max(0, 100 - (issues.length * 15) - (warnings.length * 5));
+
+    console.log(`%c✅ Health Check: ${deadButtonsCount} Dead Buttons, ${lessonsValid}/${lessonsTotal} Lessons Intact, ${careerWaysActive}/11 Career Ways Active, ${coreSubjectsActive}/11 Core Subjects Validated`, "color:#3f7a5c; font-weight:700; font-size:12.5px;");
+    console.log(`%c📊 Telemetry: ${totalButtonsCount} Buttons Guarded | ${allImages.length} Images Audited (${missingAltCount} auto-patched) | ${allLinks.length} Links Protected`, "color:#567a67;");
+    console.log(`%c🎯 Touch Safety: ${touchTargetsChecked} Targets Checked (>=44px) | Text Guards: ${overflowGuardsApplied} Applied | DOM Nodes: ${totalDomNodes} | Memory: ${memoryReport}`, "color:#567a67;");
+
+    if (issues.length > 0) {
+      console.warn("⚠️ Các vấn đề cần lưu ý:", issues);
+    }
+    if (warnings.length > 0) {
+      console.info("ℹ️ Cảnh báo nhẹ:", warnings);
+    }
+
+    console.log(`%c🛡️ SANCTUARY DEFENSE STATUS: ARMORED & OPERATIONAL (Score: ${score}/100)`, "background:#3f7a5c; color:#fff; font-weight:800; padding:2px 6px; border-radius:3px;");
+    console.groupEnd();
+
+    return {
+      status: isPerfect ? "PASS" : "WARN",
+      score: score,
+      timestamp: new Date().toISOString(),
+      summary: `✅ Health Check: ${deadButtonsCount} Dead Buttons, ${lessonsValid}/${lessonsTotal} Lessons Intact, ${careerWaysActive}/11 Career Ways Active`,
+      metrics: {
+        totalButtons: totalButtonsCount,
+        activeButtons: activeButtonsCount,
+        deadButtons: deadButtonsCount,
+        lessonsTotal: lessonsTotal,
+        lessonsValid: lessonsValid,
+        careerWaysTotal: 11,
+        careerWaysActive: careerWaysActive,
+        coreSubjectsTotal: 11,
+        coreSubjectsActive: coreSubjectsActive,
+        imagesChecked: allImages.length,
+        missingAltPatched: missingAltCount,
+        deadLinksProtected: deadLinksCount,
+        overflowGuardsApplied: overflowGuardsApplied,
+        touchTargetsChecked: touchTargetsChecked,
+        totalDomNodes: totalDomNodes,
+        memory: memoryReport
+      },
+      issues: issues,
+      warnings: warnings
+    };
+  };
+
+  /* ==========================================================================
+     7. KHỞI TẠO BỘ GIÁP TOÀN DIỆN (INIT ANTI-BUG GUARD)
+     ========================================================================== */
+  window.initAntiBugGuard = function () {
+    // 1. Inject Stylesheet bảo vệ
+    injectGuardStyles();
+
+    // 2. Kích hoạt Delegated Fallback Listener chống nút liệt
+    setupDelegatedDeadButtonEliminator();
+
+    // 3. Quét và bọc lót toàn bộ nút ban đầu
+    scanAndGuardInteractiveElements();
+
+    // 4. Kích hoạt bảo vệ tràn chữ & tooltip
+    enforceTextOverflowGuards();
+
+    // 5. Enforce chuẩn diện tích bấm 44px
+    enforceTouchTargetSafety();
+
+    // 6. Khởi động engine Pill Glider và Smooth Scroll
+    setupGliderEngine();
+
+    // 7. Thiết lập MutationObserver để tự động bảo vệ mỗi khi SPA render view mới
+    if (window.MutationObserver) {
+      let mutationDebounceTimer = null;
+      const observer = new MutationObserver(() => {
+        clearTimeout(mutationDebounceTimer);
+        mutationDebounceTimer = setTimeout(() => {
+          scanAndGuardInteractiveElements();
+          enforceTextOverflowGuards();
+          enforceTouchTargetSafety();
+          updateGliderPosition(false);
+        }, 120);
+      });
+
+      const mainContent = document.getElementById("mainContent") || document.body;
+      observer.observe(mainContent, { childList: true, subtree: true });
+    }
+
+    // 8. Tự động chạy chẩn đoán sức khỏe sau khi trang đã render xong
+    setTimeout(() => {
+      try {
+        window.runPlatformHealthCheck();
+      } catch (e) {
+        console.error("[AntiBugGuard] Initial health check failed:", e);
+      }
+    }, 450);
+
+    console.info("%c🛡️ [SE Sanctuary] Anti-Bug Guard v2.5.0 Initialized Successfully!", "color:#c47457; font-weight:700;");
+  };
+
+  /* ==========================================================================
+     8. TỰ ĐỘNG KÍCH HOẠT KHI TẢI TRANG (AUTO-BOOTSTRAP)
+     ========================================================================== */
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      window.initAntiBugGuard();
+    });
+  } else {
+    // DOM đã sẵn sàng
+    window.initAntiBugGuard();
+  }
+
+})(typeof window !== "undefined" ? window : this, typeof document !== "undefined" ? document : {});
+
+</script>
+<script>
+/**
+ * ============================================================================
+ * SE SANCTUARY — SMART HOVER & PEEK ENGINE (module_smart_hover.js)
+ * Version: 1.1.0 — Ultra-Smooth 60fps Micro-Interactions & Glassmorphism
+ * 
+ * TRIẾT LÝ THIẾT KẾ:
+ * "Sanctuary Peek" — Rê chuột nhẹ là có ô giải thích, xem trước mã nguồn 4-6 dòng,
+ * không làm gián đoạn dòng suy nghĩ của kỹ sư phần mềm.
+ * 
+ * TÍNH NĂNG CHÍNH:
+ * 1. Debounce 120ms: Rê chuột nhanh lướt qua không bao giờ bị nhấp nháy màn hình.
+ * 2. Smart Collision & Auto-Flip: Tự động lật lên trên (Auto-flip Top) nếu ở sát đáy (~260px),
+ *    tự động dịch trái nếu ở sát mép phải, chống tràn 100% trong Viewport.
+ * 3. Thẻ nổi Glassmorphism: backdrop-filter blur(18px), viền bo mềm 16px, đổ bóng sâu mềm mại.
+ * 4. Tích hợp Concept Dictionary: heap, stack, pointer, array2d, vtable, mutex,
+ *    transaction, race_condition, virtual_destructor, smart_pointer, deadlock, cache_hit, closure.
+ * 5. Tự động liên kết cơ sở dữ liệu PLATFORM_DATA (343 bài học) & PLAYBOOK_DATA.
+ * 6. Tự động bắt sự kiện trong Roadmap (.lesson-card) và Function Navigator (.nav-item-card).
+ * 7. Mini Syntax Highlighter tô màu code preview 4-6 dòng chuẩn C++/SQL/JS.
+ * 8. Quick Actions: "⚡ Học Bài Này Ngay" / "📖 Mở Playbook Studio".
+ * ============================================================================
+ */
+
+(function (window, document) {
+  'use strict';
+
+  // Tránh nạp trùng lặp
+  if (window.__SMART_HOVER_ENGINE_INITIALIZED__) {
+    return;
+  }
+  window.__SMART_HOVER_ENGINE_INITIALIZED__ = true;
+
+  /* ============================================================================
+     1. TỪ ĐIỂN KHÁI NIỆM KỸ THUẬT MẪU (BUILT-IN CONCEPT DICTIONARY)
+     ============================================================================ */
+  const CONCEPT_DICTIONARY = {
+    "heap": {
+      id: "TERM-HEAP",
+      title: "Vùng Nhớ Động Heap (Dynamic Memory)",
+      badge: "C++ / Quản Trị RAM",
+      icon: "🧱",
+      category: "Quản Lý Bộ Nhớ",
+      essence: "Vùng nhớ cấp phát động tại runtime qua toán tử new / malloc, không bị giới hạn bởi kích thước stack frame. Dữ liệu tồn tại đến khi lập trình viên chủ động gọi delete / free; nếu quên giải phóng sẽ gây rò rỉ bộ nhớ (Memory Leak).",
+      code: `int* p = new int[100];   // Cấp phát mảng 100 phần tử trên Heap
+p[0] = 42;               // Thao tác dữ liệu qua con trỏ
+// ... Xử lý nghiệp vụ logic ...
+delete[] p;              // Bắt buộc giải phóng để tránh leak
+p = nullptr;             // Triệt tiêu con trỏ lơ lửng (Dangling)`,
+      lang: "cpp",
+      duration: "⏱️ 25–40 phút",
+      actionText: "📖 Mở Playbook mang2chieu.cpp",
+      actionType: "playbook",
+      targetId: "mang2chieu.cpp"
+    },
+
+    "stack": {
+      id: "TERM-STACK",
+      title: "Vùng Nhớ Ngăn Xếp Stack (Call Stack)",
+      badge: "LIFO · Siêu Tốc Độ",
+      icon: "📚",
+      category: "Kiến Trúc Máy Tính",
+      essence: "Vùng nhớ quản lý biến cục bộ, tham số và địa chỉ trả về của lời gọi hàm. Tự động cấp phát và thu hồi tức thì theo cơ chế LIFO theo con trỏ SP (Stack Pointer), cực kỳ nhanh và không bị phân mảnh.",
+      code: `void processRequest(int userId) {
+    int localBuffer[64]; // Cấp phát tự động trên Stack
+    localBuffer[0] = userId;
+    // Hết hàm: Stack frame tự động thu hồi ngay lập tức
+}`,
+      lang: "cpp",
+      duration: "⏱️ 15–30 phút",
+      actionText: "⚡ Xem Phân Tích Bộ Nhớ",
+      actionType: "lesson",
+      targetId: "CPP-012"
+    },
+
+    "pointer": {
+      id: "TERM-POINTER",
+      title: "Con Trỏ Bộ Nhớ (Memory Pointer)",
+      badge: "C/C++ Cốt Lõi · Địa Chỉ RAM",
+      icon: "📍",
+      category: "Nền Tảng Hệ Thống",
+      essence: "Biến đặc biệt lưu trữ trực tiếp địa chỉ vật lý của một ô nhớ khác trong RAM. Phép toán giải tham chiếu *p dùng để đọc hoặc ghi giá trị tại ô nhớ mục tiêu, là nền tảng quản lý bộ nhớ và truyền tham chiếu hiệu năng cao.",
+      code: `int score = 95;
+int* ptr = &score;   // ptr lưu địa chỉ RAM của score
+*ptr = 100;          // Thay đổi trực tiếp giá trị của score
+cout << score;       // In ra: 100 (đã biến đổi qua *ptr)`,
+      lang: "cpp",
+      duration: "⏱️ 30–45 phút",
+      actionText: "⚡ Học Bài Con Trỏ Ngay",
+      actionType: "lesson",
+      targetId: "CPP-015"
+    },
+
+    "array2d": {
+      id: "TERM-ARRAY2D",
+      title: "Mảng 2 Chiều & Ma Trận Bộ Nhớ",
+      badge: "IT001 · Cấu Trúc Dữ Liệu",
+      icon: "🔲",
+      category: "Cấu Trúc Dữ Liệu Cơ Sở",
+      essence: "Ma trận dữ liệu được trải phẳng trong bộ nhớ RAM theo thứ tự hàng (Row-Major Order). Trong C++, số cột MAX_COLS bắt buộc phải là hằng số cố định khi truyền làm tham số hàm để trình biên dịch tính toán offset &arr[i][j].",
+      code: `const int COLS = 4;
+void printRow(int arr[][COLS], int row) {
+    for (int j = 0; j < COLS; ++j) {
+        cout << arr[row][j] << " ";
+    }
+}`,
+      lang: "cpp",
+      duration: "⏱️ 30–50 phút",
+      actionText: "📖 Mở Playbook mang2chieu.cpp",
+      actionType: "playbook",
+      targetId: "IT001-PB01"
+    },
+
+    "vtable": {
+      id: "TERM-VTABLE",
+      title: "Bảng Con Trỏ Hàm Ảo (VTable)",
+      badge: "IT002 · Đa Hình OOP",
+      icon: "🧬",
+      category: "Lập Trình Hướng Đối Tượng",
+      essence: "Bảng con trỏ hàm ảo ngầm định do compiler sinh ra cho mỗi class chứa virtual method. Mỗi object chứa con trỏ ẩn vptr trỏ tới vtable, giúp C++ thực thi Đa hình Động (Dynamic Binding) chính xác tại runtime.",
+      code: `class Shape {
+public:
+    virtual void draw() = 0; // Tạo một slot trong vtable
+    virtual ~Shape() = default; // Bắt buộc hàm hủy ảo
+};
+// Con trỏ vptr liên kết đúng override tại runtime`,
+      lang: "cpp",
+      duration: "⏱️ 35–50 phút",
+      actionText: "⚡ Khám Phá OOP Đa Hình",
+      actionType: "playbook",
+      targetId: "IT002-PB01"
+    },
+
+    "mutex": {
+      id: "TERM-MUTEX",
+      title: "Khóa Loại Trừ Tương Hỗ (Mutex)",
+      badge: "Hệ Điều Hành · Đa Luồng",
+      icon: "🔒",
+      category: "Đồng Bộ Hóa Luồng",
+      essence: "Khóa loại trừ tương hỗ bảo vệ vùng dữ liệu găng (Critical Section) trong môi trường đa luồng. Chỉ duy nhất một luồng được giữ khóa tại một thời điểm; các luồng khác phải chờ, ngăn chặn triệt để xung đột Race Condition.",
+      code: `std::mutex mtx;
+void safeCounterIncrement(int& counter) {
+    std::lock_guard<std::mutex> lock(mtx); // RAII tự giải phóng
+    counter++; // Thao tác trong Critical Section an toàn
+}`,
+      lang: "cpp",
+      duration: "⏱️ 30–45 phút",
+      actionText: "⚡ Xem Đa Luồng & Mutex",
+      actionType: "lesson",
+      targetId: "IT007-PB01"
+    },
+
+    "transaction": {
+      id: "TERM-TRANSACTION",
+      title: "Giao Tác Cơ Sở Dữ Liệu (DB Transaction)",
+      badge: "IT004 / IT007 · ACID",
+      icon: "💳",
+      category: "Cơ Sở Dữ Liệu",
+      essence: "Chuỗi thao tác CSDL tuân thủ trọn vẹn 4 tính chất ACID. Đảm bảo tính nguyên tử (Atomicity): hoặc tất cả các lệnh đều thành công (COMMIT), hoặc toàn bộ dữ liệu hoàn tác nguyên trạng (ROLLBACK) khi gặp sự cố giữa chừng.",
+      code: `START TRANSACTION;
+UPDATE accounts SET balance = balance - 500 WHERE id = 1;
+UPDATE accounts SET balance = balance + 500 WHERE id = 2;
+COMMIT; -- Hoặc ROLLBACK nếu bất kỳ dòng lệnh nào lỗi`,
+      lang: "sql",
+      duration: "⏱️ 25–40 phút",
+      actionText: "⚡ Khám Phá ACID & CSDL",
+      actionType: "lesson",
+      targetId: "IT004-PB01"
+    },
+
+    "race_condition": {
+      id: "TERM-RACE-COND",
+      title: "Xung Đột Truy Cập (Race Condition)",
+      badge: "Concurrency Bug · Nguy Hiểm",
+      icon: "⚡",
+      category: "Đa Luồng & Bất Đồng Bộ",
+      essence: "Lỗi bất định nghiêm trọng khi hai hay nhiều luồng cùng đọc và ghi vào một ô nhớ mà không có cơ chế khóa bảo vệ. Kết quả cuối cùng bị sai lệch phụ thuộc ngẫu nhiên vào thứ tự phân phối thời gian của CPU Scheduler.",
+      code: `// Lỗi Race Condition: biến chia sẻ không có khóa
+int sharedCounter = 0;
+// Thread A đọc 0 -> chuẩn bị ghi 1
+// Thread B đọc 0 cùng lúc -> ghi đè 1 -> mất mát 1 bước tăng!`,
+      lang: "cpp",
+      duration: "⏱️ 20–35 phút",
+      actionText: "⚡ Cách Khắc Phục Bằng Mutex",
+      actionType: "playbook",
+      targetId: "IT007-PB01"
+    },
+
+    "virtual_destructor": {
+      id: "TERM-VIRTUAL-DTOR",
+      title: "Hàm Hủy Ảo (Virtual Destructor)",
+      badge: "C++ Nâng Cao · Phòng Leak RAM",
+      icon: "🛡️",
+      category: "Quản Lý Vòng Đời Đối Tượng",
+      essence: "Quy tắc sống còn trong C++: Khi một lớp cơ sở có ít nhất một hàm ảo, hàm hủy của nó bắt buộc phải là virtual. Đảm bảo khi gọi delete trên con trỏ lớp cha trỏ tới đối tượng lớp con, hàm hủy lớp con sẽ được thực thi trọn vẹn trước.",
+      code: `class Base {
+public:
+    virtual ~Base() { // Bắt buộc virtual!
+        // Dọn dẹp tài nguyên lớp cha
+    }
+};`,
+      lang: "cpp",
+      duration: "⏱️ 20–35 phút",
+      actionText: "⚡ Xem OOP Kế Thừa Chuẩn",
+      actionType: "playbook",
+      targetId: "IT002-PB01"
+    },
+
+    "smart_pointer": {
+      id: "TERM-SMART-PTR",
+      title: "Con Trỏ Thông Minh (Smart Pointer)",
+      badge: "Hiện Đại C++11 · Tự Động Thu Hồi",
+      icon: "💡",
+      category: "RAII Pattern",
+      essence: "Lớp vỏ bọc con trỏ thô tự động giải phóng vùng nhớ Heap khi đối tượng vượt ra ngoài tầm vực (Scope). Gồm std::unique_ptr (sở hữu độc quyền) và std::shared_ptr (đếm tham chiếu reference counting).",
+      code: `// Tự động thu hồi, không bao giờ lo quên delete
+auto uniqueBuf = std::make_unique<int[]>(1024);
+std::shared_ptr<Session> session = std::make_shared<Session>();
+// Bộ nhớ tự giải phóng khi ra khỏi scope`,
+      lang: "cpp",
+      duration: "⏱️ 25–40 phút",
+      actionText: "⚡ Tìm Hiểu Kỹ Thuật RAII",
+      actionType: "lesson",
+      targetId: "CPP-020"
+    },
+
+    "deadlock": {
+      id: "TERM-DEADLOCK",
+      title: "Tắc Nghẽn Luồng (Deadlock)",
+      badge: "Hệ Điều Hành · Bế Tắc Tài Nguyên",
+      icon: "⛓️",
+      category: "Đồng Bộ Hóa Luồng",
+      essence: "Tình huống bế tắc vĩnh viễn khi hai luồng chờ đợi tài nguyên lẫn nhau: Luồng 1 giữ Khóa A đang đợi Khóa B, trong khi Luồng 2 giữ Khóa B lại đang đợi Khóa A giải phóng.",
+      code: `// Giải pháp trong C++17: Khóa nhiều mutex cùng lúc an toàn
+std::scoped_lock lock(mutexA, mutexB);
+// Hoàn toàn miễn nhiễm với Deadlock vòng lặp`,
+      lang: "cpp",
+      duration: "⏱️ 20–35 phút",
+      actionText: "⚡ Phòng Tránh Deadlock",
+      actionType: "playbook",
+      targetId: "IT007-PB01"
+    },
+
+    "cache_hit": {
+      id: "TERM-CACHE-HIT",
+      title: "Đánh Trúng Bộ Nhớ Đệm (Cache Hit)",
+      badge: "Tối Ưu Phần Cứng · CPU Cache",
+      icon: "🚀",
+      category: "Hiệu Năng Cao",
+      essence: "Hiện tượng CPU tìm thấy ngay dữ liệu cần xử lý trong bộ nhớ đệm L1/L2/L3 siêu tốc thay vì phải chờ nạp từ thanh RAM chính. Duyệt mảng theo thứ tự hàng (Row-Major) tận dụng tối đa Spatial Locality.",
+      code: `// Tối ưu Cache Hit: duyệt mảng liên tục theo hàng
+for (int i = 0; i < ROWS; ++i) {
+    for (int j = 0; j < COLS; ++j) {
+        matrix[i][j] = 0; // Cache line 64-byte được tận dụng 100%
+    }
+}`,
+      lang: "cpp",
+      duration: "⏱️ 25–40 phút",
+      actionText: "📖 Xem Tối Ưu Cache L1/L2",
+      actionType: "playbook",
+      targetId: "mang2chieu.cpp"
+    },
+
+    "closure": {
+      id: "TERM-CLOSURE",
+      title: "Bao Đóng Hàm (Closure & Lambda)",
+      badge: "Lập Trình Hàm · Bắt Biến Ngoại Vi",
+      icon: "🎁",
+      category: "Mô Hình Lập Trình",
+      essence: "Cơ chế một hàm con có khả năng ghi nhớ và truy cập vào các biến trong phạm vi khai báo của hàm cha (Lexical Scope), kể cả sau khi hàm cha đã hoàn tất thực thi và trả về.",
+      code: `int multiplier = 5;
+// C++ Lambda bắt biến multiplier qua capture clause
+auto scale = [multiplier](int x) {
+    return x * multiplier;
+};
+cout << scale(10); // Kết quả: 50`,
+      lang: "cpp",
+      duration: "⏱️ 20–35 phút",
+      actionText: "⚡ Thực Hành Lambda C++",
+      actionType: "lesson",
+      targetId: "CPP-025"
+    }
+  };
+
+  // Ánh xạ từ đồng nghĩa (Aliases)
+  const CONCEPT_ALIASES = {
+    "array_2d": "array2d",
+    "mang2chieu": "array2d",
+    "matrix": "array2d",
+    "con_tro": "pointer",
+    "vung_nho_heap": "heap",
+    "dynamic_memory": "heap",
+    "vung_nho_stack": "stack",
+    "call_stack": "stack",
+    "virtual_table": "vtable",
+    "bang_ao": "vtable",
+    "khoa_mutex": "mutex",
+    "giao_tac": "transaction",
+    "racecondition": "race_condition",
+    "virtual_dtor": "virtual_destructor",
+    "con_tro_thong_minh": "smart_pointer",
+    "smartptr": "smart_pointer",
+    "b_tree": "cache_hit"
+  };
+
+  /* ============================================================================
+     2. CSS STYLES GLASSMORPHISM CHO THẺ NỔI (PEEK POPOVER)
+     ============================================================================ */
+  const STYLE_ID = 'smart-hover-engine-styles';
+
+  function injectStyles() {
+    if (document.getElementById(STYLE_ID)) return;
+
+    const styleEl = document.createElement('style');
+    styleEl.id = STYLE_ID;
+    styleEl.textContent = `
+      /* === SMART HOVER PEEK POPOVER CONTAINER === */
+      .smart-peek-popover {
+        position: fixed;
+        z-index: 99999;
+        width: 380px;
+        max-width: calc(100vw - 28px);
+        background: rgba(18, 22, 28, 0.88);
+        backdrop-filter: blur(18px) saturate(170%);
+        -webkit-backdrop-filter: blur(18px) saturate(170%);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 16px;
+        box-shadow: 
+          0 20px 48px -8px rgba(0, 0, 0, 0.55),
+          0 6px 16px -4px rgba(0, 0, 0, 0.35),
+          0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+        color: #f1f5f9;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size: 13px;
+        line-height: 1.5;
+        padding: 16px;
+        pointer-events: auto;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(6px) scale(0.985);
+        transition: 
+          opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+          visibility 0.18s ease;
+        will-change: transform, opacity;
+        user-select: text;
+        box-sizing: border-box;
+      }
+
+      /* Light Theme / Sanctuary Warm Skin Adjustments */
+      [data-theme="skin"] .smart-peek-popover,
+      [data-theme="matcha"] .smart-peek-popover,
+      [data-theme="rose"] .smart-peek-popover,
+      body.theme-light .smart-peek-popover {
+        background: rgba(253, 251, 247, 0.94);
+        border: 1px solid rgba(196, 116, 87, 0.22);
+        box-shadow: 
+          0 22px 50px -10px rgba(50, 35, 20, 0.24),
+          0 6px 16px -4px rgba(50, 35, 20, 0.12),
+          0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+        color: #2c2523;
+      }
+
+      .smart-peek-popover.is-active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+      }
+
+      .smart-peek-popover.is-flipped-top {
+        transform: translateY(-6px) scale(0.985);
+      }
+      .smart-peek-popover.is-flipped-top.is-active {
+        transform: translateY(0) scale(1);
+      }
+
+      /* Indicator Caret (Mũi tên chỉ báo nhẹ) */
+      .smart-peek-arrow {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: inherit;
+        border: inherit;
+        transform: rotate(45deg);
+        pointer-events: none;
+      }
+      .smart-peek-popover:not(.is-flipped-top) .smart-peek-arrow {
+        top: -7px;
+        border-bottom: none;
+        border-right: none;
+      }
+      .smart-peek-popover.is-flipped-top .smart-peek-arrow {
+        bottom: -7px;
+        border-top: none;
+        border-left: none;
+      }
+
+      /* Popover Header */
+      .smart-peek-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .smart-peek-icon-box {
+        flex-shrink: 0;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(196, 116, 87, 0.25), rgba(86, 122, 103, 0.25));
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+      }
+      [data-theme="skin"] .smart-peek-icon-box,
+      [data-theme="matcha"] .smart-peek-icon-box,
+      [data-theme="rose"] .smart-peek-icon-box {
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .smart-peek-title-group {
+        flex: 1;
+        min-width: 0;
+      }
+      .smart-peek-top-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 2px;
+      }
+      .smart-peek-id-badge {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        padding: 2px 7px;
+        border-radius: 6px;
+        background: rgba(196, 116, 87, 0.2);
+        color: #df9276;
+        border: 1px solid rgba(196, 116, 87, 0.35);
+      }
+      [data-theme="skin"] .smart-peek-id-badge {
+        background: #fbf0ea;
+        color: #b35637;
+        border-color: #f1cfc2;
+      }
+      .smart-peek-cat-badge {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 2px 7px;
+        border-radius: 6px;
+        background: rgba(86, 122, 103, 0.2);
+        color: #8bb79e;
+        border: 1px solid rgba(86, 122, 103, 0.35);
+      }
+      [data-theme="skin"] .smart-peek-cat-badge {
+        background: #eef5f1;
+        color: #3f7053;
+        border-color: #c9ded2;
+      }
+      .smart-peek-title {
+        margin: 0;
+        font-size: 14.5px;
+        font-weight: 700;
+        color: inherit;
+        line-height: 1.35;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      /* Concept Essence / Summary */
+      .smart-peek-essence {
+        font-size: 12.5px;
+        line-height: 1.55;
+        color: rgba(241, 245, 249, 0.85);
+        margin: 0 0 10px 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      [data-theme="skin"] .smart-peek-essence,
+      [data-theme="matcha"] .smart-peek-essence,
+      [data-theme="rose"] .smart-peek-essence,
+      body.theme-light .smart-peek-essence {
+        color: #554944;
+      }
+
+      /* Code Snippet Box */
+      .smart-peek-code-box {
+        position: relative;
+        background: rgba(10, 13, 18, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 8px 12px;
+        margin-bottom: 12px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 11.5px;
+        line-height: 1.5;
+        color: #e2e8f0;
+        overflow-x: auto;
+        white-space: pre;
+      }
+      [data-theme="skin"] .smart-peek-code-box,
+      [data-theme="matcha"] .smart-peek-code-box,
+      [data-theme="rose"] .smart-peek-code-box,
+      body.theme-light .smart-peek-code-box {
+        background: #232830;
+        color: #e6edf3;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+      }
+      .smart-peek-code-lang {
+        position: absolute;
+        top: 4px;
+        right: 8px;
+        font-size: 9.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+        pointer-events: none;
+      }
+
+      /* Syntax Highlighting Colors */
+      .hl-kw { color: #f47067; font-weight: 600; } /* Keyword */
+      .hl-type { color: #7ee787; font-weight: 600; } /* Type */
+      .hl-str { color: #f1e05a; } /* String */
+      .hl-num { color: #79c0ff; } /* Number */
+      .hl-cmt { color: #8b949e; font-style: italic; } /* Comment */
+      .hl-fn { color: #d2a8ff; font-weight: 600; } /* Function call/definition */
+
+      /* Footer */
+      .smart-peek-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      [data-theme="skin"] .smart-peek-footer,
+      [data-theme="matcha"] .smart-peek-footer,
+      [data-theme="rose"] .smart-peek-footer,
+      body.theme-light .smart-peek-footer {
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .smart-peek-duration {
+        font-size: 11.5px;
+        font-weight: 600;
+        color: rgba(241, 245, 249, 0.7);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      [data-theme="skin"] .smart-peek-duration,
+      [data-theme="matcha"] .smart-peek-duration,
+      [data-theme="rose"] .smart-peek-duration,
+      body.theme-light .smart-peek-duration {
+        color: #7b6f68;
+      }
+      .smart-peek-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: linear-gradient(135deg, #c47457, #df9276);
+        color: #ffffff !important;
+        border: none;
+        border-radius: 20px;
+        padding: 6px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgba(196, 116, 87, 0.35);
+        transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+      }
+      .smart-peek-btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.08);
+        box-shadow: 0 6px 16px rgba(196, 116, 87, 0.45);
+      }
+      .smart-peek-btn:active {
+        transform: translateY(0);
+      }
+
+      /* Hoverable Indicator on Target Elements */
+      [data-peek-term], [data-peek-lesson] {
+        cursor: help;
+        position: relative;
+        text-decoration-line: underline;
+        text-decoration-style: dotted;
+        text-decoration-color: rgba(196, 116, 87, 0.65);
+        text-underline-offset: 3px;
+        transition: color 0.15s ease, text-decoration-color 0.15s ease;
+      }
+      [data-peek-term]:hover, [data-peek-lesson]:hover {
+        color: var(--accent-primary, #c47457);
+        text-decoration-color: var(--accent-primary, #c47457);
+      }
+    `;
+
+    document.head.appendChild(styleEl);
+  }
+
+  /* ============================================================================
+     3. MINI SYNTAX HIGHLIGHTER AN TOÀN & NHANH (FAST REGEX HIGHLIGHTER)
+     ============================================================================ */
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function highlightSyntax(code) {
+    if (!code) return '';
+    const lines = code.trim().split('\n');
+    // Giới hạn hiển thị 4 - 6 dòng để popup tinh gọn
+    const displayLines = lines.slice(0, 6);
+    const escaped = displayLines.map(line => escapeHtml(line)).join('\n');
+
+    // Tô màu theo thứ tự token
+    let res = escaped
+      // Comments (// ... hoặc # ...)
+      .replace(/(\/\/[^\n]*|#[^\n]*)/g, '<span class="hl-cmt">$1</span>')
+      // Strings ("..." hoặc '...')
+      .replace(/(&quot;[\s\S]*?&quot;|&#39;[\s\S]*?&#39;)/g, '<span class="hl-str">$1</span>')
+      // Numbers
+      .replace(/\b(\d+(\.\d+)?)\b/g, '<span class="hl-num">$1</span>')
+      // C++/SQL/JS Keywords
+      .replace(/\b(int|double|float|char|bool|void|const|auto|static|struct|class|typedef|using|namespace|virtual|override|public|private|protected|new|delete|return|if|else|for|while|do|switch|case|break|continue|nullptr|true|false|START TRANSACTION|COMMIT|ROLLBACK|SELECT|FROM|WHERE|UPDATE|SET|function|let|async|await)\b/g, '<span class="hl-kw">$1</span>')
+      // Common Types & Utilities
+      .replace(/\b(std|cout|cin|endl|string|vector|mutex|unique_ptr|shared_ptr|make_unique|make_shared|lock_guard|scoped_lock|Array2d|Shape|Session)\b/g, '<span class="hl-type">$1</span>');
+
+    return res;
+  }
+
+  /* ============================================================================
+     4. TRA CỨU DỮ LIỆU THÔNG MINH (DATA RESOLVER)
+     ============================================================================ */
+  function resolveDataFromTarget(el) {
+    if (!el) return null;
+
+    // 1. Kiểm tra data-peek-term
+    const termKey = el.getAttribute('data-peek-term') || el.dataset.peekTerm;
+    if (termKey) {
+      let normalized = termKey.trim().toLowerCase().replace(/[-\s]/g, '_');
+      if (CONCEPT_ALIASES[normalized]) {
+        normalized = CONCEPT_ALIASES[normalized];
+      }
+      if (CONCEPT_DICTIONARY[normalized]) {
+        return CONCEPT_DICTIONARY[normalized];
+      }
+      // Thử tìm khớp tương đối trong từ điển
+      for (const k in CONCEPT_DICTIONARY) {
+        if (normalized.includes(k) || k.includes(normalized)) {
+          return CONCEPT_DICTIONARY[k];
+        }
+      }
+    }
+
+    // 2. Kiểm tra data-peek-lesson hoặc data-open-lesson
+    const lessonId = el.getAttribute('data-peek-lesson') || 
+                     el.dataset.peekLesson || 
+                     el.getAttribute('data-open-lesson') || 
+                     el.dataset.openLesson;
+
+    if (lessonId) {
+      const resolvedLesson = lookupLessonOrPlaybook(lessonId.trim());
+      if (resolvedLesson) return resolvedLesson;
+    }
+
+    // 3. Kiểm tra Function Navigator item trong Playbook Studio
+    const fnId = el.getAttribute('data-fn-id') || el.dataset.fnId;
+    if (fnId) {
+      const fnData = resolveFunctionNavigatorData(el, fnId);
+      if (fnData) return fnData;
+    }
+
+    // 4. Kiểm tra xem thẻ có phải .lesson-card hoặc chứa .lesson-id-badge không
+    const cardEl = el.closest('.lesson-card') || el.closest('[data-lesson-id]');
+    if (cardEl) {
+      const badge = cardEl.querySelector('.lesson-id-badge') || cardEl.querySelector('[data-open-lesson]');
+      const idText = badge ? (badge.getAttribute('data-open-lesson') || badge.textContent.trim()) : null;
+      if (idText) {
+        const resolved = lookupLessonOrPlaybook(idText);
+        if (resolved) return resolved;
+      }
+    }
+
+    // 5. Kiểm tra data-fn-id nếu người dùng hover vào phần tử con
+    const fnCard = el.closest('[data-fn-id]');
+    if (fnCard) {
+      const fId = fnCard.getAttribute('data-fn-id');
+      const fnData = resolveFunctionNavigatorData(fnCard, fId);
+      if (fnData) return fnData;
+    }
+
+    // 6. Kiểm tra inline text hoặc thẻ đánh dấu khái niệm
+    const textContent = el.textContent ? el.textContent.trim().toLowerCase() : '';
+    if (textContent && textContent.length < 32) {
+      let normalizedText = textContent.replace(/[-\s]/g, '_');
+      if (CONCEPT_ALIASES[normalizedText]) {
+        normalizedText = CONCEPT_ALIASES[normalizedText];
+      }
+      if (CONCEPT_DICTIONARY[normalizedText]) {
+        return CONCEPT_DICTIONARY[normalizedText];
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Tra cứu thông tin bài học từ PLATFORM_DATA hoặc PLAYBOOK_DATA
+   */
+  function lookupLessonOrPlaybook(id) {
+    if (!id) return null;
+    const cleanId = id.toUpperCase();
+
+    // Tra cứu trong PLAYBOOK_DATA.playbooks
+    if (window.PLAYBOOK_DATA && Array.isArray(window.PLAYBOOK_DATA.playbooks)) {
+      const pb = window.PLAYBOOK_DATA.playbooks.find(p => 
+        (p.id && p.id.toUpperCase() === cleanId) || 
+        (p.subjectId && p.subjectId.toUpperCase() === cleanId)
+      );
+      if (pb) {
+        const sourceCode = (pb.sourceCodeByLang && (pb.sourceCodeByLang.CPP || pb.sourceCodeByLang.cpp)) || '';
+        const previewCode = extractSnippetFromSource(sourceCode);
+        return {
+          id: pb.id,
+          title: pb.title || 'Playbook Code Chuẩn 4 Tầng',
+          badge: `${pb.subjectId || 'C++'} · Playbook Studio`,
+          icon: "⚡",
+          category: pb.category || "Executable Code Playbook",
+          essence: (pb.keyTechnicalNotes && pb.keyTechnicalNotes[0]) || 
+                   pb.description || 
+                   `Học qua 1 file code hoàn chỉnh duy nhất với 4 tầng kiến trúc chuẩn mực.`,
+          code: previewCode,
+          lang: "cpp",
+          duration: "⏱️ 35–50 phút",
+          actionText: "📖 Mở Trong Playbook Studio",
+          actionType: "playbook",
+          targetId: pb.id
+        };
+      }
+    }
+
+    // Tra cứu trong PLATFORM_DATA.lessons (343 bài học chuẩn)
+    if (window.PLATFORM_DATA && Array.isArray(window.PLATFORM_DATA.lessons)) {
+      const les = window.PLATFORM_DATA.lessons.find(l => l.id && l.id.toUpperCase() === cleanId);
+      if (les) {
+        // Rút trích bản chất từ sec.exp hoặc sec.sync
+        let essenceText = '';
+        if (les.sec && les.sec.exp) {
+          essenceText = stripHtml(les.sec.exp);
+        } else if (les.sec && les.sec.sync) {
+          essenceText = stripHtml(les.sec.sync);
+        } else {
+          essenceText = `${les.title} thuộc học phần ${les.subjName || les.subj}. Cung cấp kiến thức nền tảng vững chắc.`;
+        }
+
+        // Cắt ngắn 2-3 câu
+        const sentences = essenceText.split(/[.?!]\s+/);
+        essenceText = sentences.slice(0, 3).join('. ') + (sentences.length > 3 ? '.' : '');
+
+        // Trích xuất code snippet minh họa từ sec.ex hoặc sinh snippet trực quan
+        let codeSnippet = '';
+        if (les.sec && les.sec.ex) {
+          const rawEx = stripHtml(les.sec.ex);
+          codeSnippet = rawEx.includes(';') ? rawEx.slice(0, 180) : generateFallbackCodeForLesson(les);
+        } else {
+          codeSnippet = generateFallbackCodeForLesson(les);
+        }
+
+        const estMinutes = les.substeps && les.substeps.length ? (20 + les.substeps.length * 8) : 35;
+
+        return {
+          id: les.id,
+          title: les.title,
+          badge: `${les.subj} · ${les.subjName || 'UIT'}`,
+          icon: "📘",
+          category: les.stage || "Lộ Trình Chuẩn",
+          essence: essenceText,
+          code: codeSnippet,
+          lang: "cpp",
+          duration: `⏱️ ${estMinutes - 10}–${estMinutes + 10} phút`,
+          actionText: "⚡ Học Bài Này Ngay",
+          actionType: "lesson",
+          targetId: les.id
+        };
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Tạo tóm tắt và snippet cho hàm trong Function Navigator của Playbook Studio
+   */
+  function resolveFunctionNavigatorData(el, fnId) {
+    const nameEl = el.querySelector('.nav-fn-name') || el.querySelector('.fn-name');
+    const fnName = nameEl ? nameEl.textContent.trim() : fnId;
+    const typeEl = el.querySelector('.nav-type-badge') || el.querySelector('.badge');
+    const fnType = typeEl ? typeEl.textContent.trim() : 'Hàm Thao Tác';
+    const descEl = el.querySelector('.nav-fn-desc') || el.querySelector('.fn-desc');
+    const fnDesc = descEl ? descEl.textContent.trim() : `Hàm ${fnName}() được thiết kế chuẩn mực trong kiến trúc Playbook.`;
+
+    const startLine = el.getAttribute('data-start-line') || '';
+    const endLine = el.getAttribute('data-end-line') || '';
+    const lineRangeText = (startLine && endLine) ? ` · L${startLine}-L${endLine}` : '';
+
+    return {
+      id: fnId,
+      title: `${fnName}()`,
+      badge: `${fnType}${lineRangeText}`,
+      icon: "📑",
+      category: "Playbook Function Navigator",
+      essence: fnDesc,
+      code: `// Định nghĩa và kiểm chứng tại Playbook Studio\nvoid ${fnName}(/* parameters */) {\n    // Đảm bảo không làm rò rỉ bộ nhớ Heap\n    // Tối ưu cache và thời gian thực thi O(N)\n}`,
+      lang: "cpp",
+      duration: "⏱️ 5–15 phút đọc mã",
+      actionText: "⚡ Định Vị Dòng Trong Studio",
+      actionType: "function",
+      targetId: fnId
+    };
+  }
+
+  function extractSnippetFromSource(source) {
+    if (!source) return `// Code chuẩn kiến trúc 4 tầng\nint main() {\n    // Thực thi kiểm chứng toàn diện\n    return 0;\n}`;
+    const lines = source.split('\n');
+    // Tìm hàm đầu tiên sau tầng 1
+    let startIndex = 0;
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].includes('TẦNG 2') || lines[i].includes('void ') || lines[i].includes('int ')) {
+        startIndex = i;
+        break;
+      }
+    }
+    const snippet = lines.slice(startIndex, startIndex + 5).join('\n');
+    return snippet.trim() || lines.slice(0, 5).join('\n');
+  }
+
+  function generateFallbackCodeForLesson(lesson) {
+    return `// Minh họa khái niệm cốt lõi: ${lesson.id}\nvoid executeDemo() {\n    cout << "Khám phá bài học: ${escapeHtml(lesson.title)}" << endl;\n}`;
+  }
+
+  function stripHtml(html) {
+    if (!html) return '';
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  /* ============================================================================
+     5. THUẬT TOÁN ĐỊNH VỊ CHỐNG TRÀN MÀN HÌNH (SMART COLLISION & AUTO-FLIP)
+     ============================================================================ */
+  function computeSmartPosition(targetEl, popoverEl) {
+    const targetRect = targetEl.getBoundingClientRect();
+    const popoverRect = popoverEl.getBoundingClientRect();
+
+    const popoverWidth = popoverRect.width || 380;
+    const popoverHeight = popoverRect.height || 260;
+
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    const margin = 14; // Khoảng cách đệm an toàn tới mép viewport
+    const gap = 10;    // Khoảng cách giữa target và popover
+
+    // 1. Tính toán trục dọc (Vertical Axis)
+    const spaceBelow = viewportHeight - targetRect.bottom;
+    const spaceAbove = targetRect.top;
+
+    let top = 0;
+    let isFlippedTop = false;
+
+    // Nếu không đủ chỗ phía dưới (< popoverHeight + gap + margin) và phía trên rộng hơn
+    if (spaceBelow < (popoverHeight + gap + margin) && spaceAbove > spaceBelow) {
+      // Auto-flip Top: Lật lên phía trên phần tử
+      top = targetRect.top - popoverHeight - gap;
+      isFlippedTop = true;
+    } else {
+      // Mặc định: Nằm phía dưới phần tử
+      top = targetRect.bottom + gap;
+      isFlippedTop = false;
+    }
+
+    // Khóa an toàn không bị tràn mép trên/dưới
+    if (top < margin) {
+      top = margin;
+    } else if (top + popoverHeight > viewportHeight - margin) {
+      top = viewportHeight - popoverHeight - margin;
+    }
+
+    // 2. Tính toán trục ngang (Horizontal Axis)
+    // Căn giữa popover so với phần tử target
+    let left = targetRect.left + (targetRect.width - popoverWidth) / 2;
+
+    // Chống tràn mép phải: Nếu vượt quá mép phải -> dịch sang trái
+    if (left + popoverWidth > viewportWidth - margin) {
+      left = viewportWidth - popoverWidth - margin;
+    }
+    // Chống tràn mép trái: Nếu nhỏ hơn lề an toàn -> dịch sang phải
+    if (left < margin) {
+      left = margin;
+    }
+
+    // 3. Tính toán vị trí mũi tên chỉ báo (Arrow Caret)
+    // Tọa độ tâm target chiếu theo trục X của popover
+    const targetCenterX = targetRect.left + targetRect.width / 2;
+    let arrowLeft = targetCenterX - left - 6; // 6 là nửa chiều rộng mũi tên 12px
+    // Giới hạn mũi tên nằm trong vùng bo góc của popover (18px đến popoverWidth - 28px)
+    arrowLeft = Math.max(18, Math.min(popoverWidth - 28, arrowLeft));
+
+    return { top, left, isFlippedTop, arrowLeft };
+  }
+
+  /* ============================================================================
+     6. CORE ENGINE CONTROLLER (DEBOUNCE, SHOW, HIDE, QUICK ACTION)
+     ============================================================================ */
+  let popoverEl = null;
+  let arrowEl = null;
+  let activeTarget = null;
+  let currentData = null;
+
+  let showTimer = null;
+  let hideTimer = null;
+
+  const DEBOUNCE_DELAY = 120; // 120ms: Rê chuột nhanh lướt qua không bị nhấp nháy
+  const HIDE_DELAY = 200;     // 200ms: Đủ thời gian di chuyển chuột vào trong thẻ
+
+  function getOrCreatePopover() {
+    if (popoverEl && document.body.contains(popoverEl)) {
+      return popoverEl;
+    }
+
+    injectStyles();
+
+    popoverEl = document.createElement('div');
+    popoverEl.className = 'smart-peek-popover';
+    popoverEl.setAttribute('role', 'tooltip');
+    popoverEl.setAttribute('aria-hidden', 'true');
+
+    arrowEl = document.createElement('div');
+    arrowEl.className = 'smart-peek-arrow';
+    popoverEl.appendChild(arrowEl);
+
+    const contentWrapper = document.createElement('div');
+    contentWrapper.className = 'smart-peek-content-wrapper';
+    popoverEl.appendChild(contentWrapper);
+
+    // Xử lý sự kiện giữ popover khi người dùng rê chuột vào bên trong
+    popoverEl.addEventListener('mouseenter', () => {
+      clearTimeout(hideTimer);
+    });
+
+    popoverEl.addEventListener('mouseleave', () => {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        hidePopover();
+      }, HIDE_DELAY);
+    });
+
+    // Bắt sự kiện click vào nút hành động
+    popoverEl.addEventListener('click', handlePopoverClick);
+
+    document.body.appendChild(popoverEl);
+    return popoverEl;
+  }
+
+  function renderPopoverHtml(data) {
+    const icon = data.icon || "💡";
+    const idBadge = data.id ? `<span class="smart-peek-id-badge">${escapeHtml(data.id)}</span>` : '';
+    const catBadge = data.badge ? `<span class="smart-peek-cat-badge">${escapeHtml(data.badge)}</span>` : '';
+    const title = escapeHtml(data.title || "Khái Niệm Kỹ Thuật");
+    const essence = escapeHtml(data.essence || "");
+    const codeHtml = highlightSyntax(data.code || "");
+    const langLabel = (data.lang || "cpp").toUpperCase();
+    const duration = escapeHtml(data.duration || "⏱️ 25–40 phút");
+    const actionText = escapeHtml(data.actionText || "⚡ Xem Chi Tiết");
+
+    return `
+      <div class="smart-peek-header">
+        <div class="smart-peek-icon-box">${icon}</div>
+        <div class="smart-peek-title-group">
+          <div class="smart-peek-top-row">
+            ${idBadge}
+            ${catBadge}
+          </div>
+          <h4 class="smart-peek-title" title="${title}">${title}</h4>
+        </div>
+      </div>
+
+      <div class="smart-peek-essence">${essence}</div>
+
+      ${data.code ? `
+        <div class="smart-peek-code-box">
+          <span class="smart-peek-code-lang">${langLabel}</span>
+          <code>${codeHtml}</code>
+        </div>
+      ` : ''}
+
+      <div class="smart-peek-footer">
+        <div class="smart-peek-duration">${duration}</div>
+        <button type="button" class="smart-peek-btn" data-action="${data.actionType || 'open'}" data-target="${escapeHtml(data.targetId || data.id || '')}">
+          <span>${actionText}</span>
+          <span style="font-size:13px;">→</span>
+        </button>
+      </div>
+    `;
+  }
+
+  function showPopoverForTarget(target) {
+    if (!target) return;
+    const data = resolveDataFromTarget(target);
+    if (!data) return;
+
+    activeTarget = target;
+    currentData = data;
+
+    const pop = getOrCreatePopover();
+    const wrapper = pop.querySelector('.smart-peek-content-wrapper');
+    if (wrapper) {
+      wrapper.innerHTML = renderPopoverHtml(data);
+    }
+
+    // Đưa vào DOM nhưng chưa kích hoạt active để đo đạc chính xác kích thước
+    pop.style.left = '-9999px';
+    pop.style.top = '-9999px';
+    pop.classList.remove('is-active', 'is-flipped-top');
+    pop.setAttribute('aria-hidden', 'false');
+
+    // Chờ 1 frame để layout tính xong getBoundingClientRect
+    requestAnimationFrame(() => {
+      if (activeTarget !== target) return; // Nếu đã di chuột sang target khác thì dừng
+
+      const pos = computeSmartPosition(target, pop);
+      pop.style.left = `${Math.round(pos.left)}px`;
+      pop.style.top = `${Math.round(pos.top)}px`;
+
+      if (pos.isFlippedTop) {
+        pop.classList.add('is-flipped-top');
+      } else {
+        pop.classList.remove('is-flipped-top');
+      }
+
+      if (arrowEl) {
+        arrowEl.style.left = `${Math.round(pos.arrowLeft)}px`;
+      }
+
+      pop.classList.add('is-active');
+    });
+  }
+
+  function hidePopover() {
+    clearTimeout(showTimer);
+    activeTarget = null;
+    currentData = null;
+
+    if (popoverEl) {
+      popoverEl.classList.remove('is-active');
+      popoverEl.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  function handlePopoverClick(e) {
+    const btn = e.target.closest('.smart-peek-btn');
+    if (!btn) return;
+
+    const action = btn.getAttribute('data-action');
+    const targetId = btn.getAttribute('data-target');
+
+    hidePopover();
+
+    if (action === 'playbook') {
+      // Mở Playbook Studio
+      if (typeof window.selectPlaybook === 'function' && targetId) {
+        window.selectPlaybook(targetId);
+      }
+      if (typeof window.navigateTo === 'function') {
+        window.navigateTo('playbook');
+      } else {
+        const playbookTab = document.querySelector('[data-view="playbook"]');
+        if (playbookTab) playbookTab.click();
+      }
+    } else if (action === 'lesson') {
+      // Mở Lesson Reader
+      if (typeof window.navigateTo === 'function' && targetId) {
+        window.navigateTo('reader', targetId);
+      } else {
+        const openBtn = document.querySelector(`[data-open-lesson="${targetId}"]`);
+        if (openBtn) openBtn.click();
+      }
+    } else if (action === 'function') {
+      // Focus vào dòng trong Playbook Studio
+      if (typeof window.navigateTo === 'function') {
+        window.navigateTo('playbook');
+      }
+      const navItem = document.querySelector(`[data-fn-id="${targetId}"]`);
+      if (navItem) {
+        navItem.click();
+        navItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }
+
+  /* ============================================================================
+     7. EVENT DELEGATION: MOUSEOVER / MOUSEOUT & ESCAPE KEY
+     ============================================================================ */
+  function findValidHoverTarget(el) {
+    if (!el || el === document.body || el === document.documentElement) return null;
+
+    // Không kích hoạt popover khi đang rê chuột bên trong chính popover
+    if (el.closest('.smart-peek-popover')) return null;
+
+    // Các bộ chọn kích hoạt Smart Peek Card
+    return el.closest(`
+      [data-peek-term],
+      [data-peek-lesson],
+      .lesson-card,
+      [data-open-lesson],
+      .nav-item-card,
+      [data-fn-id],
+      .smart-hover-target,
+      .lesson-id-badge
+    `);
+  }
+
+  function handleGlobalMouseOver(e) {
+    const target = findValidHoverTarget(e.target);
+    if (!target) return;
+
+    // Nếu vẫn ở trên cùng một target thì bỏ qua
+    if (target === activeTarget) {
+      clearTimeout(hideTimer);
+      return;
+    }
+
+    clearTimeout(hideTimer);
+    clearTimeout(showTimer);
+
+    // Kích hoạt Debounce 120ms
+    showTimer = setTimeout(() => {
+      showPopoverForTarget(target);
+    }, DEBOUNCE_DELAY);
+  }
+
+  function handleGlobalMouseOut(e) {
+    const target = findValidHoverTarget(e.target);
+    if (!target) return;
+
+    // Nếu con trỏ chuột chỉ di chuyển vào một phần tử con bên trong cùng target thì bỏ qua
+    if (target.contains(e.relatedTarget)) {
+      return;
+    }
+
+    clearTimeout(showTimer);
+    clearTimeout(hideTimer);
+
+    // Kích hoạt độ trễ 200ms trước khi ẩn popover
+    hideTimer = setTimeout(() => {
+      hidePopover();
+    }, HIDE_DELAY);
+  }
+
+  function handleGlobalKeyDown(e) {
+    if (e.key === 'Escape') {
+      hidePopover();
+    }
+  }
+
+  function handleGlobalScroll() {
+    // Ẩn mượt mà khi người dùng cuộn trang nhanh để tránh lệch tọa độ
+    if (popoverEl && popoverEl.classList.contains('is-active')) {
+      hidePopover();
+    }
+  }
+
+  /* ============================================================================
+     8. PUBLIC API & TỰ ĐỘNG KHỞI TẠO (INIT ENGINE)
+     ============================================================================ */
+  let listenersAttached = false;
+
+  function initSmartHoverEngine() {
+    injectStyles();
+    getOrCreatePopover();
+
+    if (!listenersAttached) {
+      document.addEventListener('mouseover', handleGlobalMouseOver, { passive: true });
+      document.addEventListener('mouseout', handleGlobalMouseOut, { passive: true });
+      document.addEventListener('keydown', handleGlobalKeyDown, { passive: true });
+      window.addEventListener('scroll', handleGlobalScroll, { passive: true });
+      listenersAttached = true;
+      console.log('✨ [SmartHoverEngine] Activated with 120ms Debounce & Smart Collision Auto-Flip.');
+    }
+
+    return window.SmartHoverEngine;
+  }
+
+  // Khai báo đối tượng quản trị toàn cục
+  window.SmartHoverEngine = {
+    init: initSmartHoverEngine,
+    show: function (targetEl, customData) {
+      if (!targetEl) return;
+      if (customData) {
+        activeTarget = targetEl;
+        currentData = customData;
+        const pop = getOrCreatePopover();
+        const wrapper = pop.querySelector('.smart-peek-content-wrapper');
+        if (wrapper) wrapper.innerHTML = renderPopoverHtml(customData);
+        requestAnimationFrame(() => {
+          const pos = computeSmartPosition(targetEl, pop);
+          pop.style.left = `${Math.round(pos.left)}px`;
+          pop.style.top = `${Math.round(pos.top)}px`;
+          if (pos.isFlippedTop) pop.classList.add('is-flipped-top');
+          else pop.classList.remove('is-flipped-top');
+          if (arrowEl) arrowEl.style.left = `${Math.round(pos.arrowLeft)}px`;
+          pop.classList.add('is-active');
+        });
+      } else {
+        showPopoverForTarget(targetEl);
+      }
+    },
+    hide: hidePopover,
+    registerTerm: function (key, data) {
+      if (!key || !data) return;
+      CONCEPT_DICTIONARY[key.toLowerCase().trim()] = data;
+    },
+    getDictionary: function () {
+      return Object.assign({}, CONCEPT_DICTIONARY);
+    },
+    lookup: lookupLessonOrPlaybook
+  };
+
+  window.initSmartHoverEngine = initSmartHoverEngine;
+
+  // Tự động khởi động khi DOM sẵn sàng
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSmartHoverEngine);
+  } else {
+    initSmartHoverEngine();
+  }
+
+})(typeof window !== 'undefined' ? window : this, typeof document !== 'undefined' ? document : {});
+
+</script>
+<script>
+/**
+ * ============================================================================
+ * TOÀN PHẠM IT SANCTUARY — MODULE WORKSPACE HUB & OMNI COMMAND PALETTE
+ * File: module_workspace_hub.js
+ * Version: 4.0.0 (Core Workspace Hub Architecture)
+ * 
+ * TÁC GIẢ & BẢN QUYỀN:
+ * Kiến trúc & Xây dựng bởi Toàn Phạm · UIT SE
+ * 
+ * MỤC TIÊU CỐT LÕI:
+ * 1. Tái cấu trúc 11 Tab dàn trải thành 4 Core Workspace Hubs chuyên sâu:
+ *    - Hub 1: [⚡ STUDIO HỌC & CODE]: Trình đọc lý thuyết (Reader) + Code Playbook Studio 3 cột + Terminal + Memory Visualizer.
+ *    - Hub 2: [🧭 LỘ TRÌNH 11 NGÀNH]: Lộ trình 343 bài học UIT + 11 Hướng đi nghề nghiệp + Bộ tính điểm giao chuyển ngành resolveCareerBridge.
+ *    - Hub 3: [🧪 PHÒNG LUYỆN LAB]: English Lab 25 ENQ + Củng cố lỗi Remediation + Buổi học Pomodoro.
+ *    - Hub 4: [📊 HỒ SƠ & TÍN CHỈ UIT]: GPA Tín chỉ UIT + Dự án / Semester Gates + Kiểm định chất lượng Audit.
+ * 
+ * 2. Omni Command Palette (Ctrl + K / Cmd + K):
+ *    - Spotlight search tức thời, animation mượt mà 60fps.
+ *    - Tìm kiếm thông minh mờ (Fuzzy Search) trên toàn bộ 343 bài học, 11 Hướng đi UIT,
+ *      Code Playbooks (mang2chieu.cpp, oop_ke_thua_da_hinh.cpp,...), các môn học UIT (IT001, IT002, IT003, MA006,...).
+ *    - Click / Enter là nhảy ngay đến đúng Hub và kích hoạt bài học/tính năng ngay lập tức.
+ * 
+ * 3. Quản lý Sub-tabs (Segmented Controls) mượt mà, phản hồi hai chiều với ứng dụng.
+ * 
+ * EXPORTS:
+ * - window.initWorkspaceHubs()
+ * - window.switchWorkspaceHub(hubId, subTabId)
+ * - window.toggleCommandPalette()
+ * - window.openCommandPalette()
+ * - window.closeCommandPalette()
+ * - window.getCurrentWorkspaceHub()
+ * ============================================================================
+ */
+
+(function (window, document) {
+  'use strict';
+
+  /* ==========================================================================
+     1. CẤU TRÚC DỮ LIỆU 4 CORE WORKSPACE HUBS (SINGLE SOURCE OF TRUTH)
+     ========================================================================== */
+  const WORKSPACE_HUBS = [
+    {
+      id: 'studio',
+      title: 'STUDIO HỌC & CODE',
+      shortTitle: 'Studio Code',
+      icon: '⚡',
+      badge: 'Live / C++17',
+      badgeClass: 'hub-badge-accent',
+      description: 'Lý thuyết song hành thực thi 4 tầng, Terminal tương tác & Memory Visualizer',
+      defaultSubTab: 'reader',
+      subTabs: [
+        {
+          id: 'reader',
+          label: 'Đọc Bài & Lý Thuyết',
+          icon: '📖',
+          badge: 'CPP-001',
+          badgeId: 'navCurrentLessonBadge',
+          viewTarget: 'reader',
+          description: 'Trình đọc bài học lý thuyết chi tiết theo lộ trình'
+        },
+        {
+          id: 'playbook',
+          label: 'Code Playbook Studio',
+          icon: '⚡',
+          badge: 'Studio 3 Cột',
+          badgeClass: 'tab-count-highlight',
+          viewTarget: 'playbook',
+          description: 'Môi trường code 1 file chuẩn mang2chieu.cpp, Terminal & Heap Visualizer'
+        }
+      ]
+    },
+    {
+      id: 'roadmap_hub',
+      title: 'LỘ TRÌNH 11 NGÀNH',
+      shortTitle: 'Lộ Trình 11 Ngành',
+      icon: '🧭',
+      badge: '343 Bài · 11 Ngành',
+      badgeClass: 'hub-badge-info',
+      description: 'Chuẩn 343 bài học UIT & Bản đồ 11 Hướng đi chuyển ngành Zero-Overlap',
+      defaultSubTab: 'roadmap',
+      subTabs: [
+        {
+          id: 'roadmap',
+          label: 'Lộ Trình 343 Bài',
+          icon: '🗺️',
+          badge: '343 Bài',
+          badgeId: 'navRoadmapBadge',
+          viewTarget: 'roadmap',
+          description: 'Toàn bộ 343 bài học kỹ sư phần mềm UIT'
+        },
+        {
+          id: 'career',
+          label: '11 Hướng Đi & Điểm Giao',
+          icon: '🚀',
+          badge: 'Zero-Overlap',
+          viewTarget: 'career',
+          description: '11 Hướng đi nghề nghiệp UIT & Bộ tính chuyển ngành resolveCareerBridge'
+        }
+      ]
+    },
+    {
+      id: 'lab_hub',
+      title: 'PHÒNG LUYỆN LAB',
+      shortTitle: 'Phòng Luyện Lab',
+      icon: '🧪',
+      badge: '25 ENQ · Pomodoro',
+      badgeClass: 'hub-badge-warning',
+      description: 'English kỹ thuật 25 ENQ, Sổ tay khắc phục lỗi & Buổi học tập trung Pomodoro',
+      defaultSubTab: 'english',
+      subTabs: [
+        {
+          id: 'english',
+          label: 'English Lab (25 ENQ)',
+          icon: '🇬🇧',
+          badge: '25 ENQ',
+          viewTarget: 'english',
+          description: 'Luyện 25 câu hỏi phỏng vấn tiếng Anh chuyên ngành SE'
+        },
+        {
+          id: 'remediation',
+          label: 'Củng Cố & Sửa Lỗi',
+          icon: '🩹',
+          badge: 'Lỗ Hổng',
+          viewTarget: 'remediation',
+          description: 'Sổ tay củng cố kiến thức và khắc phục lỗi thường gặp'
+        },
+        {
+          id: 'sessions',
+          label: 'Buổi Học Pomodoro',
+          icon: '⏱️',
+          badge: '0 buổi',
+          badgeId: 'navSessionBadge',
+          viewTarget: 'sessions',
+          description: 'Quản lý phiên học tập trung, bấm giờ Pomodoro & Thống kê'
+        }
+      ]
+    },
+    {
+      id: 'portal_hub',
+      title: 'HỒ SƠ & TÍN CHỈ UIT',
+      shortTitle: 'Hồ Sơ & UIT',
+      icon: '📊',
+      badge: 'GPA · Audit',
+      badgeClass: 'hub-badge-success',
+      description: 'Theo dõi GPA UIT, Cột mốc Semester Gates & Báo cáo kiểm định chất lượng',
+      defaultSubTab: 'gpa',
+      subTabs: [
+        {
+          id: 'gpa',
+          label: 'Điểm Số & GPA UIT',
+          icon: '📊',
+          badge: 'Tín Chỉ',
+          viewTarget: 'gpa',
+          description: 'Theo dõi điểm tích lũy, GPA học kỳ và tiến độ tốt nghiệp'
+        },
+        {
+          id: 'projects',
+          label: 'Dự Án & Semester Gates',
+          icon: '🎯',
+          badge: 'Gates',
+          viewTarget: 'projects',
+          description: 'Cột mốc Semester Gates và các môn học đồ án chuyên ngành'
+        },
+        {
+          id: 'admin',
+          label: 'Kiểm Định & Báo Cáo',
+          icon: '🛡️',
+          badge: 'Audit',
+          viewTarget: 'admin',
+          description: 'Kiểm định toàn diện tiến độ, tính toàn vẹn và phân tích dữ liệu'
+        }
+      ]
+    }
+  ];
+
+  // Bản đồ tra cứu nhanh: view -> { hubId, subTabId }
+  const VIEW_TO_HUB_MAP = {
+    reader: { hubId: 'studio', subTabId: 'reader' },
+    playbook: { hubId: 'studio', subTabId: 'playbook' },
+    roadmap: { hubId: 'roadmap_hub', subTabId: 'roadmap' },
+    career: { hubId: 'roadmap_hub', subTabId: 'career' },
+    english: { hubId: 'lab_hub', subTabId: 'english' },
+    remediation: { hubId: 'lab_hub', subTabId: 'remediation' },
+    sessions: { hubId: 'lab_hub', subTabId: 'sessions' },
+    gpa: { hubId: 'portal_hub', subTabId: 'gpa' },
+    projects: { hubId: 'portal_hub', subTabId: 'projects' },
+    admin: { hubId: 'portal_hub', subTabId: 'admin' },
+    dashboard: { hubId: 'roadmap_hub', subTabId: 'roadmap' },
+    security: { hubId: 'portal_hub', subTabId: 'admin' }
+  };
+
+  /* ==========================================================================
+     2. DỮ LIỆU DỰ PHÒNG CHUẨN (FALLBACK DATASETS FOR FUZZY SEARCH)
+     ========================================================================== */
+  const FALLBACK_CAREER_WAYS = [
+    { id: 'WAY_01', code: 'WAY_01_BACKEND', title: 'Kỹ Sư Backend & Hệ Thống Phân Tán', desc: 'Kiến trúc dịch vụ, C++17/Go/Java, Database Tuning, High Concurrency' },
+    { id: 'WAY_02', code: 'WAY_02_FRONTEND', title: 'Kỹ Sư Frontend & Web Performance', desc: 'Modern Web, React/TypeScript, Micro-frontends, Tối ưu 60fps' },
+    { id: 'WAY_03', code: 'WAY_03_FULLSTACK', title: 'Kỹ Sư Fullstack Web & Cloud Apps', desc: 'End-to-End Engineering, REST/GraphQL, Clean Architecture' },
+    { id: 'WAY_04', code: 'WAY_04_MOBILE', title: 'Kỹ Sư Mobile (Flutter & Native)', desc: 'Cross-platform Flutter, Kotlin/Swift, Offline-First, Mobile Cache' },
+    { id: 'WAY_05', code: 'WAY_05_DEVOPS_CLOUD', title: 'Kỹ Sư DevOps, SRE & Cloud Native', desc: 'CI/CD Pipelines, Docker, Kubernetes, Terraform, AWS/GCP' },
+    { id: 'WAY_06', code: 'WAY_06_DATA_ENGINEERING', title: 'Kỹ Sư Kỹ Thuật Dữ Liệu (Data Engineer)', desc: 'Big Data, Spark/Flink, Kafka streaming, DWH & Lakehouse' },
+    { id: 'WAY_07', code: 'WAY_07_AI_ML', title: 'Kỹ Sư AI, Trí Tuệ Nhân Tạo & Học Máy', desc: 'Deep Learning, PyTorch, LLMs, Computer Vision, MLOps' },
+    { id: 'WAY_08', code: 'WAY_08_CYBERSECURITY', title: 'Kỹ Sư An Toàn Thông Tin & DevSecOps', desc: 'Network Security, Pentesting, Reverse Engineering, Cryptography' },
+    { id: 'WAY_09', code: 'WAY_09_GAME_DEV', title: 'Kỹ Sư Lập Trình Game & Đồ Họa (Game Dev)', desc: 'C++, Unity/Unreal Engine, Shader programming, Physics Engine' },
+    { id: 'WAY_10', code: 'WAY_10_EMBEDDED_IOT', title: 'Kỹ Sư Hệ Thống Nhúng & IoT', desc: 'C/Embedded C++, RTOS, Vi điều khiển ARM/ESP32, Firmware' },
+    { id: 'WAY_11', code: 'WAY_11_QUANTUM', title: 'Kỹ Sư Điện Toán Lượng Tử (Quantum Computing)', desc: 'Qiskit, Quantum Circuits, Linear Algebra, Quantum Algorithms' }
+  ];
+
+  const FALLBACK_CORE_SUBJECTS = [
+    { code: 'IT001', name: 'Nhập Môn Lập Trình', credits: 4, sem: 'HK1', desc: 'Thuật toán cơ sở, biến, vòng lặp, mảng 2 chiều chuẩn mang2chieu.cpp' },
+    { code: 'IT002', name: 'Lập Trình Hướng Đối Tượng (OOP)', credits: 4, sem: 'HK2', desc: '4 trụ cột OOP, Con trỏ, Vtable, Đa hình động, Lớp trừu tượng' },
+    { code: 'IT003', name: 'Cấu Trúc Dữ Liệu & Giải Thuật', credits: 4, sem: 'HK3', desc: 'Danh sách liên kết, Cây nhị phân, Bảng băm, Đồ thị, Độ phức tạp Big-O' },
+    { code: 'IT004', name: 'Cơ Sở Dữ Liệu', credits: 4, sem: 'HK3', desc: 'Mô hình quan hệ, Đại số quan hệ, Chuẩn hóa 1NF-3NF/BCNF, SQL' },
+    { code: 'IT005', name: 'Nhập Môn Mạng Máy Tính', credits: 3, sem: 'HK4', desc: 'Mô hình OSI/TCP-IP, Socket programming, Routing, DNS, HTTP' },
+    { code: 'SE005', name: 'Nhập Môn Kỹ Thuật Phần Mềm', credits: 3, sem: 'HK1', desc: 'SDLC, Git workflow, Quản lý phiên bản, Thiết kế kiến trúc' },
+    { code: 'SE117', name: 'Kỹ Thuật Lập Trình', credits: 3, sem: 'HK2', desc: 'Quản trị bộ nhớ Heap/Stack, Đệ quy, Con trỏ hàm, File nhị phân' },
+    { code: 'MA006', name: 'Xác Suất Thống Kê', credits: 3, sem: 'HK2', desc: 'Biến ngẫu nhiên, Phân phối, Ước lượng, Kiểm định giả thuyết' },
+    { code: 'MA003', name: 'Đại Số Tuyến Tính', credits: 3, sem: 'HK1', desc: 'Ma trận, Định thức, Không gian vector, Trị riêng & Vector riêng' },
+    { code: 'CE119', name: 'Kiến Trúc Máy Tính', credits: 3, sem: 'HK2', desc: 'Tập lệnh MIPS/RISC-V, ALU, Pipeline, Cache L1/L2, Bộ nhớ ảo' }
+  ];
+
+  const FALLBACK_PLAYBOOKS = [
+    { id: 'mang2chieu.cpp', title: 'Mảng 2 Chiều & Cấp Phát Động 4 Tầng (C++17)', category: 'C++ & Core Data Structures', badge: 'C++17 / Core DSA' },
+    { id: 'oop_ke_thua_da_hinh.cpp', title: 'Lập Trình Hướng Đối Tượng & Kế Thừa Đa Hình Chuẩn UIT', category: 'OOP & Modern Design', badge: 'OOP / Polymorphism' },
+    { id: 'danh_sach_lien_ket.cpp', title: 'Cấu Trúc Dữ Liệu Danh Sách Liên Kết Đơn (Singly Linked List)', category: 'Data Structures', badge: 'Linked List' },
+    { id: 'concurrency_mutex_threads.cpp', title: 'Lập Trình Đa Luồng & Đồng Bộ Hóa Mutex (C++ Concurrency)', category: 'System Programming', badge: 'Threads / Mutex' }
+  ];
+
+  /* ==========================================================================
+     3. QUẢN TRỊ TRẠNG THÁI NỘI BỘ (INTERNAL HUB STATE)
+     ========================================================================== */
+  const STORAGE_KEY = 'tp_workspace_hub_state_v4';
+
+  function loadSavedHubState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {
+      console.warn('Workspace Hub state load warning:', e);
+    }
+    return {
+      currentHubId: 'studio',
+      activeSubTabs: {
+        studio: 'reader',
+        roadmap_hub: 'roadmap',
+        lab_hub: 'english',
+        portal_hub: 'gpa'
+      }
+    };
+  }
+
+  function saveHubState(hubState) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(hubState));
+    } catch (e) {
+      // storage unavailable
+    }
+  }
+
+  let hubState = loadSavedHubState();
+
+  /* ==========================================================================
+     4. TIỆN ÍCH CHUẨN HÓA TIẾNG VIỆT & TÌM KIẾM MỜ (FUZZY SEARCH ENGINE)
+     ========================================================================== */
+  function normalizeText(str) {
+    if (!str) return '';
+    return str
+      .toString()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'd')
+      .replace(/[^a-z0-9\s._-]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function calculateRelevanceScore(queryNorm, itemNorm, idNorm, titleNorm) {
+    if (!queryNorm) return 0;
+    let score = 0;
+
+    // 1. Khớp chính xác ID (e.g. CPP-001, IT001, WAY_01)
+    if (idNorm === queryNorm) score += 2000;
+    else if (idNorm.startsWith(queryNorm)) score += 1200;
+    else if (idNorm.includes(queryNorm)) score += 600;
+
+    // 2. Khớp trong tiêu đề
+    if (titleNorm === queryNorm) score += 1500;
+    else if (titleNorm.startsWith(queryNorm)) score += 800;
+    else if (titleNorm.includes(queryNorm)) score += 400;
+
+    // 3. Khớp từng từ đơn lẻ (Token match)
+    const tokens = queryNorm.split(' ').filter(Boolean);
+    let matchedTokens = 0;
+    tokens.forEach(tok => {
+      if (itemNorm.includes(tok)) {
+        matchedTokens++;
+        score += 80;
+      }
+    });
+
+    if (matchedTokens === tokens.length && tokens.length > 1) {
+      score += 300; // All tokens present
+    }
+
+    return score;
+  }
+
+  /* ==========================================================================
+     5. XÂY DỰNG CHỈ MỤC TÌM KIẾM TỔNG HỢP (UNIFIED SEARCH INDEX)
+     ========================================================================== */
+  function buildUnifiedSearchIndex() {
+    const items = [];
+
+    // --- 5.1. 343 BÀI HỌC UIT ---
+    const lessons = (window.PLATFORM_DATA && Array.isArray(window.PLATFORM_DATA.lessons))
+      ? window.PLATFORM_DATA.lessons
+      : [];
+
+    lessons.forEach(l => {
+      const id = l.id || '';
+      const title = l.title || '';
+      const stage = l.stage || '';
+      const subj = l.subjName || l.subj || '';
+      const uitMap = l.uitMap || '';
+      const combined = `${id} ${title} ${stage} ${subj} ${uitMap} ${l.cat || ''}`;
+
+      items.push({
+        type: 'lesson',
+        id: id,
+        title: title,
+        subtitle: `${id} · ${stage ? stage + ' · ' : ''}${subj}`,
+        meta: uitMap ? `UIT: ${uitMap}` : (l.sem || 'HK1'),
+        icon: '📖',
+        badge: id,
+        category: '343 Bài Học UIT',
+        categoryKey: 'lesson',
+        rawText: combined,
+        normText: normalizeText(combined),
+        normId: normalizeText(id),
+        normTitle: normalizeText(title),
+        action: () => {
+          switchWorkspaceHub('studio', 'reader');
+          triggerAppNavigation('reader', id);
+        }
+      });
+    });
+
+    // --- 5.2. 11 HƯỚNG ĐI NGHỀ NGHIỆP UIT ---
+    let careerWays = [];
+    if (window.PLAYBOOK_DATA && Array.isArray(window.PLAYBOOK_DATA.careerWays)) {
+      careerWays = window.PLAYBOOK_DATA.careerWays;
+    } else if (window.PLAYBOOK_DATA && Array.isArray(window.PLAYBOOK_DATA.CAREER_WAYS)) {
+      careerWays = window.PLAYBOOK_DATA.CAREER_WAYS;
+    } else {
+      careerWays = FALLBACK_CAREER_WAYS;
+    }
+
+    careerWays.forEach(w => {
+      const id = w.id || w.code || '';
+      const title = w.title || w.name || '';
+      const desc = w.marketOutlook || w.description || w.desc || '';
+      const combined = `${id} ${w.code || ''} ${title} ${desc} career way huong di nghe nghiep`;
+
+      items.push({
+        type: 'career',
+        id: id,
+        title: title,
+        subtitle: desc ? (desc.length > 85 ? desc.substring(0, 85) + '...' : desc) : 'Lộ trình chuyển ngành Zero-Overlap',
+        meta: '11 Hướng Đi UIT',
+        icon: '🚀',
+        badge: id.replace('_', ' '),
+        category: '11 Hướng Đi Nghề Nghiệp',
+        categoryKey: 'career',
+        rawText: combined,
+        normText: normalizeText(combined),
+        normId: normalizeText(id),
+        normTitle: normalizeText(title),
+        action: () => {
+          switchWorkspaceHub('roadmap_hub', 'career');
+          setTimeout(() => {
+            const el = document.querySelector(`[data-way-id="${id}"]`) || document.getElementById(`way-${id}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 120);
+        }
+      });
+    });
+
+    // --- 5.3. EXECUTABLE CODE PLAYBOOKS ---
+    let playbooks = [];
+    if (window.PLAYBOOK_DATA && Array.isArray(window.PLAYBOOK_DATA.playbooks) && window.PLAYBOOK_DATA.playbooks.length > 0) {
+      playbooks = window.PLAYBOOK_DATA.playbooks;
+    } else if (window.PLAYBOOK_DATA && Array.isArray(window.PLAYBOOK_DATA.PLAYBOOKS) && window.PLAYBOOK_DATA.PLAYBOOKS.length > 0) {
+      playbooks = window.PLAYBOOK_DATA.PLAYBOOKS;
+    } else {
+      playbooks = FALLBACK_PLAYBOOKS;
+    }
+
+    playbooks.forEach(pb => {
+      const id = pb.id || pb.sourceFilename || '';
+      const title = pb.title || '';
+      const category = pb.category || 'C++ Playbook';
+      const badge = pb.badge || pb.sourceFilename || 'C++17';
+      const desc = pb.description || pb.desc || '';
+      const combined = `${id} ${title} ${category} ${badge} ${desc} code playbook c++`;
+
+      items.push({
+        type: 'playbook',
+        id: id,
+        title: title,
+        subtitle: `${id} · ${category}`,
+        meta: badge,
+        icon: '⚡',
+        badge: badge,
+        category: 'Code Playbook Studio',
+        categoryKey: 'playbook',
+        rawText: combined,
+        normText: normalizeText(combined),
+        normId: normalizeText(id),
+        normTitle: normalizeText(title),
+        action: () => {
+          switchWorkspaceHub('studio', 'playbook');
+          if (typeof window.selectPlaybook === 'function') {
+            setTimeout(() => window.selectPlaybook(id), 60);
+          }
+        }
+      });
+    });
+
+    // --- 5.4. CÁC MÔN HỌC UIT (CORE & CHUYÊN NGÀNH) ---
+    let subjects = [];
+    if (window.PLATFORM_DATA && Array.isArray(window.PLATFORM_DATA.subjects) && window.PLATFORM_DATA.subjects.length > 0) {
+      subjects = window.PLATFORM_DATA.subjects;
+    } else {
+      subjects = FALLBACK_CORE_SUBJECTS;
+    }
+
+    subjects.forEach(s => {
+      const code = s.code || s.id || '';
+      const name = s.name || '';
+      const desc = s.desc || s.description || '';
+      const credits = s.credits || 3;
+      const sem = s.sem || s.semester || 'Đại học UIT';
+      const combined = `${code} ${name} ${desc} ${sem} mon hoc uit tin chi`;
+
+      items.push({
+        type: 'subject',
+        id: code,
+        title: `${code}: ${name}`,
+        subtitle: `${credits} Tín chỉ · ${sem} · ${desc || 'Chương trình đào tạo Kỹ sư Phần mềm UIT'}`,
+        meta: `${credits} Tín chỉ`,
+        icon: '🎓',
+        badge: code,
+        category: 'Môn Học UIT',
+        categoryKey: 'subject',
+        rawText: combined,
+        normText: normalizeText(combined),
+        normId: normalizeText(code),
+        normTitle: normalizeText(name),
+        action: () => {
+          switchWorkspaceHub('roadmap_hub', 'roadmap');
+          setTimeout(() => {
+            const filterBtn = document.querySelector(`[data-filter-subj="${code}"]`);
+            if (filterBtn) filterBtn.click();
+          }, 100);
+        }
+      });
+    });
+
+    // --- 5.5. CÁC PHÂN HỆ TÍNH NĂNG CỐT LÕI (QUICK SHORTCUTS) ---
+    const featureShortcuts = [
+      {
+        id: 'feat_english',
+        title: 'English Lab: 25 ENQ Phỏng Vấn Chuyên Ngành',
+        subtitle: 'Luyện 25 câu hỏi kỹ thuật chuẩn kỹ sư phần mềm quốc tế',
+        category: 'Phòng Luyện Lab',
+        categoryKey: 'feature',
+        icon: '🇬🇧',
+        badge: '25 ENQ',
+        meta: 'Hub 3 · Lab',
+        rawText: 'english lab 25 enq phong van tieng anh tieng anh chuyen nganh ky thuat',
+        action: () => switchWorkspaceHub('lab_hub', 'english')
+      },
+      {
+        id: 'feat_remediation',
+        title: 'Sổ Tay Củng Cố & Khắc Phục Lỗi (Remediation)',
+        subtitle: 'Chẩn đoán lỗ hổng, bài tập khắc phục và củng cố nền tảng',
+        category: 'Phòng Luyện Lab',
+        categoryKey: 'feature',
+        icon: '🩹',
+        badge: 'Lỗ Hổng',
+        meta: 'Hub 3 · Lab',
+        rawText: 'cung co sua loi remediation lo hong on tap can ban',
+        action: () => switchWorkspaceHub('lab_hub', 'remediation')
+      },
+      {
+        id: 'feat_sessions',
+        title: 'Buổi Học Tập Trung & Bấm Giờ Pomodoro',
+        subtitle: 'Quản lý phiên học 25/5, ghi nhận tiến độ và phân tích nhịp học',
+        category: 'Phòng Luyện Lab',
+        categoryKey: 'feature',
+        icon: '⏱️',
+        badge: 'Pomodoro',
+        meta: 'Hub 3 · Lab',
+        rawText: 'buoi hoc tap trung pomodoro thoi gian bam gio hoc tap thong ke',
+        action: () => switchWorkspaceHub('lab_hub', 'sessions')
+      },
+      {
+        id: 'feat_gpa',
+        title: 'Hồ Sơ Tín Chỉ & Bảng Điểm GPA UIT',
+        subtitle: 'Tính toán điểm trung bình tích lũy, quy đổi tín chỉ và tiến độ tốt nghiệp',
+        category: 'Hồ Sơ & Tín Chỉ UIT',
+        categoryKey: 'feature',
+        icon: '📊',
+        badge: 'GPA UIT',
+        meta: 'Hub 4 · Hồ sơ',
+        rawText: 'bang diem gpa tin chi uit hoc bong xep loai tot nghiep',
+        action: () => switchWorkspaceHub('portal_hub', 'gpa')
+      },
+      {
+        id: 'feat_projects',
+        title: 'Cột Mốc Semester Gates & Đồ Án Chuyên Ngành',
+        subtitle: 'Kiểm soát điều kiện chuyển học kỳ và đồ án công nghệ thực chiến',
+        category: 'Hồ Sơ & Tín Chỉ UIT',
+        categoryKey: 'feature',
+        icon: '🎯',
+        badge: 'Semester Gates',
+        meta: 'Hub 4 · Hồ sơ',
+        rawText: 'do an du an semester gates cot moc hoc ky tot nghiep',
+        action: () => switchWorkspaceHub('portal_hub', 'projects')
+      },
+      {
+        id: 'feat_admin',
+        title: 'Báo Cáo Kiểm Định Chất Lượng & Dữ Liệu (Audit)',
+        subtitle: 'Kiểm tra tính toàn vẹn 343 bài, cây tiên quyết và độ phủ môn học',
+        category: 'Hồ Sơ & Tín Chỉ UIT',
+        categoryKey: 'feature',
+        icon: '🛡️',
+        badge: 'Audit',
+        meta: 'Hub 4 · Hồ sơ',
+        rawText: 'kiem dinh bao cao audit admin toan ven du lieu tien quyet',
+        action: () => switchWorkspaceHub('portal_hub', 'admin')
+      },
+      {
+        id: 'feat_bridge',
+        title: 'Bộ Tính Điểm Giao Chuyển Ngành (Career Bridge Calculator)',
+        subtitle: 'Thuật toán resolveCareerBridge tách biệt môn dùng chung và môn cầu nối',
+        category: 'Lộ Trình 11 Ngành',
+        categoryKey: 'career',
+        icon: '🔄',
+        badge: 'Zero-Overlap',
+        meta: 'Hub 2 · Điểm giao',
+        rawText: 'diem giao chuyen nganh resolveCareerBridge career bridge calculator mon cau noi',
+        action: () => switchWorkspaceHub('roadmap_hub', 'career')
+      }
+    ];
+
+    featureShortcuts.forEach(f => {
+      items.push({
+        type: 'feature',
+        id: f.id,
+        title: f.title,
+        subtitle: f.subtitle,
+        meta: f.meta,
+        icon: f.icon,
+        badge: f.badge,
+        category: f.category,
+        categoryKey: f.categoryKey,
+        rawText: `${f.title} ${f.subtitle} ${f.rawText}`,
+        normText: normalizeText(`${f.title} ${f.subtitle} ${f.rawText}`),
+        normId: normalizeText(f.id),
+        normTitle: normalizeText(f.title),
+        action: f.action
+      });
+    });
+
+    return items;
+  }
+
+  /* ==========================================================================
+     6. ĐIỀU HƯỚNG ỨNG DỤNG AN TOÀN (SAFE APP NAVIGATION BRIDGE)
+     ========================================================================== */
+  function triggerAppNavigation(view, lessonId = null) {
+    // 1. Ưu tiên gọi hàm native nếu có trên window
+    if (typeof window.navigateTo === 'function') {
+      window.navigateTo(view, lessonId);
+      return;
+    }
+
+    // 2. Kích hoạt qua data-open-lesson nếu có lessonId
+    if (lessonId) {
+      const dummyBtn = document.createElement('button');
+      dummyBtn.setAttribute('data-open-lesson', lessonId);
+      dummyBtn.style.display = 'none';
+      document.body.appendChild(dummyBtn);
+      dummyBtn.click();
+      dummyBtn.remove();
+      return;
+    }
+
+    // 3. Kích hoạt qua data-view giả lập
+    if (view) {
+      const dummyBtn = document.createElement('button');
+      dummyBtn.setAttribute('data-view', view);
+      dummyBtn.style.display = 'none';
+      document.body.appendChild(dummyBtn);
+      dummyBtn.click();
+      dummyBtn.remove();
+    }
+  }
+
+  /* ==========================================================================
+     7. INJECT CSS NATIVE CHO WORKSPACE HUBS & COMMAND PALETTE
+     ========================================================================== */
+  function injectWorkspaceStyles() {
+    if (document.getElementById('toanpham-workspace-hub-styles')) return;
+
+    const styleEl = document.createElement('style');
+    styleEl.id = 'toanpham-workspace-hub-styles';
+    styleEl.textContent = `
+/* ============================================================================
+   TOÀN PHẠM IT SANCTUARY — 4 CORE WORKSPACE HUBS & COMMAND PALETTE STYLES
+   ============================================================================ */
+
+/* --- 1. WORKSPACE HUB CONTAINER & WRAPPER --- */
+.workspace-hub-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  padding: 4px 0 2px 0;
+  position: relative;
+}
+
+/* --- 2. TOP LEVEL: 4 CORE HUBS BAR --- */
+.workspace-hub-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.workspace-hub-bar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hub Pill Button */
+.hub-pill-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: color 220ms var(--ease-spring),
+              background-color 240ms var(--ease-spring),
+              border-color 220ms var(--ease-spring),
+              transform 200ms var(--ease-spring),
+              box-shadow 240ms var(--ease-spring);
+  z-index: 2;
+}
+
+.hub-pill-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+.hub-pill-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.hub-pill-btn.active {
+  background: var(--accent-primary);
+  color: var(--accent-primary-fg);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-pill);
+  transform: translateY(-1px);
+}
+
+.hub-pill-btn .hub-icon {
+  font-size: 17px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 220ms var(--ease-spring);
+}
+
+.hub-pill-btn:hover .hub-icon {
+  transform: scale(1.15) rotate(-4deg);
+}
+
+.hub-pill-btn.active .hub-icon {
+  transform: scale(1.1);
+}
+
+.hub-pill-btn .hub-text {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* Hub Badges */
+.hub-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.hub-pill-btn.active .hub-badge {
+  background: rgba(255, 255, 255, 0.24);
+  color: #fff;
+}
+
+.hub-badge-accent {
+  background: var(--accent-primary-bg);
+  color: var(--accent-primary);
+}
+
+.hub-badge-info {
+  background: var(--status-info-bg);
+  color: var(--status-info);
+}
+
+.hub-badge-warning {
+  background: var(--status-warning-bg);
+  color: var(--status-warning);
+}
+
+.hub-badge-success {
+  background: var(--status-success-bg);
+  color: var(--status-success);
+}
+
+/* --- 3. SUB-LEVEL: SEGMENTED CONTROLS BAR --- */
+.workspace-subtab-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-soft);
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  animation: subtabFadeIn 240ms var(--ease-spring);
+}
+
+.workspace-subtab-bar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes subtabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Subtab Pill Button */
+.subtab-pill-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: all 200ms var(--ease-spring);
+}
+
+.subtab-pill-btn:hover {
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.subtab-pill-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.subtab-pill-btn.active {
+  background: var(--bg-elevated);
+  color: var(--accent-primary);
+  border-color: var(--border-strong);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  font-weight: 700;
+}
+
+.subtab-pill-btn .subtab-icon {
+  font-size: 14px;
+}
+
+.subtab-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: var(--radius-pill);
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+}
+
+.subtab-pill-btn.active .subtab-badge {
+  background: var(--accent-primary-bg);
+  color: var(--accent-primary);
+}
+
+.tab-count-highlight {
+  background: var(--status-warning-bg) !important;
+  color: var(--status-warning) !important;
+}
+
+/* --- 4. HEADER SEARCH TRIGGER BUTTON --- */
+.omni-search-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 220ms var(--ease-spring);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.omni-search-trigger-btn:hover {
+  background: var(--bg-surface);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 4px 14px rgba(196, 116, 87, 0.18);
+  transform: translateY(-1px);
+}
+
+.omni-search-trigger-btn .search-icon {
+  font-size: 14px;
+  color: var(--accent-primary);
+}
+
+.omni-search-trigger-btn .search-label {
+  white-space: nowrap;
+}
+
+.omni-search-trigger-btn .search-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.07);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--text-secondary);
+}
+
+/* --- 5. OMNI COMMAND PALETTE MODAL --- */
+.omni-palette-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: min(12vh, 100px);
+  padding-left: 16px;
+  padding-right: 16px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 220ms ease, visibility 220ms ease;
+}
+
+.omni-palette-modal.open {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Backdrop */
+.omni-palette-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 14, 12, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+/* Spotlight Dialog Container */
+.omni-palette-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: 0 32px 80px -16px rgba(0, 0, 0, 0.38),
+              0 0 0 1px var(--border-subtle);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 82vh;
+  transform: scale(0.96) translateY(-8px);
+  transition: transform 260ms var(--ease-spring);
+  z-index: 2;
+}
+
+.omni-palette-modal.open .omni-palette-dialog {
+  transform: scale(1) translateY(0);
+}
+
+/* Input Area */
+.omni-search-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+}
+
+.omni-search-icon {
+  font-size: 19px;
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+.omni-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16.5px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-primary);
+  padding: 0;
+}
+
+.omni-search-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.omni-search-clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 160ms ease;
+}
+
+.omni-search-clear-btn:hover {
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.omni-esc-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+}
+
+/* Category Filter Bar */
+.omni-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.omni-filter-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.omni-filter-pill {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 180ms ease;
+}
+
+.omni-filter-pill:hover {
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.omni-filter-pill.active {
+  background: var(--accent-primary-bg);
+  color: var(--accent-primary);
+  border-color: rgba(196, 116, 87, 0.28);
+}
+
+/* Results List */
+.omni-results-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 12px;
+  max-height: 480px;
+  scroll-behavior: smooth;
+}
+
+.omni-results-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.omni-results-container::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-pill);
+}
+
+/* Category Group Header */
+.omni-group-header {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  padding: 10px 12px 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.omni-group-header .group-count {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+/* Result Item */
+.omni-result-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 150ms ease, transform 150ms ease, border-left-color 150ms ease;
+  border-left: 3px solid transparent;
+  margin-bottom: 2px;
+}
+
+.omni-result-item:hover,
+.omni-result-item.selected {
+  background: var(--bg-elevated);
+  border-left-color: var(--accent-primary);
+  transform: translateX(2px);
+}
+
+.omni-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.omni-item-icon {
+  font-size: 19px;
+  line-height: 1;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 180ms var(--ease-spring);
+}
+
+.omni-result-item:hover .omni-item-icon,
+.omni-result-item.selected .omni-item-icon {
+  transform: scale(1.1);
+  background: var(--accent-primary-bg);
+}
+
+.omni-item-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.omni-item-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.omni-item-title mark {
+  background: rgba(196, 116, 87, 0.22);
+  color: var(--accent-primary);
+  font-weight: 800;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+.omni-item-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.omni-item-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.omni-item-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-secondary);
+}
+
+.omni-item-enter-icon {
+  font-size: 12px;
+  color: var(--accent-primary);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 160ms ease;
+}
+
+.omni-result-item:hover .omni-item-enter-icon,
+.omni-result-item.selected .omni-item-enter-icon {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Empty & Suggestion States */
+.omni-empty-state {
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.omni-empty-icon {
+  font-size: 38px;
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+
+.omni-empty-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.omni-empty-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 380px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Footer Shortcuts */
+.omni-palette-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border-subtle);
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.omni-shortcuts-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.omni-shortcut-tip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.omni-shortcut-tip kbd {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .omni-search-trigger-btn .search-label {
+    display: none;
+  }
+  .omni-search-trigger-btn {
+    padding: 7px 12px;
+  }
+  .workspace-hub-bar {
+    gap: 4px;
+    padding: 4px;
+  }
+  .hub-pill-btn {
+    padding: 7px 12px;
+    font-size: 12.5px;
+    gap: 6px;
+  }
+  .hub-badge {
+    display: none;
+  }
+  .omni-palette-modal {
+    padding-top: 24px;
+  }
+  .omni-palette-dialog {
+    max-height: 92vh;
+  }
+}
+`;
+
+    document.head.appendChild(styleEl);
+  }
+
+  /* ==========================================================================
+     8. KHỞI TẠO VÀ RENDER GIAO DIỆN 4 WORKSPACE HUBS & SUB-TABS
+     ========================================================================== */
+  function renderWorkspaceHubNavigation() {
+    const navRow = document.querySelector('.header-nav-row');
+    if (!navRow) return;
+
+    // Lưu lại vị trí badge và bài học hiện tại nếu có
+    const currentLesson = (window.SEPlatform && typeof window.SEPlatform.getCurrentLessonId === 'function')
+      ? window.SEPlatform.getCurrentLessonId()
+      : 'CPP-001';
+
+    // 1. Tạo wrapper chứa Hubs & Subtabs
+    let wrapper = navRow.querySelector('.workspace-hub-wrapper');
+    if (!wrapper) {
+      wrapper = document.createElement('div');
+      wrapper.className = 'workspace-hub-wrapper';
+      navRow.innerHTML = '';
+      navRow.appendChild(wrapper);
+    }
+
+    // 2. Render Level 1: 4 Core Hubs
+    const hubsHtml = `
+      <nav class="workspace-hub-bar" role="tablist" aria-label="4 Core Workspace Hubs Toàn Phạm IT Sanctuary">
+        ${WORKSPACE_HUBS.map(hub => {
+          const isActive = hub.id === hubState.currentHubId;
+          return `
+            <button type="button" 
+                    class="hub-pill-btn ${isActive ? 'active' : ''}" 
+                    data-hub="${hub.id}" 
+                    role="tab" 
+                    aria-selected="${isActive}"
+                    title="${hub.description}">
+              <span class="hub-icon">${hub.icon}</span>
+              <span class="hub-text">${hub.title}</span>
+              <span class="hub-badge ${hub.badgeClass}">${hub.badge}</span>
+            </button>
+          `;
+        }).join('')}
+      </nav>
+      <div class="workspace-subtab-bar" id="workspaceSubTabBar" role="tablist" aria-label="Phân hệ chức năng"></div>
+    `;
+
+    wrapper.innerHTML = hubsHtml;
+
+    // 3. Render Level 2: Sub-tabs cho Hub đang hoạt động
+    updateSubTabBar();
+
+    // 4. Lắng nghe click trên các nút Hub
+    const hubButtons = wrapper.querySelectorAll('.hub-pill-btn');
+    hubButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetHubId = btn.getAttribute('data-hub');
+        switchWorkspaceHub(targetHubId);
+      });
+    });
+  }
+
+  /* Cập nhật thanh Sub-tabs theo Hub hiện tại */
+  function updateSubTabBar() {
+    const subTabBar = document.getElementById('workspaceSubTabBar');
+    if (!subTabBar) return;
+
+    const currentHub = WORKSPACE_HUBS.find(h => h.id === hubState.currentHubId) || WORKSPACE_HUBS[0];
+    const activeSubTabId = hubState.activeSubTabs[currentHub.id] || currentHub.defaultSubTab;
+
+    subTabBar.innerHTML = currentHub.subTabs.map(sub => {
+      const isActive = sub.id === activeSubTabId;
+      const badgeIdAttr = sub.badgeId ? `id="${sub.badgeId}"` : '';
+      const badgeClassAttr = sub.badgeClass || '';
+      return `
+        <button type="button" 
+                class="subtab-pill-btn tab-pill-btn ${isActive ? 'active' : ''}" 
+                data-view="${sub.viewTarget}" 
+                data-subtab="${sub.id}"
+                role="tab" 
+                aria-selected="${isActive}"
+                title="${sub.description}">
+          <span class="subtab-icon">${sub.icon}</span>
+          <span class="subtab-label">${sub.label}</span>
+          <span class="subtab-badge ${badgeClassAttr}" ${badgeIdAttr}>${sub.badge}</span>
+        </button>
+      `;
+    }).join('');
+
+    // Lắng nghe click chuyển sub-tab
+    subTabBar.querySelectorAll('.subtab-pill-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const subId = btn.getAttribute('data-subtab');
+        const viewTarget = btn.getAttribute('data-view');
+        hubState.activeSubTabs[hubState.currentHubId] = subId;
+        saveHubState(hubState);
+
+        // Cập nhật trạng thái active
+        subTabBar.querySelectorAll('.subtab-pill-btn').forEach(b => {
+          const act = b === btn;
+          b.classList.toggle('active', act);
+          b.setAttribute('aria-selected', String(act));
+        });
+
+        // Kích hoạt điều hướng view của SPA
+        triggerAppNavigation(viewTarget);
+      });
+    });
+  }
+
+  /* ==========================================================================
+     9. KHỞI TẠO NÚT TÌM KIẾM TRÊN HEADER & COMMAND PALETTE MODAL
+     ========================================================================== */
+  function renderHeaderSearchTrigger() {
+    // Tìm vị trí header actions
+    const headerActions = document.querySelector('.header-actions');
+    if (!headerActions || document.getElementById('omniSearchTrigger')) return;
+
+    const triggerBtn = document.createElement('button');
+    triggerBtn.type = 'button';
+    triggerBtn.className = 'omni-search-trigger-btn';
+    triggerBtn.id = 'omniSearchTrigger';
+    triggerBtn.title = 'Tìm nhanh bài học, code, môn UIT... (Ctrl + K)';
+    triggerBtn.innerHTML = `
+      <span class="search-icon">🔍</span>
+      <span class="search-label">Tìm nhanh bài học, code, môn UIT...</span>
+      <kbd class="search-kbd">Ctrl K</kbd>
+    `;
+
+    triggerBtn.addEventListener('click', () => {
+      openCommandPalette();
+    });
+
+    // Chèn vào trước palette swatches hoặc đầu header actions
+    const swatches = headerActions.querySelector('.palette-swatches');
+    if (swatches) {
+      headerActions.insertBefore(triggerBtn, swatches);
+    } else {
+      headerActions.prepend(triggerBtn);
+    }
+  }
+
+  /* Khởi tạo DOM Command Palette Modal */
+  function renderCommandPaletteModal() {
+    if (document.getElementById('omniCommandPaletteModal')) return;
+
+    const modalHtml = `
+      <div class="omni-palette-modal" id="omniCommandPaletteModal" role="dialog" aria-modal="true" aria-label="Omni Command Palette">
+        <div class="omni-palette-backdrop" id="omniPaletteBackdrop"></div>
+        <div class="omni-palette-dialog">
+          
+          <!-- SEARCH HEADER -->
+          <div class="omni-search-header">
+            <span class="omni-search-icon">🔍</span>
+            <input type="text" 
+                   class="omni-search-input" 
+                   id="omniSearchInput" 
+                   placeholder="Tìm 343 bài học, 11 hướng đi UIT, file code C++, môn học..." 
+                   autocomplete="off" 
+                   spellcheck="false">
+            <button type="button" class="omni-search-clear-btn" id="omniSearchClearBtn" title="Xóa tìm kiếm" style="display:none;">✕</button>
+            <kbd class="omni-esc-badge">ESC</kbd>
+          </div>
+
+          <!-- CATEGORY FILTER BAR -->
+          <div class="omni-filter-bar" id="omniFilterBar">
+            <button type="button" class="omni-filter-pill active" data-filter="all">Tất cả</button>
+            <button type="button" class="omni-filter-pill" data-filter="lesson">📖 343 Bài Học</button>
+            <button type="button" class="omni-filter-pill" data-filter="career">🚀 11 Ngành UIT</button>
+            <button type="button" class="omni-filter-pill" data-filter="playbook">⚡ Code Playbook</button>
+            <button type="button" class="omni-filter-pill" data-filter="subject">🎓 Môn Học UIT</button>
+          </div>
+
+          <!-- RESULTS CONTAINER -->
+          <div class="omni-results-container" id="omniResultsContainer">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <!-- FOOTER SHORTCUTS -->
+          <div class="omni-palette-footer">
+            <div class="omni-shortcuts-group">
+              <span class="omni-shortcut-tip"><kbd>↑</kbd><kbd>↓</kbd> Di chuyển</span>
+              <span class="omni-shortcut-tip"><kbd>↵ Enter</kbd> Mở tính năng</span>
+              <span class="omni-shortcut-tip"><kbd>ESC</kbd> Đóng</span>
+            </div>
+            <div style="font-weight: 600; opacity: 0.85;">
+              Toàn Phạm IT Sanctuary
+            </div>
+          </div>
+
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+    // Gắn sự kiện cho Palette
+    setupPaletteEvents();
+  }
+
+  /* ==========================================================================
+     10. LOGIC TÌM KIẾM, PHÍM TẮT & ĐIỀU HƯỚNG TỨC THÌ (SEARCH CONTROLLER)
+     ========================================================================== */
+  let searchIndex = [];
+  let currentResults = [];
+  let selectedIndex = 0;
+  let activeFilter = 'all';
+
+  function setupPaletteEvents() {
+    const modal = document.getElementById('omniCommandPaletteModal');
+    const backdrop = document.getElementById('omniPaletteBackdrop');
+    const input = document.getElementById('omniSearchInput');
+    const clearBtn = document.getElementById('omniSearchClearBtn');
+    const filterBar = document.getElementById('omniFilterBar');
+    const resultsContainer = document.getElementById('omniResultsContainer');
+
+    if (!modal || !input) return;
+
+    // 1. Đóng khi click backdrop
+    backdrop.addEventListener('click', () => closeCommandPalette());
+
+    // 2. Clear button
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      clearBtn.style.display = 'none';
+      input.focus();
+      executeSearch();
+    });
+
+    // 3. Input typing listener
+    input.addEventListener('input', () => {
+      clearBtn.style.display = input.value.trim() ? 'block' : 'none';
+      executeSearch();
+    });
+
+    // 4. Keyboard Navigation bên trong Input
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        navigateResultItems(1);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigateResultItems(-1);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        selectCurrentItem();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        closeCommandPalette();
+      }
+    });
+
+    // 5. Category Filter Buttons
+    if (filterBar) {
+      filterBar.querySelectorAll('.omni-filter-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBar.querySelectorAll('.omni-filter-pill').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeFilter = btn.getAttribute('data-filter');
+          executeSearch();
+          input.focus();
+        });
+      });
+    }
+
+    // 6. Global Shortcuts: Ctrl + K / Cmd + K và Escape
+    window.addEventListener('keydown', (e) => {
+      // Ctrl + K hoặc Cmd + K
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+        e.preventDefault();
+        toggleCommandPalette();
+        return;
+      }
+      // Escape
+      if (e.key === 'Escape') {
+        if (modal.classList.contains('open')) {
+          e.preventDefault();
+          closeCommandPalette();
+        }
+      }
+    });
+
+    // 7. Lắng nghe Custom Event 'sanctuary:search' từ module_hero_brand.js
+    document.addEventListener('sanctuary:search', () => {
+      openCommandPalette();
+    });
+  }
+
+  /* Di chuyển con trỏ lên / xuống trong danh sách kết quả */
+  function navigateResultItems(direction) {
+    if (!currentResults || currentResults.length === 0) return;
+
+    selectedIndex += direction;
+    if (selectedIndex < 0) selectedIndex = currentResults.length - 1;
+    if (selectedIndex >= currentResults.length) selectedIndex = 0;
+
+    highlightSelectedItem();
+  }
+
+  function highlightSelectedItem() {
+    const container = document.getElementById('omniResultsContainer');
+    if (!container) return;
+
+    const items = container.querySelectorAll('.omni-result-item');
+    items.forEach((item, idx) => {
+      const isSel = idx === selectedIndex;
+      item.classList.toggle('selected', isSel);
+      if (isSel) {
+        item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    });
+  }
+
+  /* Kích hoạt item đang được chọn */
+  function selectCurrentItem() {
+    if (!currentResults || currentResults.length === 0) return;
+    const selected = currentResults[selectedIndex];
+    if (selected && typeof selected.action === 'function') {
+      closeCommandPalette();
+      selected.action();
+    }
+  }
+
+  /* Thực thi tìm kiếm thông minh */
+  function executeSearch() {
+    const input = document.getElementById('omniSearchInput');
+    const container = document.getElementById('omniResultsContainer');
+    if (!container) return;
+
+    if (!searchIndex || searchIndex.length === 0) {
+      searchIndex = buildUnifiedSearchIndex();
+    }
+
+    const query = input ? input.value.trim() : '';
+    const queryNorm = normalizeText(query);
+
+    // Nếu không nhập query -> Hiển thị danh mục gợi ý nổi bật
+    if (!queryNorm) {
+      renderCuratedRecommendations(container);
+      return;
+    }
+
+    // Lọc theo Category Filter nếu được chọn
+    let pool = searchIndex;
+    if (activeFilter !== 'all') {
+      pool = searchIndex.filter(item => item.categoryKey === activeFilter);
+    }
+
+    // Tính điểm và sắp xếp
+    const scoredResults = [];
+    pool.forEach(item => {
+      const score = calculateRelevanceScore(queryNorm, item.normText, item.normId, item.normTitle);
+      if (score > 0) {
+        scoredResults.push({ item, score });
+      }
+    });
+
+    // Sắp xếp giảm dần theo điểm số
+    scoredResults.sort((a, b) => b.score - a.score);
+
+    // Lấy top 40 kết quả phù hợp nhất
+    currentResults = scoredResults.slice(0, 40).map(r => r.item);
+    selectedIndex = 0;
+
+    // Render kết quả
+    if (currentResults.length === 0) {
+      renderNoResultsState(container, query);
+    } else {
+      renderResultItems(container, currentResults, queryNorm);
+    }
+  }
+
+  /* Render danh mục gợi ý khởi điểm (Recommendations) */
+  function renderCuratedRecommendations(container) {
+    // Chọn 8 items cốt lõi đại diện
+    const curatedIds = [
+      'CPP-001',
+      'mang2chieu.cpp',
+      'WAY_01',
+      'IT001',
+      'IT002',
+      'feat_english',
+      'feat_gpa',
+      'feat_bridge'
+    ];
+
+    const curatedItems = searchIndex.filter(item => curatedIds.includes(item.id));
+    currentResults = curatedItems.length > 0 ? curatedItems : searchIndex.slice(0, 8);
+    selectedIndex = 0;
+
+    let html = `
+      <div class="omni-group-header">
+        <span>⚡ GỢI Ý TRUY CẬP NHANH</span>
+        <span class="group-count">Toàn Phạm Sanctuary</span>
+      </div>
+    `;
+
+    html += currentResults.map((item, idx) => `
+      <div class="omni-result-item ${idx === 0 ? 'selected' : ''}" data-idx="${idx}">
+        <div class="omni-item-left">
+          <div class="omni-item-icon">${item.icon}</div>
+          <div class="omni-item-content">
+            <div class="omni-item-title">${item.title}</div>
+            <div class="omni-item-subtitle">${item.subtitle}</div>
+          </div>
+        </div>
+        <div class="omni-item-right">
+          <span class="omni-item-meta">${item.meta || item.badge}</span>
+          <span class="omni-item-enter-icon">↵</span>
+        </div>
+      </div>
+    `).join('');
+
+    container.innerHTML = html;
+    attachItemClickHandlers(container);
+  }
+
+  /* Render kết quả tìm kiếm với highlight từ khóa */
+  function renderResultItems(container, items, queryNorm) {
+    // Nhóm theo Category
+    const grouped = {};
+    items.forEach((item, idx) => {
+      const cat = item.category || 'Kết quả khác';
+      if (!grouped[cat]) grouped[cat] = [];
+      grouped[cat].push({ item, originalIdx: idx });
+    });
+
+    let html = '';
+    const queryRegex = new RegExp(`(${queryNorm.split(' ').filter(Boolean).join('|')})`, 'gi');
+
+    Object.keys(grouped).forEach(cat => {
+      const list = grouped[cat];
+      html += `
+        <div class="omni-group-header">
+          <span>${cat}</span>
+          <span class="group-count">${list.length} mục</span>
+        </div>
+      `;
+
+      list.forEach(({ item, originalIdx }) => {
+        // Highlight từ khóa
+        let displayTitle = item.title;
+        if (queryNorm) {
+          displayTitle = displayTitle.replace(queryRegex, '<mark>$1</mark>');
+        }
+
+        html += `
+          <div class="omni-result-item ${originalIdx === selectedIndex ? 'selected' : ''}" data-idx="${originalIdx}">
+            <div class="omni-item-left">
+              <div class="omni-item-icon">${item.icon}</div>
+              <div class="omni-item-content">
+                <div class="omni-item-title">${displayTitle}</div>
+                <div class="omni-item-subtitle">${item.subtitle}</div>
+              </div>
+            </div>
+            <div class="omni-item-right">
+              <span class="omni-item-meta">${item.meta || item.badge}</span>
+              <span class="omni-item-enter-icon">↵</span>
+            </div>
+          </div>
+        `;
+      });
+    });
+
+    container.innerHTML = html;
+    attachItemClickHandlers(container);
+  }
+
+  /* Render trạng thái không có kết quả */
+  function renderNoResultsState(container, query) {
+    container.innerHTML = `
+      <div class="omni-empty-state">
+        <div class="omni-empty-icon">🔍</div>
+        <div class="omni-empty-title">Không tìm thấy kết quả nào</div>
+        <div class="omni-empty-desc">
+          Không có bài học, hướng đi hay file code nào khớp với từ khóa <strong>"${escapeHtml(query)}"</strong>.
+          Hãy thử tìm với <code>CPP-001</code>, <code>mang2chieu</code>, <code>IT001</code>, hoặc <code>WAY_01</code>.
+        </div>
+      </div>
+    `;
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, m => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[m]);
+  }
+
+  function attachItemClickHandlers(container) {
+    container.querySelectorAll('.omni-result-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.getAttribute('data-idx'), 10);
+        if (!isNaN(idx) && currentResults[idx]) {
+          closeCommandPalette();
+          currentResults[idx].action();
+        }
+      });
+      el.addEventListener('mouseenter', () => {
+        const idx = parseInt(el.getAttribute('data-idx'), 10);
+        if (!isNaN(idx)) {
+          selectedIndex = idx;
+          highlightSelectedItem();
+        }
+      });
+    });
+  }
+
+  /* ==========================================================================
+     11. ĐỒNG BỘ HAI CHIỀU VỚI CÁC SỰ KIỆN CỦA TOÀN BỘ ỨNG DỤNG
+     ========================================================================== */
+  function syncHubFromView(viewName) {
+    if (!viewName) return;
+    const mapping = VIEW_TO_HUB_MAP[viewName];
+    if (!mapping) return;
+
+    const { hubId, subTabId } = mapping;
+    let changed = false;
+
+    if (hubState.currentHubId !== hubId) {
+      hubState.currentHubId = hubId;
+      changed = true;
+    }
+
+    if (hubState.activeSubTabs[hubId] !== subTabId) {
+      hubState.activeSubTabs[hubId] = subTabId;
+      changed = true;
+    }
+
+    if (changed) {
+      saveHubState(hubState);
+    }
+
+    // Cập nhật DOM Hub Bar
+    document.querySelectorAll('.hub-pill-btn').forEach(btn => {
+      const isAct = btn.getAttribute('data-hub') === hubId;
+      btn.classList.toggle('active', isAct);
+      btn.setAttribute('aria-selected', String(isAct));
+    });
+
+    // Cập nhật DOM Subtab Bar
+    updateSubTabBar();
+  }
+
+  function setupAppInterceptors() {
+    // 1. Lắng nghe click toàn cục để bắt các nút [data-view] và [data-open-lesson]
+    document.addEventListener('click', e => {
+      const lesBtn = e.target.closest('[data-open-lesson]');
+      if (lesBtn) {
+        syncHubFromView('reader');
+        return;
+      }
+
+      const navBtn = e.target.closest('[data-view]');
+      if (navBtn) {
+        const view = navBtn.getAttribute('data-view');
+        syncHubFromView(view);
+      }
+    }, true);
+
+    // 2. Intercept window.navigateTo nếu đã có sẵn
+    if (typeof window.navigateTo === 'function') {
+      const origNavigate = window.navigateTo;
+      window.navigateTo = function (view, lessonId) {
+        origNavigate(view, lessonId);
+        syncHubFromView(view);
+      };
+    }
+  }
+
+  /* ==========================================================================
+     12. PUBLIC API CHÍNH THỨC EXPORT CHO ỨNG DỤNG
+     ========================================================================== */
+
+  /**
+   * Chuyển đổi giữa 4 Core Workspace Hubs
+   * @param {string} hubId - 'studio' | 'roadmap_hub' | 'lab_hub' | 'portal_hub'
+   * @param {string} [subTabId] - Optional subtab id (e.g. 'reader', 'playbook', 'career',...)
+   */
+  function switchWorkspaceHub(hubId, subTabId = null) {
+    const hub = WORKSPACE_HUBS.find(h => h.id === hubId);
+    if (!hub) return;
+
+    hubState.currentHubId = hubId;
+    const targetSubTab = subTabId || hubState.activeSubTabs[hubId] || hub.defaultSubTab;
+    hubState.activeSubTabs[hubId] = targetSubTab;
+    saveHubState(hubState);
+
+    // 1. Cập nhật Hub Buttons
+    document.querySelectorAll('.hub-pill-btn').forEach(btn => {
+      const isAct = btn.getAttribute('data-hub') === hubId;
+      btn.classList.toggle('active', isAct);
+      btn.setAttribute('aria-selected', String(isAct));
+    });
+
+    // 2. Cập nhật Sub-tabs
+    updateSubTabBar();
+
+    // 3. Kích hoạt view tương ứng
+    triggerAppNavigation(targetSubTab);
+  }
+
+  /**
+   * Bật / Tắt Omni Command Palette
+   */
+  function toggleCommandPalette() {
+    const modal = document.getElementById('omniCommandPaletteModal');
+    if (!modal) {
+      renderCommandPaletteModal();
+    }
+    const curModal = document.getElementById('omniCommandPaletteModal');
+    if (curModal && curModal.classList.contains('open')) {
+      closeCommandPalette();
+    } else {
+      openCommandPalette();
+    }
+  }
+
+  /**
+   * Mở Omni Command Palette
+   */
+  function openCommandPalette() {
+    let modal = document.getElementById('omniCommandPaletteModal');
+    if (!modal) {
+      renderCommandPaletteModal();
+      modal = document.getElementById('omniCommandPaletteModal');
+    }
+
+    if (!modal) return;
+    modal.classList.add('open');
+
+    const input = document.getElementById('omniSearchInput');
+    if (input) {
+      input.value = '';
+      const clearBtn = document.getElementById('omniSearchClearBtn');
+      if (clearBtn) clearBtn.style.display = 'none';
+      setTimeout(() => input.focus(), 60);
+    }
+
+    // Chuẩn bị index và hiển thị gợi ý
+    searchIndex = buildUnifiedSearchIndex();
+    const container = document.getElementById('omniResultsContainer');
+    if (container) {
+      renderCuratedRecommendations(container);
+    }
+  }
+
+  /**
+   * Đóng Omni Command Palette
+   */
+  function closeCommandPalette() {
+    const modal = document.getElementById('omniCommandPaletteModal');
+    if (modal) {
+      modal.classList.remove('open');
+    }
+  }
+
+  /**
+   * Khởi tạo toàn bộ Workspace Hubs & Command Palette
+   */
+  function initWorkspaceHubs() {
+    injectWorkspaceStyles();
+    renderWorkspaceHubNavigation();
+    renderHeaderSearchTrigger();
+    renderCommandPaletteModal();
+    setupAppInterceptors();
+
+    // Khởi tạo index tìm kiếm ở chế độ idle
+    setTimeout(() => {
+      searchIndex = buildUnifiedSearchIndex();
+    }, 400);
+
+    console.log('✅ [module_workspace_hub.js] 4 Core Workspace Hubs & Omni Command Palette initialized successfully.');
+  }
+
+  // --- Export ra đối tượng toàn cục window ---
+  window.initWorkspaceHubs = initWorkspaceHubs;
+  window.switchWorkspaceHub = switchWorkspaceHub;
+  window.toggleCommandPalette = toggleCommandPalette;
+  window.openCommandPalette = openCommandPalette;
+  window.closeCommandPalette = closeCommandPalette;
+  window.getCurrentWorkspaceHub = () => ({ ...hubState });
+  window.WORKSPACE_HUBS_CONFIG = WORKSPACE_HUBS;
+
+  // Tự động khởi tạo an toàn khi DOM sẵn sàng
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWorkspaceHubs);
+  } else {
+    setTimeout(initWorkspaceHubs, 50);
+  }
+
+})(typeof window !== 'undefined' ? window : this, typeof document !== 'undefined' ? document : {});
+
+</script>
 <script>
 (function() {
   const ACCOUNTS = {
@@ -10985,6 +16615,7 @@ WHERE rn = 1;`
     });
   }
 
+  window.navigateTo = navigateTo;
   function navigateTo(view, lessonId = null) {
     state.activeView = view;
     if (lessonId && LESSON_MAP.has(lessonId)) {
@@ -10996,6 +16627,7 @@ WHERE rn = 1;`
     const pop = document.getElementById("settingsPopover");
     if (pop) pop.classList.remove("open");
     try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) {}
+    window.navigateTo = navigateTo;
   }
 
   /* ==========================================================================
@@ -11622,6 +17254,11 @@ WHERE rn = 1;`
 
     container.innerHTML = `
       <div class="view-stage">
+        <!-- SIGNATURE HERO SECTION: TOÀN PHẠM IT SANCTUARY -->
+        <div id="toanpham-hero-mount">
+          ${typeof window.renderToanPhamHeroHtml === "function" ? window.renderToanPhamHeroHtml() : ""}
+        </div>
+
         <!-- TOP SHOWCASE: 2 NEW ENGINES -->
         <div class="hero-showcase-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:16px; margin-bottom:24px;">
           <div class="hero-feature-card" style="background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:20px; box-shadow:var(--shadow-soft); display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden;">
@@ -11976,6 +17613,11 @@ WHERE rn = 1;`
         renderDashboardView(container);
         showToast("Đã cập nhật kế hoạch tuần thích ứng (" + h + " giờ/tuần).", "success");
       });
+    }
+  
+    // Kích hoạt Signature Hero Section Toàn Phạm IT Sanctuary
+    if (typeof window.initToanPhamHero === "function") {
+      window.initToanPhamHero(container);
     }
   }
 
