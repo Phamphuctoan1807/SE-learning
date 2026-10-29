@@ -12338,6 +12338,9 @@ WHERE rn = 1;`
   // Danh sách các data attributes đã được hệ sinh thái định tuyến sẵn
   const KNOWN_HANDLED_ATTRS = [
     "data-view",
+    "data-hub",
+    "data-subtab",
+    "data-hub-id",
     "data-switch-view",
     "data-open-lesson",
     "data-filter-subj",
@@ -12351,7 +12354,15 @@ WHERE rn = 1;`
     "data-uni-unskip-sem",
     "data-copy-cpp-example",
     "data-copy-id",
-    "data-palette"
+    "data-palette",
+    "data-stat-id",
+    "data-target-view",
+    "data-cm-tab",
+    "data-cm-apply-preset",
+    "data-from",
+    "data-to",
+    "data-peek-lesson",
+    "data-peek-term"
   ];
 
   // Danh mục thông điệp thông minh theo ngữ cảnh tính năng
@@ -12366,14 +12377,12 @@ WHERE rn = 1;`
     if (action) {
       return `Tính năng "${action}" đang được đồng bộ dữ liệu với máy chủ học tập...`;
     }
-    if (hub) {
-      return `Trung tâm kết nối "${hub}" đang chuẩn bị tài nguyên chuyên sâu...`;
+    if (hub || view) { return ""; }" đang chuẩn bị tài nguyên chuyên sâu...`;
     }
     if (modal) {
       return `Hộp thoại thông tin "${modal}" đang đồng bộ dữ liệu...`;
     }
-    if (view) {
-      return `Không gian "${view}" đang được tối ưu hóa hiển thị...`;
+    if (false) {" đang được tối ưu hóa hiển thị...`;
     }
     if (cleanText) {
       return `Thao tác "${cleanText}" đã được ghi nhận và đang đồng bộ...`;
@@ -12454,7 +12463,11 @@ WHERE rn = 1;`
           // NÚT BỊ TRƠ/LIỆT -> KÍCH HOẠT FALLBACK BẢO VỆ NGAY LẬP TỨC!
           e.preventDefault();
           const fallbackMsg = generateFallbackMessage(interactiveEl);
-          displayGuardToast(fallbackMsg, "info");
+          if (fallbackMsg && !fallbackMsg.includes("hub") && !fallbackMsg.includes("Trung tâm")) {
+            if (fallbackMsg && !fallbackMsg.toLowerCase().includes("hub") && !fallbackMsg.toLowerCase().includes("trung tâm")) {
+      displayGuardToast(fallbackMsg, "info");
+    }
+          }
           
           // Thêm hiệu ứng rung nhẹ (gentle pulse) để người dùng biết hệ thống đã nhận diện
           interactiveEl.style.transition = "box-shadow 0.2s ease, transform 0.2s ease";
